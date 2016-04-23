@@ -14,9 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
-import com.timitoc.groupic.models.FragmentFirst;
+import com.timitoc.groupic.models.FragmentGroups;
 import com.timitoc.groupic.models.FragmentSecond;
 import com.timitoc.groupic.models.NavDrawerItem;
 
@@ -130,23 +129,11 @@ public class MainActivity extends Activity {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new FragmentFirst();
+                fragment = new FragmentGroups();
                 break;
             case 1:
                 fragment = new FragmentSecond();
                 break;
-            /*case 2:
-                fragment = new PhotosFragment();
-                break;
-            case 3:
-                fragment = new CommunityFragment();
-                break;
-            case 4:
-                fragment = new PagesFragment();
-                break;
-            case 5:
-                fragment = new WhatsHotFragment();
-                break;*/
             default:
                 break;
         }

@@ -29,4 +29,7 @@
 
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
+    <string name="your_groups">Your Groups</string>
+    <string name="search_groups">Search Groups</string>
+    <string name="create_new">Create New</string>
 </resources>
