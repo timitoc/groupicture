@@ -45,8 +45,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTitle = "Closed";
-        mDrawerTitle = "Opened";
+	mTitle = "closed";
+        mDrawerTitle = "opened";
 
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
