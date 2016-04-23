@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/miCompose"
+            android:icon="@drawable/ic_launcher"
+            android:showAsAction="ifRoom"
+            android:title="Compose">
+    </item>
+
+    <item
+        android:id="@+id/miPhoto"
+        android:icon="@drawable/ic_launcher"
+        android:showAsAction="ifRoom"
+        android:title="Photo" >
+    </item>
+
+</menu>
