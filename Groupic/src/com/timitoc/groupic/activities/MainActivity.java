@@ -1,4 +1,4 @@
-package com.timitoc.groupic;
+package com.timitoc.groupic.activities;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
 import com.timitoc.groupic.models.FragmentGroups;
 import com.timitoc.groupic.models.FragmentSecond;

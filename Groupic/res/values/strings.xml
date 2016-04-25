@@ -32,4 +32,6 @@
     <string name="your_groups">Your Groups</string>
     <string name="search_groups">Search Groups</string>
     <string name="create_new">Create New</string>
+    <string name="log_in_string">Log in</string>
+    <string name="register_string">Register</string>
 </resources>
