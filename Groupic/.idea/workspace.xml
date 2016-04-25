@@ -77,11 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FragmentLogin.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FragmentLogin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentLogin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6509695">
-              <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="24" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#936#1087#0" expanded="true" />
@@ -100,20 +100,20 @@
           </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.8852459">
-              <caret line="16" column="66" selection-start-line="16" selection-start-column="66" selection-end-line="16" selection-end-column="66" />
+              <caret line="16" column="66" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_register.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="fragment_register.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/res/layout/fragment_register.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.0655737">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.42">
+              <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -123,9 +123,13 @@
         <entry file="file://$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentRegister.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+              <caret line="46" column="35" selection-start-line="46" selection-start-column="35" selection-end-line="46" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#963#1117#0" expanded="true" />
+                <element signature="e#1116#1117#0" expanded="true" />
+                <element signature="e#1193#1194#0" expanded="true" />
+                <element signature="e#1220#1221#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -223,13 +227,13 @@
         <option value="$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentMyGroups.java" />
         <option value="$PROJECT_DIR$/res/layout/group_list_item.xml" />
         <option value="$PROJECT_DIR$/res/layout/login_layout.xml" />
-        <option value="$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentRegister.java" />
         <option value="$PROJECT_DIR$/src/com/timitoc/groupic/activities/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/fragment_register.xml" />
         <option value="$PROJECT_DIR$/src/com/timitoc/groupic/activities/MainActivity.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentLogin.java" />
         <option value="$PROJECT_DIR$/res/layout/fragment_login.xml" />
+        <option value="$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentRegister.java" />
+        <option value="$PROJECT_DIR$/res/layout/fragment_register.xml" />
       </list>
     </option>
   </component>
@@ -1214,38 +1218,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/fragment_register.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.0655737">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/fragment_login.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.8852459">
-          <caret line="16" column="66" selection-start-line="16" selection-start-column="66" selection-end-line="16" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentRegister.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/timitoc/groupic/activities/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1262,8 +1234,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentLogin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6509695">
-          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#936#1087#0" expanded="true" />
@@ -1271,6 +1243,42 @@
             <element signature="e#1163#1164#0" expanded="true" />
             <element signature="e#1191#1192#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/fragment_login.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.8852459">
+          <caret line="16" column="66" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/timitoc/groupic/models/FragmentRegister.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="35" selection-start-line="46" selection-start-column="35" selection-end-line="46" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#963#1117#0" expanded="true" />
+            <element signature="e#1116#1117#0" expanded="true" />
+            <element signature="e#1193#1194#0" expanded="true" />
+            <element signature="e#1220#1221#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/fragment_register.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42">
+          <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>

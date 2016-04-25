@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Register"/>
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+    <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
 
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textColor="@color/red"
+                  android:id="@+id/register_attempt_response"
+                  android:text=""
+        />
+
+        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/username_textbox_r"
+                  android:layout_below="@id/register_attempt_response"
+                  android:hint="username"
+        />
+        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/password_textbox_r"
+                  android:hint="password"
+                  android:layout_below="@+id/username_textbox_r"
+                  android:inputType="textPassword"
+        />
+
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/register_request"
+                android:layout_below="@+id/password_textbox_r"
+                android:layout_centerVertical="true"
+                android:text="Register"
+
+        />
+
+    </RelativeLayout>
 
 </RelativeLayout>
