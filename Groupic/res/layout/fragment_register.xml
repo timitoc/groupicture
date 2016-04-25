@@ -13,8 +13,14 @@
         />
 
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:id="@+id/username_textbox_r"
+                  android:id="@+id/name_textbox_r"
                   android:layout_below="@id/register_attempt_response"
+                  android:hint="Nickname"
+        />
+
+        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/username_textbox_r"
+                  android:layout_below="@id/name_textbox_r"
                   android:hint="username"
         />
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"

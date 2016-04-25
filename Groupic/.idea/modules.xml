@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Groupic.iml" filepath="$PROJECT_DIR$/Groupic.iml" />
       <module fileurl="file://$PROJECT_DIR$/appcompat/appcompat.iml" filepath="$PROJECT_DIR$/appcompat/appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../volley/volley/src/main/main.iml" filepath="$PROJECT_DIR$/../../../volley/volley/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../volley/volley/src/test/test.iml" filepath="$PROJECT_DIR$/../../../volley/volley/src/test/test.iml" />
     </modules>
   </component>
 </project>
