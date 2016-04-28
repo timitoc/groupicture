@@ -1,7 +1,9 @@
 package com.timitoc.groupic.models;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +50,7 @@ public class FragmentRegister extends Fragment {
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox_r)).getText().toString();
         final String name = ((TextView)mainView.findViewById(R.id.name_textbox_r)).getText().toString();
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url ="http://192.168.1.52:8084/FirstNetBean/RegisterUser";
+        String url = getString(R.string.register_url);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -56,6 +58,14 @@ public class FragmentRegister extends Fragment {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         System.out.println(("Response is: " + response));
+                        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("username", username);
+                        editor.putString("password", password);
+                        editor.apply();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
                     }
 
                 }, new Response.ErrorListener() {
@@ -82,9 +92,7 @@ public class FragmentRegister extends Fragment {
     public void registerAttempt() {
         if (validCredentials()) {
             saveUserInDatabase();
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
+
         }
         else {
             registerAttemptResponse.setText("Invalid username, password combination");

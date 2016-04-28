@@ -1,5 +1,8 @@
 package com.timitoc.groupic.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class GroupItem {
 
     private String title;
@@ -12,6 +15,18 @@ public class GroupItem {
     public GroupItem(String title, String description){
         this.title = title;
         this.description = description;
+    }
+
+    public GroupItem(JSONObject jsonObject) {
+        try {
+            this.title = jsonObject.getString("title");
+            this.description = jsonObject.getString("description");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            this.title = "nil";
+            this.description = "nil";
+        }
+
     }
 
 

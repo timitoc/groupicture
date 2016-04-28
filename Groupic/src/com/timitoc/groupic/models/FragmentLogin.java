@@ -1,7 +1,9 @@
 package com.timitoc.groupic.models;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +13,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.utils.Consumer;
+import com.timitoc.groupic.utils.Global;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.microedition.khronos.opengles.GL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,12 +45,27 @@ public class FragmentLogin extends Fragment {
                 loginAttempt();
             }
         });
+        tryComplete();
         return mainView;
+    }
+
+    private void tryComplete() {
+        if (!Global.want_login)
+            return;
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String username = sharedPref.getString("username", "");
+        String password = sharedPref.getString("password", "");
+        if (!username.isEmpty() && !password.isEmpty()) {
+            ((TextView)mainView.findViewById(R.id.username_textbox)).setText(username);
+            ((TextView)mainView.findViewById(R.id.password_textbox)).setText(password);
+            loginAttempt();
+        }
+
     }
 
     private void correctCredentials(final String username, final String password, final Consumer<Boolean> consumer) {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url ="http://192.168.1.52:8084/FirstNetBean/AuthUser";
+        String url = getString(R.string.auth_url);
         JSONObject jsonObject = new JSONObject();
         Uri.Builder builder = Uri.parse(url).buildUpon();
         builder.appendQueryParameter("username", username);
@@ -60,10 +80,12 @@ public class FragmentLogin extends Fragment {
                             System.out.println("Requested username " + response.getString("username"));
                             System.out.println("Requested password " + response.getString("password"));
                             if ("succes".equals(response.getString("status"))) {
-                                System.out.println("Id is " + response.getInt("id"));
+                                Global.user_id = response.getInt("id");
+                                System.out.println("Id is " + Global.user_id);
                                 consumer.accept(true);
                             }
-                            consumer.accept(false);
+                            else
+                                consumer.accept(false);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             consumer.accept(false);
@@ -75,6 +97,7 @@ public class FragmentLogin extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(("That didn't work!\n") + error.getMessage());
+
             }
         }){
             @Override
@@ -92,6 +115,7 @@ public class FragmentLogin extends Fragment {
 
     public void loginAttempt() {
         loginAttemptResponse.setText("Authenticating");
+        loginAttemptResponse.setTextColor(0xffff00);
         final String username = ((TextView)mainView.findViewById(R.id.username_textbox)).getText().toString();
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox)).getText().toString();
         correctCredentials(username, password, new Consumer<Boolean>(){
@@ -99,6 +123,12 @@ public class FragmentLogin extends Fragment {
             public void accept(Boolean h) {
                 if (h) {
                     loginAttemptResponse.setText("Login succeeded");
+                    loginAttemptResponse.setTextColor(0x00ff00);
+                    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.apply();
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                     getActivity().finish();
