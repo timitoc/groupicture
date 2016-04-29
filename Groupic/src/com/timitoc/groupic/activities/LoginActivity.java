@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.timitoc.groupic.R;
-import com.timitoc.groupic.models.FragmentGroups;
-import com.timitoc.groupic.models.FragmentLogin;
-import com.timitoc.groupic.models.FragmentRegister;
-import com.timitoc.groupic.models.FragmentSecond;
+import com.timitoc.groupic.fragments.FragmentLogin;
+import com.timitoc.groupic.fragments.FragmentRegister;
 
 /**
  * Created by timi on 25.04.2016.

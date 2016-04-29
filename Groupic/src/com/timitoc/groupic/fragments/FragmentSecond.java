@@ -1,4 +1,4 @@
-package com.timitoc.groupic.models;
+package com.timitoc.groupic.fragments;
 
 /**
  * Created by timi on 21.04.2016.

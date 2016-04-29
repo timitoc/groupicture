@@ -1,15 +1,18 @@
-package com.timitoc.groupic.models;
+package com.timitoc.groupic.fragments;
 
 /**
  * Created by timi on 21.04.2016.
  */
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -17,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
+import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import org.json.JSONArray;
@@ -51,6 +55,22 @@ public class FragmentMyGroups extends Fragment{
                 groupItems);
         groupItemListView = (ListView) mainView.findViewById(R.id.list_my_groups);
         groupItemListView.setAdapter(adapter);
+        groupItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                GroupItem item = (GroupItem) adapterView.getItemAtPosition(i);
+                Fragment fragment = GroupManageFragment.newInstance(item);
+                if (fragment != null) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.frame_container, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else
+                    Log.e("MainActivity", "Error in creating fragment");
+            }
+        });
     }
 
     public void searchServerForMyGroups(final ArrayList<GroupItem> groupItems) throws JSONException {
@@ -80,6 +100,7 @@ public class FragmentMyGroups extends Fragment{
                                     groupItems.add(new GroupItem(arr.getJSONObject(i)));
                                 }
                             }
+                            groupItemListView.setAdapter(adapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

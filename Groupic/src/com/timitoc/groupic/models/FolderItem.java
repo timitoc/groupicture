@@ -3,34 +3,30 @@ package com.timitoc.groupic.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-
-public class GroupItem implements Serializable {
-
+/**
+ * Created by timi on 28.04.2016.
+ */
+public class FolderItem {
     private String title;
-    private String description;
     private int id;
 
-    public GroupItem(){
+    public FolderItem(){
 
     }
 
-    public GroupItem(int id, String title, String description){
+    public FolderItem(int id, String title){
         this.id = id;
         this.title = title;
-        this.description = description;
     }
 
-    public GroupItem(JSONObject jsonObject) {
+    public FolderItem(JSONObject jsonObject) {
         try {
             this.title = jsonObject.getString("title");
-            this.description = jsonObject.getString("description");
             this.id = jsonObject.getInt("id");
         } catch (JSONException e) {
             e.printStackTrace();
             this.id = 0;
             this.title = "nil";
-            this.description = "nil";
         }
 
     }
@@ -42,14 +38,6 @@ public class GroupItem implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getId() {

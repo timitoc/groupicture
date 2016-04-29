@@ -1,4 +1,4 @@
-package com.timitoc.groupic.models;
+package com.timitoc.groupic.fragments;
 
 import android.app.FragmentManager;
 import android.os.Bundle;

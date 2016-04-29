@@ -16,9 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
-import com.timitoc.groupic.models.FragmentGroups;
-import com.timitoc.groupic.models.FragmentSecond;
+import com.timitoc.groupic.fragments.FragmentGroups;
+import com.timitoc.groupic.fragments.FragmentSecond;
 import com.timitoc.groupic.models.NavDrawerItem;
+import com.timitoc.groupic.utils.Global;
 
 import java.util.ArrayList;
 
@@ -124,6 +125,15 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        }
+        else {
+            getFragmentManager().popBackStack();
+        }
+    }
 
     private void displayView(int position) {
         // update the main content by replacing fragments
@@ -164,16 +174,14 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
-
-        System.out.println("Clicked");
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.miCompose:
-                System.out.println("miCompose"); return true;
+            case R.id.add_menu_item:
+                Global.onAddMenuItemClicked.run(); return true;
             case R.id.miPhoto:
                 System.out.println("miPhoto"); return true;
             default:
