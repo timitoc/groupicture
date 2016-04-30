@@ -11,6 +11,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.FolderItem;
+import com.timitoc.groupic.models.ImageItem;
 import com.timitoc.groupic.utils.VolleySingleton;
 
 import java.util.ArrayList;
@@ -20,23 +21,23 @@ import java.util.ArrayList;
  */
 public class MyImagesGridAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<FolderItem> folderItems;
+    private ArrayList<ImageItem> imageItems;
     private ImageLoader loader;
 
-    public MyImagesGridAdapter(Context context, ArrayList<FolderItem> folderItems){
+    public MyImagesGridAdapter(Context context, ArrayList<ImageItem> imageItems){
         this.context = context;
-        this.folderItems = folderItems;
+        this.imageItems = imageItems;
         this.loader = VolleySingleton.getInstance(null).getImageLoader();
     }
 
     @Override
     public int getCount() {
-        return folderItems.size();
+        return imageItems.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return folderItems.get(position);
+        return imageItems.get(position);
     }
 
     @Override
@@ -51,11 +52,10 @@ public class MyImagesGridAdapter extends BaseAdapter {
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.images_grid_item, null);
         }
-
         NetworkImageView networkImageView = (NetworkImageView)convertView.findViewById(R.id.network_image_view);
         networkImageView.setDefaultImageResId(R.drawable.ic_launcher);
         networkImageView.setAdjustViewBounds(true);
-        networkImageView.setImageUrl("http://freefromhellblog.com.s144903.gridserver.com/wp-content/uploads/2010/09/imagine.jpg", loader);
+        networkImageView.setImageUrl(imageItems.get(position).getRequestUrl(), loader);
 
         return convertView;
     }

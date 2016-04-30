@@ -3,6 +3,7 @@ package com.timitoc.groupic.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,10 +19,12 @@ import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyImagesGridAdapter;
 import com.timitoc.groupic.models.FolderItem;
+import com.timitoc.groupic.models.ImageItem;
 import com.timitoc.groupic.utils.CustomRequest;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.VolleySingleton;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -129,20 +132,97 @@ public class FolderContentFragment extends Fragment {
     }
 
     private void prepare() {
-        ArrayList<FolderItem> folderItems = new ArrayList<>();
+        ArrayList<ImageItem> imageItems = new ArrayList<>();
         System.out.println("This folder id is " + folderId);
+
+        try {
+            populateImageItems(imageItems);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+/*
         folderItems.add(new FolderItem(1, "titlu"));
-        folderItems.add(new FolderItem(2, "yey"));
-        adapter = new MyImagesGridAdapter(getActivity(), folderItems);
+        folderItems.add(new FolderItem(2, "yey"));*/
+        adapter = new MyImagesGridAdapter(getActivity(), imageItems);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                FolderItem item = (FolderItem) adapterView.getItemAtPosition(i);
-                System.out.println(item.getId() + " folder pressed ");
+                ImageItem item = (ImageItem) adapterView.getItemAtPosition(i);
+                System.out.println(item.getId() + " image clicked ");
 
             }
         });
+    }
+
+    private String buildImageRequestUrl(int image_id) throws JSONException {
+        String url = getString(R.string.image_service_url);
+        Uri.Builder builder = Uri.parse(url).buildUpon();
+
+        builder.appendQueryParameter("public_key", Global.MY_PUBLIC_KEY);
+        final JSONObject params = new JSONObject();
+        params.put("id", image_id);
+        final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
+        builder.appendQueryParameter("data", params.toString());
+        builder.appendQueryParameter("hash", hash);
+        return  builder.build().toString();
+    }
+
+    void populateImageItems(final ArrayList<ImageItem> imageItems) throws JSONException {
+        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
+        String url = getString(R.string.api_service_url);
+        final JSONObject params = new JSONObject();
+        params.put("id", folderId); /// id-ul folderului curent
+        final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
+
+        StringRequest strRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            if ("success".equals(jsonResponse.getString("status"))) {
+                                JSONArray imagesId = jsonResponse.getJSONArray("images");
+                                for (int i = 0; i < imagesId.length(); i++) {
+                                    int image_id = imagesId.getInt(i);
+                                    ImageItem item = new ImageItem(image_id, "not_yet_implemented", buildImageRequestUrl(image_id));
+                                    imageItems.add(item);
+                                    System.out.println(item.getId() + " " + item.getRequestUrl());
+                                }
+                                gridView.setAdapter(adapter);
+                            }
+                            else
+                                System.out.println("failed to get Images from folders");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            System.out.println("exception to get Images from folders");
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        System.out.println("Error " + error.getMessage());
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> paramap = new HashMap<>();
+                paramap.put("function", "get_images_from_folder");
+                paramap.put("public_key", Global.MY_PUBLIC_KEY);
+                paramap.put("data", params.toString());
+                paramap.put("hash", hash);
+                return paramap;
+            }
+        };
+
+        queue.add(strRequest);
     }
 
     @Override
