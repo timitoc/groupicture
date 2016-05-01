@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyFoldersListAdapter;
 import com.timitoc.groupic.adapters.MyGroupsListAdapter;
+import com.timitoc.groupic.models.AddNewDialogBox;
 import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.utils.Encryptor;
@@ -56,11 +57,19 @@ public class GroupManageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.group_manage_fragment, container, false);
         groupItem =  (GroupItem) getArguments().getSerializable("group_item");
+        Global.current_group_id = groupItem.getId();
         prepare();
         return mainView;
     }
 
     public void prepare() {
+        Global.onAddMenuItemClicked = new Runnable() {
+            @Override
+            public void run() {
+                Global.current_folder_id = 0;
+                new AddNewDialogBox().show(getFragmentManager(), "1");
+            }
+        };
         ArrayList<FolderItem> folderItems = new ArrayList<>();
         try {
             searchServerForGroupFolders(folderItems);
@@ -75,16 +84,20 @@ public class GroupManageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FolderItem item = (FolderItem) adapterView.getItemAtPosition(i);
-                System.out.println(item.getTitle() + " folder pressed ");
-                Fragment fragment = FolderContentFragment.newInstance(item.getId());
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.folder_content, fragment)
-                        .addToBackStack(null)
-                        .commit();
+                showFolderContent(item);
 
             }
         });
+    }
+
+    public void showFolderContent(FolderItem item) {
+        System.out.println(item.getTitle() + " folder pressed ");
+        Fragment fragment = FolderContentFragment.newInstance(item.getId());
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.folder_content, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void searchServerForGroupFolders(final ArrayList<FolderItem> folderItems) throws JSONException {
@@ -115,6 +128,9 @@ public class GroupManageFragment extends Fragment {
                                 }
                             }
                             folderItemListView.setAdapter(adapter);
+                            if (!adapter.isEmpty())
+                                showFolderContent((FolderItem)adapter.getItem(0));
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

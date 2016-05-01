@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyImagesGridAdapter;
+import com.timitoc.groupic.models.AddNewDialogBox;
 import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.ImageItem;
 import com.timitoc.groupic.utils.CustomRequest;
@@ -63,7 +64,9 @@ public class FolderContentFragment extends Fragment {
         Global.onAddMenuItemClicked = new Runnable() {
             @Override
             public void run() {
-                addImage();
+                Global.current_folder_id = folderId;
+                new AddNewDialogBox().show(getFragmentManager(), "1");
+                //addImage();
             }
         };
         prepare();

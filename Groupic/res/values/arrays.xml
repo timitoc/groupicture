@@ -8,4 +8,9 @@
         <item>More Apps</item>
         <item>About</item>
     </string-array>
+    <string-array name="add_new_items">
+        <item>Add folder</item>
+        <item>Add image from gallery</item>
+        <item>Take Photor</item>
+    </string-array>
 </resources>
