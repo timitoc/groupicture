@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Name"
+              android:layout_gravity="center_horizontal"    />
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/new_group_name"
+              android:minHeight="100dp"
+              android:layout_gravity="center_horizontal"    />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Description"
+              android:layout_gravity="center_horizontal"    />
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/new_group_description"
+              android:minHeight="150dp"
+              android:layout_gravity="center_horizontal"    />
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/new_group_button"
+            android:layout_gravity="center_horizontal"
+            android:text="Create"
+    />
+
+</LinearLayout>

@@ -37,11 +37,12 @@ public class FragmentGroups extends Fragment {
         switch (position) {
             case 0:
                 fragment = new FragmentMyGroups();
-                System.out.println("0");
                 break;
             case 1:
                 fragment = new FragmentSecond();
-                System.out.println("1");
+                break;
+            case 2:
+                fragment = new CreateNewGroupFragment();
                 break;
             default:
                 break;
