@@ -17,8 +17,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.utils.Consumer;
+import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,13 +66,23 @@ public class FragmentLogin extends Fragment {
 
     }
 
-    private void correctCredentials(final String username, final String password, final Consumer<Boolean> consumer) {
+    private void correctCredentials(final String username, final String password, final Consumer<Boolean> consumer) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url = getString(R.string.auth_url);
+        String url = getString(R.string.api_service_url);
         JSONObject jsonObject = new JSONObject();
         Uri.Builder builder = Uri.parse(url).buildUpon();
-        builder.appendQueryParameter("username", username);
-        builder.appendQueryParameter("password", password);
+        builder.appendQueryParameter("function", "login_user");
+        builder.appendQueryParameter("public_key", Global.MY_PUBLIC_KEY);
+        JSONObject params = new JSONObject();
+        params.put("password", Encryptor.hash(password));
+        params.put("username", username);
+
+
+
+        String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
+        System.out.println("Hash str: " + params.toString() + Global.MY_PRIVATE_KEY);
+        builder.appendQueryParameter("data", params.toString());
+        builder.appendQueryParameter("hash", hash);
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, builder.build().toString(), jsonObject,
                 new Response.Listener<JSONObject>() {
@@ -77,17 +90,18 @@ public class FragmentLogin extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             System.out.println(response.getString("status"));
-                            System.out.println("Requested username " + response.getString("username"));
-                            System.out.println("Requested password " + response.getString("password"));
-                            if ("succes".equals(response.getString("status"))) {
+                            if ("success".equals(response.getString("status"))) {
+                                System.out.println("Success");
                                 Global.user_id = response.getInt("id");
-                                System.out.println("Id is " + Global.user_id);
                                 consumer.accept(true);
                             }
-                            else
+                            else {
                                 consumer.accept(false);
+                                System.out.println("Failure");
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            System.out.println("Error");
                             consumer.accept(false);
                         }
                     }
@@ -99,45 +113,105 @@ public class FragmentLogin extends Fragment {
                 System.out.println(("That didn't work!\n") + error.getMessage());
 
             }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> pars = new HashMap<>();
-                System.out.println("Do you even call");
-                pars.put("username", username);
-                pars.put("password", password);
-                return pars;
-            }
-        };
+        });
         System.out.println(jsonRequest.getUrl());
         queue.add(jsonRequest);
     }
+
+
+   /* private void correctCredentials(final String username, final String password, final Consumer<Boolean> consumer) throws JSONException {
+
+        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
+        String url = getString(R.string.api_service_url);
+        final JSONObject params = new JSONObject();
+        params.put("username", username);
+        params.put("password", password);
+
+        final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
+
+        StringRequest strRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            if ("success".equals(jsonResponse.getString("status"))) {
+                                System.out.println("success to login user");
+                                consumer.accept(true);
+                            }
+                            else {
+                                System.out.println("failed to login user with status " + jsonResponse.getString("status"));
+                                System.out.println("failed to login user with detail " + jsonResponse.getString("detail"));
+                                //System.out.println("Received username " + jsonResponse.getString("username"));
+                                //System.out.println("Received password " + jsonResponse.getString("password"));
+                                consumer.accept(false);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            consumer.accept(false);
+                            System.out.println("exception to login user");
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        System.out.println("Error " + error.getMessage());
+                        consumer.accept(false);
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                System.out.println("want params");
+                Map<String, String> paramap = new HashMap<>();
+                paramap.put("function", "login_user");
+                paramap.put("public_key", Global.MY_PUBLIC_KEY);
+                paramap.put("data", params.toString());
+                paramap.put("hash", hash);
+                return paramap;
+            }
+        };
+        System.out.println(strRequest.getUrl());
+        queue.add(strRequest);
+    }*/
+
 
     public void loginAttempt() {
         loginAttemptResponse.setText("Authenticating");
         loginAttemptResponse.setTextColor(0xffff00);
         final String username = ((TextView)mainView.findViewById(R.id.username_textbox)).getText().toString();
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox)).getText().toString();
-        correctCredentials(username, password, new Consumer<Boolean>(){
-            @Override
-            public void accept(Boolean h) {
-                if (h) {
-                    loginAttemptResponse.setText("Login succeeded");
-                    loginAttemptResponse.setTextColor(0x00ff00);
-                    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("username", username);
-                    editor.putString("password", password);
-                    editor.apply();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+        try {
+            correctCredentials(username, password, new Consumer<Boolean>(){
+                @Override
+                public void accept(Boolean h) {
+                    if (h) {
+                        loginAttemptResponse.setText("Login succeeded");
+                        loginAttemptResponse.setTextColor(0x00ff00);
+                        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("username", username);
+                        editor.putString("password", password);
+                        editor.apply();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                    else {
+                        loginAttemptResponse.setText("Invalid username or password");
+                    }
                 }
-                else {
-                    loginAttemptResponse.setText("Invalid username or password");
-                }
-            }
-        });
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+            loginAttemptResponse.setText("Network error occurred, please try again later");
+        }
     }
 
 

@@ -15,6 +15,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.models.ImageItem;
+import com.timitoc.groupic.utils.Encryptor;
+import com.timitoc.groupic.utils.Global;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,57 +48,87 @@ public class FragmentRegister extends Fragment {
     }
 
     private boolean validCredentials() {
-        return true;
+        final String username = ((TextView)mainView.findViewById(R.id.username_textbox_r)).getText().toString();
+        final String password = ((TextView)mainView.findViewById(R.id.password_textbox_r)).getText().toString();
+        final String name = ((TextView)mainView.findViewById(R.id.name_textbox_r)).getText().toString();
+        return username.length() > 0 && password.length() > 4 && name.length() > 0;
     }
 
-    public void saveUserInDatabase() {
+    public void saveUserInDatabase() throws JSONException {
         final String username = ((TextView)mainView.findViewById(R.id.username_textbox_r)).getText().toString();
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox_r)).getText().toString();
         final String name = ((TextView)mainView.findViewById(R.id.name_textbox_r)).getText().toString();
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url = getString(R.string.register_url);
+        String url = getString(R.string.api_service_url);
+        final JSONObject params = new JSONObject();
+        params.put("username", username);
+        params.put("password", Encryptor.hash(password));
+        params.put("name", name);
+        final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+        StringRequest strRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
                     @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        System.out.println(("Response is: " + response));
-                        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("username", username);
-                        editor.putString("password", password);
-                        editor.apply();
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
+                    public void onResponse(String response)
+                    {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            if ("success".equals(jsonResponse.getString("status"))) {
+                                System.out.println("success to register user");
+                                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("username", username);
+                                editor.putString("password", password);
+                                editor.apply();
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
+                            else {
+                                System.out.println("Username is already taken");
+                                registerAttemptResponse.setText("Username is already taken");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            System.out.println("exception to register user");
+                            registerAttemptResponse.setText("Network error occurred please try again latter");
+                        }
                     }
-
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        System.out.println("Error " + error.getMessage());
+                    }
+                })
+        {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(("That didn't work!\n") + error.getMessage());
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> pars = new HashMap<String, String>();
-                pars.put("username", username);
-                pars.put("password", password);
-                pars.put("name", name);
-                return pars;
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> paramap = new HashMap<>();
+                paramap.put("function", "register_user");
+                paramap.put("public_key", Global.MY_PUBLIC_KEY);
+                paramap.put("data", params.toString());
+                paramap.put("hash", hash);
+                return paramap;
             }
         };
-        System.out.println(stringRequest);
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
+
+        queue.add(strRequest);
 
     }
 
     public void registerAttempt() {
         if (validCredentials()) {
-            saveUserInDatabase();
-
+            try {
+                saveUserInDatabase();
+            } catch (JSONException e) {
+                e.printStackTrace();
+                registerAttemptResponse.setText("Network error occurred please try again latter");
+            }
         }
         else {
             registerAttemptResponse.setText("Invalid username, password combination");
