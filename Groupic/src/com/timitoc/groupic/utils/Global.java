@@ -24,6 +24,12 @@ public class Global {
             System.out.println("Add menu item clicked");
         }
     };
+    public static Runnable addImage = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println("nothing ever happens, and I wonder");
+        }
+    };
 
     public static String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -26,6 +26,7 @@ public class AddNewDialogBox extends DialogFragment {
                         }
                         else if (which == 1) {
                             System.out.println("Want to add image from gallery in folder " + Global.current_folder_id);
+                            Global.addImage.run();
                         }
                         else {
                             System.out.println("Want to take photo");

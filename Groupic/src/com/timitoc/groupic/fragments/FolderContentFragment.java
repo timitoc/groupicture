@@ -65,8 +65,13 @@ public class FolderContentFragment extends Fragment {
             @Override
             public void run() {
                 Global.current_folder_id = folderId;
+                Global.addImage = new Runnable() {
+                    @Override
+                    public void run() {
+                        addImage();
+                    }
+                };
                 new AddNewDialogBox().show(getFragmentManager(), "1");
-                //addImage();
             }
         };
         prepare();
