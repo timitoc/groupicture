@@ -20,8 +20,9 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/icon"
 
-            android:textColor="@color/green"
-            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:gravity="fill_vertical"
+            android:layout_centerVertical="true"
             android:paddingRight="40dp"/>
 
     <TextView android:id="@+id/counter"
@@ -30,6 +31,6 @@
               android:layout_alignParentRight="true"
               android:layout_centerVertical="true"
               android:layout_marginRight="8dp"
-              android:textColor="@color/green"/>
+              android:textColor="@color/white"/>
 
 </RelativeLayout>

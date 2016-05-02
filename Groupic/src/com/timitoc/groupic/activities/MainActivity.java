@@ -18,6 +18,8 @@ import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
 import com.timitoc.groupic.fragments.FragmentGroups;
 import com.timitoc.groupic.fragments.FragmentSecond;
+import com.timitoc.groupic.fragments.about.FragmentAbout;
+import com.timitoc.groupic.fragments.help.FragmentHelp;
 import com.timitoc.groupic.models.NavDrawerItem;
 import com.timitoc.groupic.utils.Global;
 
@@ -40,6 +42,8 @@ public class MainActivity extends Activity {
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+
+    private boolean deleteIconIsPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +71,14 @@ public class MainActivity extends Activity {
         // adding nav drawer items to array
         // Home
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
+        // Rate me
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
+        // Go premium
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
-        // Pages
+        // About
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        // Help
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-        // What's hot, We  will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
 
 
         // Recycle the typed array
@@ -143,7 +145,16 @@ public class MainActivity extends Activity {
                 fragment = new FragmentGroups();
                 break;
             case 1:
-                fragment = new FragmentSecond();
+                // fragment = new FragmentSecond();
+                break;
+            case 2:
+                // fragment = new FragmentSecond();
+                break;
+            case 3:
+                fragment = new FragmentAbout();
+                break;
+            case 4:
+                fragment = new FragmentHelp();
                 break;
             default:
                 break;
@@ -182,7 +193,12 @@ public class MainActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.add_menu_item:
                 Global.onAddMenuItemClicked.run(); return true;
-            case R.id.miPhoto:
+            case R.id.delete:
+                if (!deleteIconIsPressed)
+                    item.setIcon(R.drawable.delete_pressed);
+                else
+                    item.setIcon(R.drawable.delete);
+                deleteIconIsPressed = !deleteIconIsPressed;
                 System.out.println("miPhoto"); return true;
             default:
                 return super.onOptionsItemSelected(item);

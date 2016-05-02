@@ -9,22 +9,20 @@
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item >Home</item>
-        <item >Find People</item>
-        <item >Photos</item>
-        <item >Communities</item>
-        <item >Pages</item>
-        <item >What\'s Hot</item>
+        <item >Rate me!</item>
+        <item >Go Premium</item>
+        <item >About</item>
+        <item >Help</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_compose</item>
+        <item>@drawable/home</item>
+        <item>@drawable/star</item>
+        <item>@drawable/gopremium</item>
+        <item>@drawable/info</item>
+        <item>@drawable/question</item>
     </array>
 
     <!-- Content Description -->
@@ -38,4 +36,10 @@
     <string name="auth_url">http://192.168.1.52:8084/FirstNetBean/AuthUser</string>-->
     <string name="api_service_url">http://groupicture-timionjava.rhcloud.com/APIService</string>
     <string name="image_service_url">http://groupicture-timionjava.rhcloud.com/ImageService</string>
+
+    <!-- Strings for texts -->
+    <string name="help_use">\tYou can start using Groupic with just 3 easy steps!\n\t\t1. register/log in;\n\t\t2. create or join a group;\n\t\t3. start organizing and sharing pictures with your friends.</string>
+    <string name="about_us">About Us Texxt</string>
+    <string name="about_app">About App Texxt</string>
+
 </resources>

@@ -2,23 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/acad1">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Name"
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content" android:text="Name"
+              android:textColor="@color/white"
               android:layout_gravity="center_horizontal"    />
-    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+    <EditText android:layout_width="match_parent"
+              android:layout_height="wrap_content"
               android:id="@+id/new_group_name"
+              android:textColor="@color/white"
+              android:shadowColor="@color/red"
               android:minHeight="100dp"
               android:layout_gravity="center_horizontal"    />
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Description"
+              android:textColor="@color/white"
               android:layout_gravity="center_horizontal"    />
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:textColor="@color/white"
+              android:shadowColor="@color/red"
               android:id="@+id/new_group_description"
               android:minHeight="150dp"
               android:layout_gravity="center_horizontal"    />
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/new_group_button"
             android:layout_gravity="center_horizontal"
+            android:background="@color/acad3"
+            android:textColor="@color/acad2"
             android:text="Create"
     />
 

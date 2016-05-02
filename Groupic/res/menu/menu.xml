@@ -2,16 +2,16 @@
 
     <item
             android:id="@+id/add_menu_item"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/plus"
             android:showAsAction="ifRoom"
             android:title="Add">
     </item>
 
     <item
-        android:id="@+id/miPhoto"
-        android:icon="@drawable/ic_launcher"
+        android:id="@+id/delete"
+        android:icon="@drawable/delete"
         android:showAsAction="ifRoom"
-        android:title="Photo" >
+        android:title="Delete" >
     </item>
 
 </menu>
