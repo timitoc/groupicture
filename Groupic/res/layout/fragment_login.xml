@@ -2,12 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:background="@color/acad1">
 
     <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:textColor="@color/red"
+                  android:textColor="@color/white"
+                  android:textColorHint="@color/white"
                   android:id="@+id/login_attempt_response"
                   android:text=""
         />
@@ -15,19 +16,31 @@
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/username_textbox"
                   android:layout_below="@id/login_attempt_response"
+                  android:textColor="@color/white"
+                  android:textColorHint="@color/white"
                   android:hint="username"
         />
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/password_textbox"
                   android:hint="password"
                   android:layout_below="@+id/username_textbox"
+                  android:textColor="@color/white"
+                  android:textColorHint="@color/white"
                   android:inputType="textPassword"
+        />
+        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/auto_login_checkbox"
+                  android:layout_below="@+id/password_textbox"
+                  android:textColor="@color/white"
+                  android:text="Auto Log in"
         />
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/login_request"
-                android:layout_below="@+id/password_textbox"
+                android:layout_below="@+id/auto_login_checkbox"
                 android:layout_centerVertical="true"
+                android:background="@color/acad3"
+                android:textColor="@color/acad2"
                 android:text="Log In"
 
         />

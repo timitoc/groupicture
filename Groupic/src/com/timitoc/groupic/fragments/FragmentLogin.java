@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -37,6 +38,7 @@ public class FragmentLogin extends Fragment {
     Button loginRequest;
     TextView loginAttemptResponse;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_login, container, false);
@@ -53,9 +55,20 @@ public class FragmentLogin extends Fragment {
     }
 
     private void tryComplete() {
-        if (!Global.want_login)
-            return;
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        if (Global.logging_out){
+            Global.logging_out = false;
+            Global.want_login = false;
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("want_login", Global.want_login);
+            editor.apply();
+            return;
+        }
+        Global.want_login = sharedPref.getBoolean("want_login", false);
+        ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).setChecked(Global.want_login);
+        if (!Global.want_login){
+            return;
+        }
         String username = sharedPref.getString("username", "");
         String password = sharedPref.getString("password", "");
         if (!username.isEmpty() && !password.isEmpty()) {
@@ -181,10 +194,8 @@ public class FragmentLogin extends Fragment {
         queue.add(strRequest);
     }*/
 
-
     public void loginAttempt() {
         loginAttemptResponse.setText("Authenticating");
-        loginAttemptResponse.setTextColor(0xffff00);
         final String username = ((TextView)mainView.findViewById(R.id.username_textbox)).getText().toString();
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox)).getText().toString();
         try {
@@ -192,13 +203,17 @@ public class FragmentLogin extends Fragment {
                 @Override
                 public void accept(Boolean h) {
                     if (h) {
+                        // auto log in?
+                        Global.want_login = ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).isChecked();
+
                         loginAttemptResponse.setText("Login succeeded");
-                        loginAttemptResponse.setTextColor(0x00ff00);
                         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("username", username);
                         editor.putString("password", password);
+                        editor.putBoolean("want_login", Global.want_login);
                         editor.apply();
+
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
                         getActivity().finish();

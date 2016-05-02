@@ -13,6 +13,7 @@
         <item >Go Premium</item>
         <item >About</item>
         <item >Help</item>
+        <item >Log out</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -23,6 +24,7 @@
         <item>@drawable/gopremium</item>
         <item>@drawable/info</item>
         <item>@drawable/question</item>
+        <item>@drawable/logout</item>
     </array>
 
     <!-- Content Description -->

@@ -9,7 +9,8 @@ import java.io.ByteArrayOutputStream;
  */
 public class Global {
 
-    public static boolean want_login = true;
+    public static boolean want_login = false;
+    public static boolean logging_out = false;
     public static int user_id = -1;
     public static int current_folder_id;
     public static int current_group_id;
@@ -37,5 +38,4 @@ public class Global {
         byte[] imageBytes = baos.toByteArray();
         return Base64.encodeBytes(imageBytes);
     }
-
 }

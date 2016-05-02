@@ -2,6 +2,9 @@ package com.timitoc.groupic.activities;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -13,10 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
 import com.timitoc.groupic.fragments.FragmentGroups;
+import com.timitoc.groupic.fragments.FragmentLogin;
+import com.timitoc.groupic.fragments.FragmentRegister;
 import com.timitoc.groupic.fragments.FragmentSecond;
 import com.timitoc.groupic.fragments.about.FragmentAbout;
 import com.timitoc.groupic.fragments.help.FragmentHelp;
@@ -79,6 +85,8 @@ public class MainActivity extends Activity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
         // Help
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+        // Log out
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
 
 
         // Recycle the typed array
@@ -155,6 +163,13 @@ public class MainActivity extends Activity {
                 break;
             case 4:
                 fragment = new FragmentHelp();
+                break;
+            case 5:
+                Global.want_login = false;
+                Global.logging_out = true;
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                this.finish();
                 break;
             default:
                 break;

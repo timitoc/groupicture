@@ -2,28 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+android:background="@color/acad1">
 
     <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:textColor="@color/red"
+                  android:textColor="@color/white"
                   android:id="@+id/register_attempt_response"
                   android:text=""
         />
 
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textColor="@color/white"
+                  android:textColorHint="@color/white"
                   android:id="@+id/name_textbox_r"
                   android:layout_below="@id/register_attempt_response"
                   android:hint="Nickname"
         />
 
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textColor="@color/white"
+                  android:textColorHint="@color/white"
                   android:id="@+id/username_textbox_r"
                   android:layout_below="@id/name_textbox_r"
                   android:hint="username"
         />
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textColor="@color/white"
+                  android:textColorHint="@color/white"
                   android:id="@+id/password_textbox_r"
                   android:hint="password"
                   android:layout_below="@+id/username_textbox_r"
@@ -33,6 +40,8 @@
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/register_request"
                 android:layout_below="@+id/password_textbox_r"
+                android:background="@color/acad3"
+                android:textColor="@color/acad2"
                 android:layout_centerVertical="true"
                 android:text="Register"
 

@@ -11,16 +11,16 @@
             android:layout_width="0dp"
             android:layout_weight=".2"
             android:choiceMode="singleChoice"
-            android:divider="@color/red"
+            android:divider="@color/white"
             android:dividerHeight="2dp"
-            android:background="@color/blue"/>
+            android:background="@color/acad1"/>
 
     <FrameLayout
             android:id="@+id/folder_content"
             android:layout_width="0dp"
             android:layout_weight=".8"
             android:layout_gravity="right"
-            android:background="@color/red"
+            android:background="@color/acad3"
             android:layout_height="match_parent" />
 
 
