@@ -39,7 +39,7 @@ public class FragmentGroups extends Fragment {
                 fragment = new FragmentMyGroups();
                 break;
             case 1:
-                fragment = new FragmentSecond();
+                fragment = new SearchGroupsFragment();
                 break;
             case 2:
                 fragment = new CreateNewGroupFragment();
