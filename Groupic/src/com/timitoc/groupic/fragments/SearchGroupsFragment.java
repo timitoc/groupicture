@@ -1,13 +1,13 @@
 package com.timitoc.groupic.fragments;
 
-import android.app.Fragment;
+import android.app.*;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.Toast;
+import android.widget.*;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,6 +36,7 @@ public class SearchGroupsFragment extends Fragment{
     SearchView searchView;
     ListView foundGroups;
     MyGroupsListAdapter adapter;
+    GroupItem selectedItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,6 +74,13 @@ public class SearchGroupsFragment extends Fragment{
         }
         adapter = new MyGroupsListAdapter(getActivity(), groupItems);
         foundGroups.setAdapter(adapter);
+        foundGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedItem = (GroupItem) adapterView.getItemAtPosition(i);
+                new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
+            }
+        });
     }
 
     void getGroupsFromServer(final ArrayList<GroupItem> groupItems) throws JSONException {
@@ -136,4 +144,32 @@ public class SearchGroupsFragment extends Fragment{
         queue.add(strRequest);
     }
 
+    private class ConfirmGroupEnteringDialog extends DialogFragment {
+
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Do you want to enter this Group?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                System.out.println("Fire");
+                                try {
+                                    CreateNewGroupFragment.mapGroupToUser(selectedItem.getId(), getActivity());
+                                    Toast.makeText(getActivity(), "Group entered successfully", Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Are you connected to the internet", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                System.out.println("Don't fire");
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                return builder.create();
+
+            }
+    }
 }

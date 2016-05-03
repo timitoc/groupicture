@@ -1,5 +1,6 @@
 package com.timitoc.groupic.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -82,7 +83,7 @@ public class CreateNewGroupFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Group created successfully", Toast.LENGTH_SHORT).show();
                                 int group_id = jsonResponse.getInt("id");
                                 System.out.println("Obtained id is: " + group_id);
-                                mapGroupToUser(group_id);
+                                mapGroupToUser(group_id, getActivity());
                             }
                             else
                                 Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
@@ -117,9 +118,9 @@ public class CreateNewGroupFragment extends Fragment {
         queue.add(strRequest);
     }
 
-    private void mapGroupToUser(int group_id) throws JSONException {
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url = getString(R.string.api_service_url);
+    public static void mapGroupToUser(int group_id, final Activity activity) throws JSONException {
+        RequestQueue queue = Volley.newRequestQueue(activity);
+        String url = activity.getString(R.string.api_service_url);
         final JSONObject params = new JSONObject();
         params.put("user_id", Global.user_id);
         params.put("group_id", group_id);
@@ -140,10 +141,10 @@ public class CreateNewGroupFragment extends Fragment {
                                 System.out.println("e bine");
                             }
                             else
-                                Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -153,7 +154,7 @@ public class CreateNewGroupFragment extends Fragment {
                     public void onErrorResponse(VolleyError error)
                     {
                         System.out.println("Error " + error.getMessage());
-                        Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
                     }
                 })
         {
