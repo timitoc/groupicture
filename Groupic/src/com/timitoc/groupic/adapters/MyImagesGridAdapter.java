@@ -57,6 +57,7 @@ public class MyImagesGridAdapter extends BaseAdapter {
         networkImageView.setAdjustViewBounds(true);
         networkImageView.setImageUrl(imageItems.get(position).getRequestUrl(), loader);
 
+
         return convertView;
     }
 }

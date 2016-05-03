@@ -1,5 +1,6 @@
 package com.timitoc.groupic.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -144,6 +145,7 @@ public class SearchGroupsFragment extends Fragment{
         queue.add(strRequest);
     }
 
+    @SuppressLint("ValidFragment")
     private class ConfirmGroupEnteringDialog extends DialogFragment {
 
             @Override

@@ -3,7 +3,6 @@ package com.timitoc.groupic.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,16 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import com.android.volley.*;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.activities.BigImageViewActivity;
 import com.timitoc.groupic.adapters.MyImagesGridAdapter;
 import com.timitoc.groupic.models.AddNewDialogBox;
-import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.ImageItem;
-import com.timitoc.groupic.utils.CustomRequest;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.VolleySingleton;
@@ -157,8 +157,11 @@ public class FolderContentFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ImageItem item = (ImageItem) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(getActivity(), BigImageViewActivity.class);
+                intent.putExtra("request_url", item.getRequestUrl());
+                //Start details activity
+                startActivity(intent);
                 System.out.println(item.getId() + " image clicked ");
-
             }
         });
     }

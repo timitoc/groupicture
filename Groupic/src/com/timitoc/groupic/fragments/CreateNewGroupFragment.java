@@ -122,6 +122,7 @@ public class CreateNewGroupFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(activity);
         String url = activity.getString(R.string.api_service_url);
         final JSONObject params = new JSONObject();
+        System.out.println("Want to map " + Global.user_id + " with " + group_id + " ");
         params.put("user_id", Global.user_id);
         params.put("group_id", group_id);
         final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
