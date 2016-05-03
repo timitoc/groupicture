@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.utils.Global;
 
 public class FragmentGroups extends Fragment {
     View mainView;
@@ -20,6 +21,12 @@ public class FragmentGroups extends Fragment {
         setButtonEvent((Button) mainView.findViewById(R.id.your_groups), 0);
         setButtonEvent((Button) mainView.findViewById(R.id.search_groups), 1);
         setButtonEvent((Button) mainView.findViewById(R.id.create_new), 2);
+        Global.onAddMenuItemClicked = new Runnable() {
+            @Override
+            public void run() {
+                setDisplay(2);
+            }
+        };
         return mainView;
     }
 
