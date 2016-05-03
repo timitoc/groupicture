@@ -7,6 +7,7 @@
     <GridView android:layout_width="match_parent" android:layout_height="match_parent"
               android:id="@+id/images_grid_view"
               android:background="@color/acad3"
+              android:numColumns="auto_fit"
     >
 
     </GridView>
