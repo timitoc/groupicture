@@ -70,6 +70,12 @@ public class GroupManageFragment extends Fragment {
                 new AddNewDialogBox().show(getFragmentManager(), "1");
             }
         };
+        Global.onRefreshMenuItemClicked = new Runnable() {
+            @Override
+            public void run() {
+                prepare();
+            }
+        };
         ArrayList<FolderItem> folderItems = new ArrayList<>();
         try {
             searchServerForGroupFolders(folderItems);

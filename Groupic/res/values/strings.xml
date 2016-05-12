@@ -41,7 +41,7 @@
 
     <!-- Strings for texts -->
     <string name="help_use">\tYou can start using Groupic with just 3 easy steps!\n\t\t1. register/log in;\n\t\t2. create or join a group;\n\t\t3. start organizing and sharing pictures with your friends.</string>
-    <string name="about_us">About Us Texxt</string>
-    <string name="about_app">About App Texxt</string>
+    <string name="about_us">\tThe Groupic application was developed by\n\tArdelean Andrei-Timotei (timitoc@yahoo.com)\nand\n\tGoran Constantin-Cornel (cornelg7@yahoo.com)</string>
+    <string name="about_app">\tGroupic is a simple way to organize photos in your family or in a group of friends. Join groups with people so that you can share with them both important moments of your life and other boring stuff such as school essays and homework.\n\tIt\'s never been easier!</string>
 
 </resources>

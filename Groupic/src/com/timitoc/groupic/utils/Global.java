@@ -25,6 +25,12 @@ public class Global {
             System.out.println("Add menu item clicked");
         }
     };
+    public static Runnable onRefreshMenuItemClicked = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println("Refresh menu item clicked");
+        }
+    };
     public static Runnable addImage = new Runnable() {
         @Override
         public void run() {

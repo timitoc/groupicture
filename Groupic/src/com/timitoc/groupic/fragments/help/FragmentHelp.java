@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.utils.Global;
 
 /**
  * Created by Cornel on 02.05.2016.
@@ -20,6 +21,12 @@ public class FragmentHelp extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView =  inflater.inflate(R.layout.fragment_help, container, false);
         setDisplay(0);
+        Global.onRefreshMenuItemClicked = new Runnable() {
+            @Override
+            public void run() {
+                setDisplay(0);
+            }
+        };
         setButtonEvent((Button) mainView.findViewById(R.id.help_use), 0);
         return mainView;
     }

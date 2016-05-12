@@ -206,6 +206,8 @@ public class MainActivity extends Activity {
 
         // Handle action bar actions click
         switch (item.getItemId()) {
+            case R.id.refresh:
+                Global.onRefreshMenuItemClicked.run(); return true;
             case R.id.add_menu_item:
                 Global.onAddMenuItemClicked.run(); return true;
             case R.id.delete:

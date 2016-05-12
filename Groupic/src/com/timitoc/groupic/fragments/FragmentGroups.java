@@ -21,6 +21,12 @@ public class FragmentGroups extends Fragment {
         setButtonEvent((Button) mainView.findViewById(R.id.your_groups), 0);
         setButtonEvent((Button) mainView.findViewById(R.id.search_groups), 1);
         setButtonEvent((Button) mainView.findViewById(R.id.create_new), 2);
+        Global.onRefreshMenuItemClicked = new Runnable() {
+            @Override
+            public void run() {
+                setDisplay(0);
+            }
+        };
         Global.onAddMenuItemClicked = new Runnable() {
             @Override
             public void run() {
