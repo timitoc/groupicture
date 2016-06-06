@@ -65,8 +65,10 @@ public class BigImageViewActivity extends Activity {
                 //Toast.makeText(BigImageViewActivity.this, "right", Toast.LENGTH_SHORT).show();
                 imageSwitcher.setInAnimation(inRight);
                 imageSwitcher.setOutAnimation(outRight);
+                //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 currentIndex = (currentIndex + 1 + requestArray.length) % requestArray.length;
-                imageSwitcher.setImageResource(R.drawable.ic_launcher);
+
+                //imageSwitcher.setImageResource(R.drawable.ic_launcher);
                 loadImage(requestArray[currentIndex]);
             }
             public void onSwipeLeft() {
@@ -74,7 +76,7 @@ public class BigImageViewActivity extends Activity {
                 imageSwitcher.setInAnimation(inLeft);
                 imageSwitcher.setOutAnimation(outLeft);
                 currentIndex = (currentIndex - 1 + requestArray.length) % requestArray.length;
-                imageSwitcher.setImageResource(R.drawable.ic_launcher);
+                //imageSwitcher.setImageResource(R.drawable.ic_launcher);
                 loadImage(requestArray[currentIndex]);
             }
         });
@@ -86,8 +88,8 @@ public class BigImageViewActivity extends Activity {
             @Override
             public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                 BitmapDrawable drawable = new BitmapDrawable(response.getBitmap());
-                imageSwitcher.setInAnimation(BigImageViewActivity.this, android.R.anim.fade_in);
-                imageSwitcher.setOutAnimation(BigImageViewActivity.this, android.R.anim.fade_out);
+                //imageSwitcher.setInAnimation(BigImageViewActivity.this, android.R.anim.fade_in);
+                //imageSwitcher.setOutAnimation(BigImageViewActivity.this, android.R.anim.fade_out);
                 imageSwitcher.setImageDrawable(drawable);
                 System.out.println("Image loaded ");
             }
