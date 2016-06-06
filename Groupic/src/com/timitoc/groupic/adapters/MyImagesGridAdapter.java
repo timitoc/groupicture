@@ -23,11 +23,21 @@ public class MyImagesGridAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<ImageItem> imageItems;
     private ImageLoader loader;
+    private String[] requestArray;
 
     public MyImagesGridAdapter(Context context, ArrayList<ImageItem> imageItems){
         this.context = context;
         this.imageItems = imageItems;
         this.loader = VolleySingleton.getInstance(null).getImageLoader();
+    }
+
+    public String[] getRequestArray()
+    {
+        requestArray = new String[imageItems.size()];
+        for (int i = 0; i < imageItems.size(); i++)
+            requestArray[i] = imageItems.get(i).getRequestUrl();
+        System.out.println("request array length on get " + requestArray.length);
+        return requestArray;
     }
 
     @Override

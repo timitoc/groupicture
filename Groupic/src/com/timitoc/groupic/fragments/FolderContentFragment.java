@@ -159,6 +159,8 @@ public class FolderContentFragment extends Fragment {
                 ImageItem item = (ImageItem) adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(getActivity(), BigImageViewActivity.class);
                 intent.putExtra("request_url", item.getRequestUrl());
+                intent.putExtra("index", i);
+                intent.putExtra("request_array", adapter.getRequestArray());
                 //Start details activity
                 startActivity(intent);
                 System.out.println(item.getId() + " image clicked ");
