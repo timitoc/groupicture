@@ -65,6 +65,7 @@ public class FragmentLogin extends Fragment {
             return;
         }
         Global.want_login = sharedPref.getBoolean("want_login", false);
+
         ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).setChecked(Global.want_login);
         if (!Global.want_login){
             return;
@@ -124,7 +125,7 @@ public class FragmentLogin extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(("That didn't work!\n") + error.getMessage());
-
+                consumer.accept(false);
             }
         });
         System.out.println(jsonRequest.getUrl());
@@ -214,6 +215,7 @@ public class FragmentLogin extends Fragment {
                         editor.putBoolean("want_login", Global.want_login);
                         editor.apply();
 
+                        Global.initializeSettings(getActivity());
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
                         getActivity().finish();

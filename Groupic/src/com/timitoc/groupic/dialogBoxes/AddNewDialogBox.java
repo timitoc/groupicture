@@ -1,4 +1,4 @@
-package com.timitoc.groupic.models;
+package com.timitoc.groupic.dialogBoxes;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

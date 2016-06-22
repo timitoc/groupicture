@@ -1,6 +1,10 @@
 package com.timitoc.groupic.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Environment;
 
 import java.io.ByteArrayOutputStream;
 
@@ -11,6 +15,7 @@ public class Global {
 
     public static boolean want_login = false;
     public static boolean logging_out = false;
+    public static boolean confirm_save_image_on_local = true;
     public static int user_id = -1;
     public static int current_folder_id;
     public static int current_group_id;
@@ -18,6 +23,13 @@ public class Global {
     public static final String MY_PUBLIC_KEY = "6f21f9c06e3a78f3ca345bc126967076";
     public static final int PICK_IMAGE_REQUEST = 1;
 
+    public static String phoneStoragePath = "Not yet initialized";
+
+    public static void initializeSettings(Activity baseActivity) {
+        phoneStoragePath = Environment.getExternalStorageDirectory().toString() + "/groupicture_images";
+        SharedPreferences sharedPreferences = baseActivity.getPreferences(Context.MODE_PRIVATE);
+        confirm_save_image_on_local = sharedPreferences.getBoolean("confirm_save_image_on_local", true);
+    }
 
     public static Runnable onAddMenuItemClicked = new Runnable() {
         @Override

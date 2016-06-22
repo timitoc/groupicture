@@ -67,6 +67,7 @@ public class MyImagesGridAdapter extends BaseAdapter {
         networkImageView.setAdjustViewBounds(true);
         networkImageView.setImageUrl(imageItems.get(position).getRequestUrl(), loader);
 
+        System.out.println("Adapter request to get view for image on position " + position + " with id " + imageItems.get(position).getId());
 
         return convertView;
     }

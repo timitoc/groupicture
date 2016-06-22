@@ -20,10 +20,12 @@ import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.activities.BigImageViewActivity;
 import com.timitoc.groupic.adapters.MyImagesGridAdapter;
-import com.timitoc.groupic.models.AddNewDialogBox;
+import com.timitoc.groupic.dialogBoxes.AddNewDialogBox;
+import com.timitoc.groupic.dialogBoxes.SaveImageOnLocalDialogBox;
 import com.timitoc.groupic.models.ImageItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
+import com.timitoc.groupic.utils.SaveLocalManager;
 import com.timitoc.groupic.utils.VolleySingleton;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -166,6 +168,29 @@ public class FolderContentFragment extends Fragment {
                 System.out.println(item.getId() + " image clicked ");
             }
         });
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ImageItem item = (ImageItem) adapterView.getItemAtPosition(i);
+                askToSaveImageOnLocal(item);
+                return true;
+            }
+        });
+    }
+
+    private void saveImageOnLocal(ImageItem item) {
+
+    }
+
+
+    private void askToSaveImageOnLocal(ImageItem item) {
+        SaveLocalManager.prepare(item);
+        if (Global.confirm_save_image_on_local) {
+            new SaveImageOnLocalDialogBox().show(getFragmentManager(), "2");
+        }
+        else
+            SaveLocalManager.savePrepared();
     }
 
     private String buildImageRequestUrl(int image_id) throws JSONException {
