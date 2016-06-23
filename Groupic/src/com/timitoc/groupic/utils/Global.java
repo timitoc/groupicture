@@ -23,12 +23,14 @@ public class Global {
     public static final String MY_PUBLIC_KEY = "6f21f9c06e3a78f3ca345bc126967076";
     public static final int PICK_IMAGE_REQUEST = 1;
 
-    public static String phoneStoragePath = "Not yet initialized";
+    public static String phoneStoragePath = null;
+    public static Activity baseActivity;
 
     public static void initializeSettings(Activity baseActivity) {
         phoneStoragePath = Environment.getExternalStorageDirectory().toString() + "/groupicture_images";
         SharedPreferences sharedPreferences = baseActivity.getPreferences(Context.MODE_PRIVATE);
         confirm_save_image_on_local = sharedPreferences.getBoolean("confirm_save_image_on_local", true);
+        Global.baseActivity = baseActivity;
     }
 
     public static Runnable onAddMenuItemClicked = new Runnable() {

@@ -173,16 +173,22 @@ public class FolderContentFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ImageItem item = (ImageItem) adapterView.getItemAtPosition(i);
-                askToSaveImageOnLocal(item);
+                processSaveOnLocalRequest(item);
                 return true;
             }
         });
     }
 
-    private void saveImageOnLocal(ImageItem item) {
-
+    private void processSaveOnLocalRequest(ImageItem item) {
+        if (SaveLocalManager.alreadySaved(item))
+            askToDeleteImageOnLocal(item);
+        else
+            askToSaveImageOnLocal(item);
     }
 
+    private void askToDeleteImageOnLocal(ImageItem item) {
+        System.out.println("Wish to delete this");
+    }
 
     private void askToSaveImageOnLocal(ImageItem item) {
         SaveLocalManager.prepare(item);
