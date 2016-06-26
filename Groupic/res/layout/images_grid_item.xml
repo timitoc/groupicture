@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.android.volley.toolbox.NetworkImageView
+    <com.timitoc.groupic.utils.CustomNetworkImageView
             android:id="@+id/network_image_view"
             android:layout_width="100dp" android:layout_height="100dp"
             android:scaleType="centerCrop"

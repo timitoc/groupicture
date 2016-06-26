@@ -12,6 +12,8 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.ImageItem;
+import com.timitoc.groupic.utils.CustomNetworkImageView;
+import com.timitoc.groupic.utils.SaveLocalManager;
 import com.timitoc.groupic.utils.VolleySingleton;
 
 import java.util.ArrayList;
@@ -62,11 +64,19 @@ public class MyImagesGridAdapter extends BaseAdapter {
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.images_grid_item, null);
         }
-        NetworkImageView networkImageView = (NetworkImageView)convertView.findViewById(R.id.network_image_view);
-        networkImageView.setDefaultImageResId(R.drawable.ic_launcher);
-        networkImageView.setAdjustViewBounds(true);
-        networkImageView.setImageUrl(imageItems.get(position).getRequestUrl(), loader);
 
+        ImageItem imageItem = imageItems.get(position);
+        if (SaveLocalManager.alreadySaved(imageItem)) {
+            System.out.println("Getting item " + imageItem.getId() + " from local ");
+            CustomNetworkImageView networkImageView = (CustomNetworkImageView) convertView.findViewById(R.id.network_image_view);
+            networkImageView.setLocalImageBitmap(SaveLocalManager.getBitmapFromLocal(imageItem));
+        }
+        else {
+            NetworkImageView networkImageView = (NetworkImageView) convertView.findViewById(R.id.network_image_view);
+            networkImageView.setDefaultImageResId(R.drawable.ic_launcher);
+            networkImageView.setAdjustViewBounds(true);
+            networkImageView.setImageUrl(imageItems.get(position).getRequestUrl(), loader);
+        }
         System.out.println("Adapter request to get view for image on position " + position + " with id " + imageItems.get(position).getId());
 
         return convertView;

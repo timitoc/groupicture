@@ -3,6 +3,7 @@ package com.timitoc.groupic.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -66,13 +67,18 @@ public class SaveLocalManager {
 
     }
 
+    public static Bitmap getBitmapFromLocal(ImageItem item) {
+        String path = Global.phoneStoragePath + "/" + constructImageFileName(item);
+        return BitmapFactory.decodeFile(path);
+    }
+
     public static void makeError() {
         System.out.println("Couldn't save");
 
     }
 
     public static String constructImageFileName(ImageItem item) {
-        return "GroupictureImage#" + Integer.toHexString(item.getId());
+        return "GI#" + Integer.toHexString(item.getId());
     }
 
 
@@ -98,7 +104,7 @@ public class SaveLocalManager {
 
         public static void initializePreferenceData() {
             preferences = Global.baseActivity.getPreferences(Context.MODE_PRIVATE);
-            editor = preferences.edit();
+
             filesSet = preferences.getStringSet(PREFERENCE_TAG, new HashSet<String>());
         }
 
@@ -109,6 +115,7 @@ public class SaveLocalManager {
 
         public static void saveFile(String fileName) {
             init();
+            editor = preferences.edit();
             filesSet.add(fileName);
             editor.putStringSet(PREFERENCE_TAG, filesSet);
             editor.apply();
