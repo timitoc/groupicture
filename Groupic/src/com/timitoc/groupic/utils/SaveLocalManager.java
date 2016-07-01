@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -48,6 +49,13 @@ public class SaveLocalManager {
         });
     }
 
+    public static void deletePrepared() {
+        if (prepared == null)
+            throw new RuntimeException("No ImageItem prepared");
+        System.out.println("Proceeding to delete item " + prepared.getId() + " " + prepared.getTitle());
+        deleteBitmapOnLocal(constructImageFileName(prepared));
+    }
+
     public static void saveBitmapOnLocal(Bitmap bitmap) {
         File localDirectory = new File(Global.phoneStoragePath);
         localDirectory.mkdirs();
@@ -64,7 +72,21 @@ public class SaveLocalManager {
             e.printStackTrace();
             makeError();
         }
+    }
 
+    /**
+     *
+     * @param imageFileName File name for the image to be erased
+     * @return Returns true if the file existed and the deletion was successful.
+     */
+    private static boolean deleteBitmapOnLocal(String imageFileName) {
+        File localDirectory = new File(Global.phoneStoragePath);
+        localDirectory.mkdirs();
+        File imageFile = new File(localDirectory, imageFileName);
+        PreferenceImageDataManager.deleteFile(imageFileName);
+        if (imageFile.exists())
+            return imageFile.delete();
+        return false;
     }
 
     public static Bitmap getBitmapFromLocal(ImageItem item) {
@@ -86,6 +108,7 @@ public class SaveLocalManager {
         return PreferenceImageDataManager.alreadySaved(constructImageFileName(item));
     }
 
+
     private static class PreferenceImageDataManager{
 
         private static SharedPreferences preferences;
@@ -94,6 +117,7 @@ public class SaveLocalManager {
         private static final String PREFERENCE_TAG = "local_images_set";
 
         private static void init() {
+            System.out.println("init called");
             if (!PreferenceImageDataManager.isPreferenceDataInitialized())
                 PreferenceImageDataManager.initializePreferenceData();
         }
@@ -103,9 +127,11 @@ public class SaveLocalManager {
         }
 
         public static void initializePreferenceData() {
-            preferences = Global.baseActivity.getPreferences(Context.MODE_PRIVATE);
+            System.out.println("init continued");
+            preferences = PreferenceManager.getDefaultSharedPreferences(Global.baseActivity);
 
             filesSet = preferences.getStringSet(PREFERENCE_TAG, new HashSet<String>());
+            System.out.println(filesSet.toString());
         }
 
         public static boolean alreadySaved(String fileName) {
@@ -118,9 +144,30 @@ public class SaveLocalManager {
             editor = preferences.edit();
             filesSet.add(fileName);
             editor.putStringSet(PREFERENCE_TAG, filesSet);
-            editor.apply();
+            boolean worked = editor.commit();
+            if (!worked)
+                System.out.println("Failed to delete file to preferences");
+            else {
+                System.out.println("Successfully save file to preferences");
+                System.out.println(fileName);
+                System.out.println(filesSet.toString());
+                preferences = PreferenceManager.getDefaultSharedPreferences(Global.baseActivity);
+                filesSet = preferences.getStringSet(PREFERENCE_TAG, null);
+                System.out.println(filesSet.toString());
+            }
         }
 
+        public static void deleteFile(String fileName) {
+            init();
+            editor = preferences.edit();
+            filesSet.remove(fileName);
+            editor.putStringSet(PREFERENCE_TAG, filesSet);
+            boolean worked = editor.commit();
+            if (!worked)
+                System.out.println("Failed to delete file from preferences");
+            else
+                System.out.println("Successfully deleted file from preferences");
+        }
     }
 
 }

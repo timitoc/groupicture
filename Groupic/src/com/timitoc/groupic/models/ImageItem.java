@@ -3,10 +3,12 @@ package com.timitoc.groupic.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by timi on 30.04.2016.
  */
-public class ImageItem {
+public class ImageItem implements Serializable{
     private int id;
     private String title;
     private String requestUrl;

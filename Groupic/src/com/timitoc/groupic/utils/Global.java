@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 
 import java.io.ByteArrayOutputStream;
 
@@ -16,6 +17,7 @@ public class Global {
     public static boolean want_login = false;
     public static boolean logging_out = false;
     public static boolean confirm_save_image_on_local = true;
+    public static boolean confirm_delete_image_in_local = true;
     public static int user_id = -1;
     public static int current_folder_id;
     public static int current_group_id;
@@ -26,10 +28,12 @@ public class Global {
     public static String phoneStoragePath = null;
     public static Activity baseActivity;
 
+
     public static void initializeSettings(Activity baseActivity) {
         phoneStoragePath = Environment.getExternalStorageDirectory().toString() + "/groupicture_images";
-        SharedPreferences sharedPreferences = baseActivity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseActivity);
         confirm_save_image_on_local = sharedPreferences.getBoolean("confirm_save_image_on_local", true);
+        confirm_delete_image_in_local = sharedPreferences.getBoolean("confirm_delete_image_in_local", true);
         Global.baseActivity = baseActivity;
     }
 
@@ -57,5 +61,11 @@ public class Global {
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         return Base64.encodeBytes(imageBytes);
+    }
+
+    public static Bitmap getScaledBitmap(int width, int height, Bitmap bitmap) {
+        int newHeight = width * bitmap.getHeight() / bitmap.getWidth();
+        System.out.println(width + " " + height + " " + newHeight);
+        return  Bitmap.createScaledBitmap(bitmap, width, newHeight, false);
     }
 }

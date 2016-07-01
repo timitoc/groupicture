@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class FragmentLogin extends Fragment {
     }
 
     private void tryComplete() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if (Global.logging_out){
             Global.logging_out = false;
             Global.want_login = false;
@@ -208,7 +209,7 @@ public class FragmentLogin extends Fragment {
                         Global.want_login = ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).isChecked();
 
                         loginAttemptResponse.setText("Login succeeded");
-                        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("username", username);
                         editor.putString("password", password);

@@ -21,6 +21,7 @@ import com.timitoc.groupic.R;
 import com.timitoc.groupic.activities.BigImageViewActivity;
 import com.timitoc.groupic.adapters.MyImagesGridAdapter;
 import com.timitoc.groupic.dialogBoxes.AddNewDialogBox;
+import com.timitoc.groupic.dialogBoxes.DeleteImageOnLocalDialogBox;
 import com.timitoc.groupic.dialogBoxes.SaveImageOnLocalDialogBox;
 import com.timitoc.groupic.models.ImageItem;
 import com.timitoc.groupic.utils.Encryptor;
@@ -162,6 +163,7 @@ public class FolderContentFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), BigImageViewActivity.class);
                 intent.putExtra("request_url", item.getRequestUrl());
                 intent.putExtra("index", i);
+                intent.putExtra("image_items_list", adapter.getImageItems());
                 intent.putExtra("request_array", adapter.getRequestArray());
                 //Start details activity
                 startActivity(intent);
@@ -187,7 +189,12 @@ public class FolderContentFragment extends Fragment {
     }
 
     private void askToDeleteImageOnLocal(ImageItem item) {
-        System.out.println("Wish to delete this");
+        SaveLocalManager.prepare(item);
+        if (Global.confirm_delete_image_in_local) {
+            new DeleteImageOnLocalDialogBox().show(getFragmentManager(), "3");
+        }
+        else
+            SaveLocalManager.deletePrepared();
     }
 
     private void askToSaveImageOnLocal(ImageItem item) {

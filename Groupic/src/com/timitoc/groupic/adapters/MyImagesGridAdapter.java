@@ -13,6 +13,7 @@ import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.ImageItem;
 import com.timitoc.groupic.utils.CustomNetworkImageView;
+import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.SaveLocalManager;
 import com.timitoc.groupic.utils.VolleySingleton;
 
@@ -42,6 +43,10 @@ public class MyImagesGridAdapter extends BaseAdapter {
         return requestArray;
     }
 
+    public ArrayList<ImageItem> getImageItems() {
+        return imageItems;
+    }
+
     @Override
     public int getCount() {
         return imageItems.size();
@@ -69,7 +74,10 @@ public class MyImagesGridAdapter extends BaseAdapter {
         if (SaveLocalManager.alreadySaved(imageItem)) {
             System.out.println("Getting item " + imageItem.getId() + " from local ");
             CustomNetworkImageView networkImageView = (CustomNetworkImageView) convertView.findViewById(R.id.network_image_view);
-            networkImageView.setLocalImageBitmap(SaveLocalManager.getBitmapFromLocal(imageItem));
+            int oldWidth = networkImageView.getLayoutParams().width;
+            int oldHeight = networkImageView.getLayoutParams().height;
+            networkImageView.setLocalImageBitmap(Global.getScaledBitmap(oldWidth, oldHeight, SaveLocalManager.getBitmapFromLocal(imageItem)));
+
         }
         else {
             NetworkImageView networkImageView = (NetworkImageView) convertView.findViewById(R.id.network_image_view);
