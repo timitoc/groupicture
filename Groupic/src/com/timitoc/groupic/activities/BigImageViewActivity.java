@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.ImageItem;
+import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.OnSwipeTouchListener;
 import com.timitoc.groupic.utils.SaveLocalManager;
 import com.timitoc.groupic.utils.VolleySingleton;
@@ -97,6 +98,10 @@ public class BigImageViewActivity extends Activity {
     }
 
     private void loadImageFromLocal(ImageItem imageItem) {
+        int oldWidth = 600;
+        int oldHeight = 895;
+        System.out.println(oldWidth + " " + oldHeight);
+        //BitmapDrawable drawable = new BitmapDrawable(Global.getScaledBitmap(oldWidth, oldHeight, SaveLocalManager.getBitmapFromLocal(imageItem)));
         BitmapDrawable drawable = new BitmapDrawable(SaveLocalManager.getBitmapFromLocal(imageItem));
         imageSwitcher.setImageDrawable(drawable);
         System.out.println("Image loaded from local");

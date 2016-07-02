@@ -37,6 +37,16 @@ public class Global {
         Global.baseActivity = baseActivity;
     }
 
+    public static void onBaseActivityDestroyed() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseActivity);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("confirm_save_image_on_local", confirm_save_image_on_local);
+        editor.putBoolean("confirm_delete_image_on_local", confirm_delete_image_in_local);
+        if (!editor.commit())
+            System.out.println("pref error");
+    }
+
+
     public static Runnable onAddMenuItemClicked = new Runnable() {
         @Override
         public void run() {

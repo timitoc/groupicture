@@ -76,7 +76,8 @@ public class MyImagesGridAdapter extends BaseAdapter {
             CustomNetworkImageView networkImageView = (CustomNetworkImageView) convertView.findViewById(R.id.network_image_view);
             int oldWidth = networkImageView.getLayoutParams().width;
             int oldHeight = networkImageView.getLayoutParams().height;
-            networkImageView.setLocalImageBitmap(Global.getScaledBitmap(oldWidth, oldHeight, SaveLocalManager.getBitmapFromLocal(imageItem)));
+            //networkImageView.setLocalImageBitmap(Global.getScaledBitmap(oldWidth, oldHeight, SaveLocalManager.getBitmapFromLocal(imageItem)));
+            networkImageView.setLocalImageBitmap(SaveLocalManager.getBitmapFromLocal(imageItem));
 
         }
         else {
