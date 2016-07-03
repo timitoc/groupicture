@@ -25,6 +25,17 @@
               android:id="@+id/new_group_description"
               android:minHeight="150dp"
               android:layout_gravity="center_horizontal"    />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Password"
+              android:textColor="@color/white"
+              android:layout_gravity="center_horizontal"    />
+    <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:textColor="@color/white"
+              android:shadowColor="@color/red"
+              android:id="@+id/new_group_password"
+              android:hint="Let this field empty for a free access group"
+              android:textColorHint="@color/darkblue"
+              android:minHeight="150dp"
+              android:layout_gravity="center_horizontal" android:inputType="textPassword"/>
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/new_group_button"
             android:layout_gravity="center_horizontal"

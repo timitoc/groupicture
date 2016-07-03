@@ -49,10 +49,13 @@ public class CreateNewGroupFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 System.out.println("Started creating group");
-                String name = ((EditText) mainView.findViewById(R.id.new_group_name)).getText().toString();
-                String description = ((EditText) mainView.findViewById(R.id.new_group_description)).getText().toString();
+                if (!checkInput())
+                    return;
                 try {
-                    createNewGroup(name, description);
+                    String name = ((EditText) mainView.findViewById(R.id.new_group_name)).getText().toString();
+                    String description = ((EditText) mainView.findViewById(R.id.new_group_description)).getText().toString();
+                    String password = ((EditText) mainView.findViewById(R.id.new_group_password)).getText().toString();
+                    createNewGroup(name, description, password);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -60,12 +63,48 @@ public class CreateNewGroupFragment extends Fragment {
         });
     }
 
-    private void createNewGroup(String name, String description) throws JSONException {
+    private boolean invalid(String data)
+    {
+        if (data == null || data.isEmpty())
+            return true;
+        if (data.contains("\n") || data.contains("\r"))
+            return  true;
+        return false;
+    }
+
+    /**
+     * Shows the errors within the input data.
+     * @return Returns true if input is sanitized.
+     */
+    private boolean checkInput() {
+        // Better feedback coming soon
+
+        String name = ((EditText) mainView.findViewById(R.id.new_group_name)).getText().toString();
+        String description = ((EditText) mainView.findViewById(R.id.new_group_description)).getText().toString();
+        String password = ((EditText) mainView.findViewById(R.id.new_group_password)).getText().toString();
+
+        /*System.out.println("the password is " + password);
+        System.out.println("the password hash is " + Encryptor.hash(password));
+        return false;*/
+
+        if (invalid(name)) {
+            Toast.makeText(this.getActivity(), "Invalid name or description", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!password.isEmpty() && invalid(password)) {
+            Toast.makeText(this.getActivity(), "Invalid password", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void createNewGroup(String name, String description, String password) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         final JSONObject params = new JSONObject();
         params.put("name", name);
         params.put("description", description);
+        params.put("password", password.isEmpty() ? "" : Encryptor.hash(password));
         final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
 
         StringRequest strRequest = new StringRequest(Request.Method.POST, url,
