@@ -78,4 +78,5 @@ public class Global {
         System.out.println(width + " " + height + " " + newHeight);
         return  Bitmap.createScaledBitmap(bitmap, width, newHeight, false);
     }
+
 }

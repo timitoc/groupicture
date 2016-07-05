@@ -11,10 +11,19 @@
             android:textSize="32sp"
             android:gravity="fill_vertical"/>
 
-    <TextView android:id="@+id/group_description"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@+id/group_title"
-              android:textColor="@color/white"/>
-
+    <TextView
+            android:id="@+id/group_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group_title"
+            android:textColor="@color/white"/>
+    <TextView
+            android:id="@+id/bonus_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="asdafdefaefafaefa"
+            android:layout_below="@+id/group_description"
+            android:textColor="@color/red"
+            android:visibility="gone"
+    />
 </RelativeLayout>

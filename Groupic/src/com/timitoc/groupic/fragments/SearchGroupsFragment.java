@@ -20,6 +20,7 @@ import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
+import com.timitoc.groupic.utils.ViewUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,6 +80,7 @@ public class SearchGroupsFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedItem = (GroupItem) adapterView.getItemAtPosition(i);
+
                 new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
             }
         });

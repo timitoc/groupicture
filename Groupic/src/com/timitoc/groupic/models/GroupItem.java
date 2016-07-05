@@ -10,6 +10,7 @@ public class GroupItem implements Serializable {
     private String title;
     private String description;
     private int id;
+    private boolean hasPassword;
 
     public GroupItem(){
 
@@ -26,11 +27,16 @@ public class GroupItem implements Serializable {
             this.title = jsonObject.getString("title");
             this.description = jsonObject.getString("description");
             this.id = jsonObject.getInt("id");
+            if (jsonObject.has("hasPassword"))
+                this.hasPassword = jsonObject.getBoolean("hasPassword");
+            else
+                this.hasPassword = false;
         } catch (JSONException e) {
             e.printStackTrace();
             this.id = 0;
             this.title = "nil";
             this.description = "nil";
+            this.hasPassword = false;
         }
 
     }
