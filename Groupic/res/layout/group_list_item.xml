@@ -17,13 +17,30 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/group_title"
             android:textColor="@color/white"/>
-    <TextView
-            android:id="@+id/bonus_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="asdafdefaefafaefa"
-            android:layout_below="@+id/group_description"
-            android:textColor="@color/red"
-            android:visibility="gone"
-    />
+    <RelativeLayout android:id="@+id/no_pass_layout" android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:layout_below="@+id/group_description" android:visibility="gone">
+            <TextView
+                android:id="@+id/info_no_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This group has no password you can enter it"
+                android:textColor="@color/red"
+            />
+            <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:id="@+id/no_pass_enter"
+                    android:layout_below="@+id/info_no_pass"
+                    android:text="Enter group"
+                    android:focusable="false"
+            />
+    </RelativeLayout>
+    <LinearLayout android:id="@+id/has_pass_layout" android:layout_height="wrap_content" android:layout_width="wrap_content"
+                  android:layout_below="@+id/group_description" android:visibility="gone">
+        <TextView
+                android:id="@+id/info_has_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This group has a password"
+                android:textColor="@color/red"
+        />
+    </LinearLayout>
 </RelativeLayout>

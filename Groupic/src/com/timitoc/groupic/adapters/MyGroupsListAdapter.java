@@ -54,8 +54,9 @@ public class MyGroupsListAdapter extends BaseAdapter {
 
         txtTitle.setText(groupItems.get(position).getTitle());
         txtDescription.setText(groupItems.get(position).getDescription());
-        View summary = convertView.findViewById(R.id.bonus_text);
-        ViewUtils.addAction(convertView, summary, Global.baseActivity);
+
+
+
 
         return convertView;
     }

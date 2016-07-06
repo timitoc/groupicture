@@ -80,8 +80,14 @@ public class SearchGroupsFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedItem = (GroupItem) adapterView.getItemAtPosition(i);
-
-                new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
+                View summary;
+                if (!selectedItem.hasPassword())
+                    summary = view.findViewById(R.id.no_pass_layout);
+                else
+                    summary = view.findViewById(R.id.has_pass_layout);
+                System.out.println("Calling toggle");
+                ViewUtils.toggle(summary);
+                //new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
             }
         });
     }
