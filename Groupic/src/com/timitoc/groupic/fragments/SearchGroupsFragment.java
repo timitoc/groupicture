@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,15 +82,38 @@ public class SearchGroupsFragment extends Fragment{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedItem = (GroupItem) adapterView.getItemAtPosition(i);
                 View summary;
-                if (!selectedItem.hasPassword())
+                Button enterButton;
+                EditText inputText = null;
+                if (!selectedItem.hasPassword()) {
                     summary = view.findViewById(R.id.no_pass_layout);
-                else
+                    enterButton = (Button) summary.findViewById(R.id.no_pass_enter);
+                }
+                else {
                     summary = view.findViewById(R.id.has_pass_layout);
+                    enterButton = (Button) summary.findViewById(R.id.has_pass_enter);
+                    inputText = (EditText) summary.findViewById(R.id.has_pass_input);
+                }
+                enterButton.setOnClickListener(createGroupEnterEvent(selectedItem.hasPassword(), inputText));
                 System.out.println("Calling toggle");
                 ViewUtils.toggle(summary);
                 //new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
             }
         });
+    }
+
+    /**
+     *
+     * @param hasPassword Indicates if password is required for entering this group
+     * @param input EditText widget for password. Can be null if hasPassword is false
+     * @return OnClickLister for the respective Group
+     */
+    private View.OnClickListener createGroupEnterEvent(boolean hasPassword, @Nullable EditText input) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
+            }
+        };
     }
 
     void getGroupsFromServer(final ArrayList<GroupItem> groupItems) throws JSONException {

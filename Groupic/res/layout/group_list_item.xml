@@ -42,5 +42,18 @@
                 android:text="This group has a password"
                 android:textColor="@color/red"
         />
+        <EditText
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/has_pass_input"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:focusable="false"
+        />
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/has_pass_enter"
+                android:layout_below="@+id/info_no_pass"
+                android:text="Enter group"
+                android:focusable="false"
+        />
     </LinearLayout>
 </RelativeLayout>
