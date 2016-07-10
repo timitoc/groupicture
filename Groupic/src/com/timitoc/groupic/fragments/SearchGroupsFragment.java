@@ -3,6 +3,7 @@ package com.timitoc.groupic.fragments;
 import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
+import com.timitoc.groupic.utils.GroupEnterCallback;
 import com.timitoc.groupic.utils.ViewUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,9 +77,10 @@ public class SearchGroupsFragment extends Fragment{
         catch (JSONException e) {
             e.printStackTrace();
         }
-        adapter = new MyGroupsListAdapter(getActivity(), groupItems);
+        adapter = new MyGroupsListAdapter(getActivity(), groupItems, createGroupEnterEvent());
+
         foundGroups.setAdapter(adapter);
-        foundGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*foundGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedItem = (GroupItem) adapterView.getItemAtPosition(i);
@@ -93,24 +96,21 @@ public class SearchGroupsFragment extends Fragment{
                     enterButton = (Button) summary.findViewById(R.id.has_pass_enter);
                     inputText = (EditText) summary.findViewById(R.id.has_pass_input);
                 }
-                enterButton.setOnClickListener(createGroupEnterEvent(selectedItem.hasPassword(), inputText));
+                //enterButton.setOnClickListener(createGroupEnterEvent(selectedItem.hasPassword(), inputText));
                 System.out.println("Calling toggle");
                 ViewUtils.toggle(summary);
                 //new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
             }
-        });
+        });*/
     }
 
-    /**
-     *
-     * @param hasPassword Indicates if password is required for entering this group
-     * @param input EditText widget for password. Can be null if hasPassword is false
-     * @return OnClickLister for the respective Group
-     */
-    private View.OnClickListener createGroupEnterEvent(boolean hasPassword, @Nullable EditText input) {
-        return new View.OnClickListener() {
+
+    private GroupEnterCallback createGroupEnterEvent() {
+        return new GroupEnterCallback() {
             @Override
-            public void onClick(View view) {
+            public void call(boolean hasPassword, @Nullable String input) {
+                if (input != null)
+                    System.out.println("The input password is " + input);
                 new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
             }
         };

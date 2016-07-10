@@ -33,7 +33,7 @@
                     android:focusable="false"
             />
     </RelativeLayout>
-    <LinearLayout android:id="@+id/has_pass_layout" android:layout_height="wrap_content" android:layout_width="wrap_content"
+    <RelativeLayout android:id="@+id/has_pass_layout" android:layout_height="wrap_content" android:layout_width="wrap_content"
                   android:layout_below="@+id/group_description" android:visibility="gone">
         <TextView
                 android:id="@+id/info_has_pass"
@@ -47,13 +47,14 @@
                 android:id="@+id/has_pass_input"
                 android:hint="password"
                 android:inputType="textPassword"
-                android:focusable="false"
+                android:layout_below="@+id/info_has_pass"
+                android:focusable="true"
         />
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/has_pass_enter"
-                android:layout_below="@+id/info_no_pass"
+                android:layout_below="@+id/has_pass_input"
                 android:text="Enter group"
                 android:focusable="false"
         />
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
