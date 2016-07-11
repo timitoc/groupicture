@@ -1,16 +1,19 @@
 package com.timitoc.groupic.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.*;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,14 +26,12 @@ import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.GroupEnterCallback;
-import com.timitoc.groupic.utils.ViewUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -108,10 +109,21 @@ public class SearchGroupsFragment extends Fragment{
     private GroupEnterCallback createGroupEnterEvent() {
         return new GroupEnterCallback() {
             @Override
-            public void call(boolean hasPassword, @Nullable String input) {
-                if (input != null)
-                    System.out.println("The input password is " + input);
-                new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
+            public void call(GroupItem groupItem, @Nullable String input) {
+                try {
+                    if (input == null) {
+                        CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), "");
+                        return;
+                    }
+                    System.out.println("The input password is " + input + " for group " + groupItem.getTitle());
+                    CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), input);
+
+                    //new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Are you connected to the internet", Toast.LENGTH_SHORT).show();
+                }
             }
         };
     }
@@ -177,6 +189,8 @@ public class SearchGroupsFragment extends Fragment{
         queue.add(strRequest);
     }
 
+
+    /// Fragment out-of-use, delete if stick to plan A.
     @SuppressLint("ValidFragment")
     private class ConfirmGroupEnteringDialog extends DialogFragment {
 
@@ -188,7 +202,7 @@ public class SearchGroupsFragment extends Fragment{
                             public void onClick(DialogInterface dialog, int id) {
                                 System.out.println("Fire");
                                 try {
-                                    CreateNewGroupFragment.mapGroupToUser(selectedItem.getId(), getActivity());
+                                    CreateNewGroupFragment.mapGroupToUser(selectedItem.getId(), getActivity(), null);
                                     Toast.makeText(getActivity(), "Group entered successfully", Toast.LENGTH_SHORT).show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();

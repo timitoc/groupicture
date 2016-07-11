@@ -1,6 +1,7 @@
 package com.timitoc.groupic.utils;
 
 import android.support.annotation.Nullable;
+import com.timitoc.groupic.models.GroupItem;
 
 /**
  * Created by timi on 10.07.2016.
@@ -8,9 +9,9 @@ import android.support.annotation.Nullable;
 public interface GroupEnterCallback {
 
     /**
-     * @param hasPassword Indicates if password is required for entering this group
+     * @param groupItem Indicates the Group the user wants to enter
      * @param input String for password. Can be null if hasPassword is false
      */
-    void call(boolean hasPassword, @Nullable String input);
+    void call(GroupItem groupItem, @Nullable String input);
 
 }

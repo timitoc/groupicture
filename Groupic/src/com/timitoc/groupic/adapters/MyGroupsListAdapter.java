@@ -89,7 +89,7 @@ public class MyGroupsListAdapter extends BaseAdapter {
                 String inputPassword = null;
                 if (finalInputText != null)
                     inputPassword = finalInputText.getText().toString();
-                expansionButtonAction.call(selectedItem.hasPassword(), inputPassword);
+                expansionButtonAction.call(selectedItem, inputPassword);
             }
         });
         view.setOnClickListener(new View.OnClickListener() {

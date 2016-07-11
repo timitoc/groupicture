@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,11 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
-import com.timitoc.groupic.adapters.MyGroupsListAdapter;
-import com.timitoc.groupic.models.ImageItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,7 +94,7 @@ public class CreateNewGroupFragment extends Fragment {
         return true;
     }
 
-    private void createNewGroup(String name, String description, String password) throws JSONException {
+    private void createNewGroup(String name, String description, final String password) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         final JSONObject params = new JSONObject();
@@ -122,7 +118,7 @@ public class CreateNewGroupFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Group created successfully", Toast.LENGTH_SHORT).show();
                                 int group_id = jsonResponse.getInt("id");
                                 System.out.println("Obtained id is: " + group_id);
-                                mapGroupToUser(group_id, getActivity());
+                                mapGroupToUser(group_id, getActivity(), password);
                             }
                             else
                                 Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
@@ -157,13 +153,16 @@ public class CreateNewGroupFragment extends Fragment {
         queue.add(strRequest);
     }
 
-    public static void mapGroupToUser(int group_id, final Activity activity) throws JSONException {
+    public static void mapGroupToUser(int group_id, final Activity activity, String input) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(activity);
         String url = activity.getString(R.string.api_service_url);
+        String password = (input==null || input.isEmpty()) ? "" : Encryptor.hash(input);
+        System.out.println(password);
         final JSONObject params = new JSONObject();
         System.out.println("Want to map " + Global.user_id + " with " + group_id + " ");
         params.put("user_id", Global.user_id);
         params.put("group_id", group_id);
+        params.put("password", password);
         final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
 
         StringRequest strRequest = new StringRequest(Request.Method.POST, url,
@@ -180,8 +179,10 @@ public class CreateNewGroupFragment extends Fragment {
                             if ("success".equals(jsonResponse.getString("status"))) {
                                 System.out.println("e bine");
                             }
-                            else
+                            else {
                                 Toast.makeText(activity, "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                                System.out.println(jsonResponse.getString("status") + " " + jsonResponse.getString("detail"));
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(activity, "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
