@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,7 +26,8 @@ import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
-import com.timitoc.groupic.utils.GroupEnterCallback;
+import com.timitoc.groupic.utils.interfaces.GroupEnterCallback;
+import com.timitoc.groupic.utils.interfaces.ServerStatusCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,20 +111,33 @@ public class SearchGroupsFragment extends Fragment{
     private GroupEnterCallback createGroupEnterEvent() {
         return new GroupEnterCallback() {
             @Override
-            public void call(GroupItem groupItem, @Nullable String input) {
+            public void call(GroupItem groupItem, @Nullable String input, TextView feedbackInfo) {
                 try {
                     if (input == null) {
                         CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), "");
                         return;
                     }
                     System.out.println("The input password is " + input + " for group " + groupItem.getTitle());
-                    CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), input);
+                    CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), input, createFeedback(feedbackInfo));
 
                     //new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
                 }
                 catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Are you connected to the internet", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+    }
+
+    private ServerStatusCallback createFeedback(final TextView feedbackInfo) {
+        return new ServerStatusCallback() {
+            @Override
+            public void onStatus(String status, String detail) {
+                if ("success".equals(status))
+                    feedbackInfo.setText("Successfully entered the group");
+                else {
+                    feedbackInfo.setText("Failure in entering the group");
                 }
             }
         };

@@ -3,6 +3,7 @@ package com.timitoc.groupic.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
+import com.timitoc.groupic.utils.interfaces.ServerStatusCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -154,6 +156,10 @@ public class CreateNewGroupFragment extends Fragment {
     }
 
     public static void mapGroupToUser(int group_id, final Activity activity, String input) throws JSONException {
+        mapGroupToUser(group_id, activity, input, null);
+    }
+
+    public static void mapGroupToUser(int group_id, final Activity activity, String input, @Nullable final ServerStatusCallback callback) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(activity);
         String url = activity.getString(R.string.api_service_url);
         String password = (input==null || input.isEmpty()) ? "" : Encryptor.hash(input);
@@ -173,14 +179,12 @@ public class CreateNewGroupFragment extends Fragment {
                     {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            System.out.println("jsonResponse status " + jsonResponse.getString("status"));
-                            if (jsonResponse.has("detail"))
-                                System.out.println("jsonResponse detail " + jsonResponse.get("detail"));
-                            if ("success".equals(jsonResponse.getString("status"))) {
+                            if (callback != null)
+                                callback.onStatus(jsonResponse.getString("status"), jsonResponse.getString("detail"));
+                            if ("success".equals(jsonResponse.getString("status")))
                                 System.out.println("e bine");
-                            }
                             else {
-                                Toast.makeText(activity, "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(activity, "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
                                 System.out.println(jsonResponse.getString("status") + " " + jsonResponse.getString("detail"));
                             }
                         } catch (JSONException e) {

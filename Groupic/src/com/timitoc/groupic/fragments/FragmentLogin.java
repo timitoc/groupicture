@@ -1,7 +1,6 @@
 package com.timitoc.groupic.fragments;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,21 +14,14 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
-import com.timitoc.groupic.models.FolderItem;
-import com.timitoc.groupic.utils.Consumer;
+import com.timitoc.groupic.utils.interfaces.Consumer;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import javax.microedition.khronos.opengles.GL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by timi on 25.04.2016.

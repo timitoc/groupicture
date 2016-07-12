@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.GroupItem;
-import com.timitoc.groupic.models.NavDrawerItem;
-import com.timitoc.groupic.utils.Global;
-import com.timitoc.groupic.utils.GroupEnterCallback;
+import com.timitoc.groupic.utils.interfaces.GroupEnterCallback;
 import com.timitoc.groupic.utils.ViewUtils;
 
 import java.util.ArrayList;
@@ -73,14 +71,17 @@ public class MyGroupsListAdapter extends BaseAdapter {
         final View summary;
         Button enterButton;
         EditText inputText = null;
+        final TextView feedbackInfo;
         if (!selectedItem.hasPassword()) {
             summary = view.findViewById(R.id.no_pass_layout);
             enterButton = (Button) summary.findViewById(R.id.no_pass_enter);
+            feedbackInfo = (TextView) summary.findViewById(R.id.info_no_pass);
         }
         else {
             summary = view.findViewById(R.id.has_pass_layout);
             enterButton = (Button) summary.findViewById(R.id.has_pass_enter);
             inputText = (EditText) summary.findViewById(R.id.has_pass_input);
+            feedbackInfo = (TextView) summary.findViewById(R.id.info_has_pass);
         }
         final EditText finalInputText = inputText;
         enterButton.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +90,7 @@ public class MyGroupsListAdapter extends BaseAdapter {
                 String inputPassword = null;
                 if (finalInputText != null)
                     inputPassword = finalInputText.getText().toString();
-                expansionButtonAction.call(selectedItem, inputPassword);
+                expansionButtonAction.call(selectedItem, inputPassword, feedbackInfo);
             }
         });
         view.setOnClickListener(new View.OnClickListener() {
