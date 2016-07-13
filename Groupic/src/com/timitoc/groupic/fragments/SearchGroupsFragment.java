@@ -114,7 +114,7 @@ public class SearchGroupsFragment extends Fragment{
             public void call(GroupItem groupItem, @Nullable String input, TextView feedbackInfo) {
                 try {
                     if (input == null) {
-                        CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), "");
+                        CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), "", createFeedback(feedbackInfo));
                         return;
                     }
                     System.out.println("The input password is " + input + " for group " + groupItem.getTitle());
@@ -137,7 +137,11 @@ public class SearchGroupsFragment extends Fragment{
                 if ("success".equals(status))
                     feedbackInfo.setText("Successfully entered the group");
                 else {
-                    feedbackInfo.setText("Failure in entering the group");
+                    System.out.println("detail: " + detail);
+                    if ("incorrect_password".equals(detail))
+                        feedbackInfo.setText("Incorrect group password");
+                    else if (detail.startsWith("Duplicate"))
+                        feedbackInfo.setText("You are already part of this group");
                 }
             }
         };

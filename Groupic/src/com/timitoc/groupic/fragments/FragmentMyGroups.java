@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
+import com.timitoc.groupic.dialogBoxes.DeleteGroupDialogBox;
 import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
@@ -59,18 +60,40 @@ public class FragmentMyGroups extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 GroupItem item = (GroupItem) adapterView.getItemAtPosition(i);
-                Fragment fragment = GroupManageFragment.newInstance(item);
-                if (fragment != null) {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.frame_container, fragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
+                if (!Global.deleteIconIsPressed)
+                    enterGroupView(item);
                 else
-                    Log.e("MainActivity", "Error in creating fragment");
+                    promptDeleteGroup(item);
+
             }
         });
+    }
+
+    private void promptDeleteGroup(GroupItem item) {
+        new DeleteGroupDialogBox(){
+            @Override
+            public void leave() {
+
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        }.show(getFragmentManager(), "4");
+    }
+
+    private void enterGroupView(GroupItem item) {
+        Fragment fragment = GroupManageFragment.newInstance(item);
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else
+            Log.e("MainActivity", "Error in creating fragment");
     }
 
     public void searchServerForMyGroups(final ArrayList<GroupItem> groupItems) throws JSONException {

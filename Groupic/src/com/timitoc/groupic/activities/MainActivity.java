@@ -45,8 +45,6 @@ public class MainActivity extends Activity {
     // slide menu items
     private String[] navMenuTitles;
 
-    private boolean deleteIconIsPressed = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -204,11 +202,11 @@ public class MainActivity extends Activity {
             case R.id.add_menu_item:
                 Global.onAddMenuItemClicked.run(); return true;
             case R.id.delete:
-                if (!deleteIconIsPressed)
+                Global.deleteIconIsPressed = !Global.deleteIconIsPressed;
+                if (Global.deleteIconIsPressed)
                     item.setIcon(R.drawable.delete_pressed);
                 else
                     item.setIcon(R.drawable.delete);
-                deleteIconIsPressed = !deleteIconIsPressed;
                 System.out.println("miPhoto"); return true;
             default:
                 return super.onOptionsItemSelected(item);

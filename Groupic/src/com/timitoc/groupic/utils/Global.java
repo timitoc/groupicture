@@ -18,6 +18,7 @@ public class Global {
     public static boolean logging_out = false;
     public static boolean confirm_save_image_on_local = true;
     public static boolean confirm_delete_image_in_local = true;
+    public static boolean deleteIconIsPressed = false;
     public static int user_id = -1;
     public static int current_folder_id;
     public static int current_group_id;
