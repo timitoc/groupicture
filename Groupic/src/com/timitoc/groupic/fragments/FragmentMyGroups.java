@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -22,6 +23,7 @@ import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
 import com.timitoc.groupic.dialogBoxes.DeleteGroupDialogBox;
 import com.timitoc.groupic.models.GroupItem;
+import com.timitoc.groupic.utils.CustomRequest;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import org.json.JSONArray;
@@ -69,11 +71,18 @@ public class FragmentMyGroups extends Fragment{
         });
     }
 
-    private void promptDeleteGroup(GroupItem item) {
+    private void promptDeleteGroup(final GroupItem item) {
         new DeleteGroupDialogBox(){
             @Override
             public void leave() {
-
+                try {
+                    unmapGroupFromUser(item);
+                    Toast.makeText(getActivity(), "Successfully left group", Toast.LENGTH_SHORT).show();
+                    Global.onRefreshMenuItemClicked.run();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    System.out.println("Exception rised");
+                }
             }
 
             @Override
@@ -82,6 +91,7 @@ public class FragmentMyGroups extends Fragment{
             }
         }.show(getFragmentManager(), "4");
     }
+
 
     private void enterGroupView(GroupItem item) {
         Fragment fragment = GroupManageFragment.newInstance(item);
@@ -94,6 +104,37 @@ public class FragmentMyGroups extends Fragment{
         }
         else
             Log.e("MainActivity", "Error in creating fragment");
+    }
+
+    private void unmapGroupFromUser(GroupItem groupItem) throws JSONException {
+        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
+        String url = getString(R.string.api_service_url);
+        //JSONObject jsonObject = new JSONObject();
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("function", "unmap_group_from_user");
+        map.put("public_key", Global.MY_PUBLIC_KEY);
+        JSONObject params = new JSONObject();
+        params.put("user_id", Global.user_id);
+        params.put("group_id", groupItem.getId());
+        String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
+        map.put("data", params.toString());
+        map.put("hash", hash);
+
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, url, map, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    System.out.println(response.toString());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    System.out.println(("That didn't work!\n") + error.getMessage());
+                }
+        });
+        System.out.println(customRequest.getUrl());
+        queue.add(customRequest);
+
     }
 
     public void searchServerForMyGroups(final ArrayList<GroupItem> groupItems) throws JSONException {
