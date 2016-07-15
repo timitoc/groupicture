@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:background="@color/acad1"
+>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/acad1">
-
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content" android:text="Name"
               android:textColor="@color/white"
@@ -12,8 +15,9 @@
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/new_group_name"
+              android:textCursorDrawable="@null"
               android:textColor="@color/white"
-              android:shadowColor="@color/red"
+              android:shadowColor="@color/acad3"
               android:minHeight="100dp"
               android:layout_gravity="center_horizontal"    />
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Description"
@@ -21,20 +25,22 @@
               android:layout_gravity="center_horizontal"    />
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:textColor="@color/white"
-              android:shadowColor="@color/red"
+              android:shadowColor="@color/acad3"
+              android:textCursorDrawable="@null"
               android:id="@+id/new_group_description"
-              android:minHeight="150dp"
+              android:minHeight="100dp"
               android:layout_gravity="center_horizontal"    />
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Password"
               android:textColor="@color/white"
               android:layout_gravity="center_horizontal"    />
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:textColor="@color/white"
-              android:shadowColor="@color/red"
+              android:shadowColor="@color/acad3"
               android:id="@+id/new_group_password"
               android:hint="Let this field empty for a free access group"
-              android:textColorHint="@color/darkblue"
-              android:minHeight="150dp"
+              android:textColorHint="@color/acad3"
+              android:minHeight="100dp"
+              android:textCursorDrawable="@null"
               android:layout_gravity="center_horizontal" android:inputType="textPassword"/>
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/new_group_button"
@@ -43,5 +49,5 @@
             android:textColor="@color/acad2"
             android:text="Create"
     />
-
 </LinearLayout>
+</ScrollView>
