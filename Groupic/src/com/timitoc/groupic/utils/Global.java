@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 import java.io.ByteArrayOutputStream;
 
@@ -27,25 +28,37 @@ public class Global {
     public static final int PICK_IMAGE_REQUEST = 1;
     public static final int TAKE_PHOTO_REQUEST = 2;
 
+    public static String SHARED_PREFERENCES_NAME = "groupicture-pref";
     public static String phoneStoragePath = null;
     public static Activity baseActivity;
+
+    private static SharedPreferences sharedPreferences = null;
 
 
     public static void initializeSettings(Activity baseActivity) {
         phoneStoragePath = Environment.getExternalStorageDirectory().toString() + "/groupicture_images";
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseActivity);
+        sharedPreferences = baseActivity.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         confirm_save_image_on_local = sharedPreferences.getBoolean("confirm_save_image_on_local", true);
         confirm_delete_image_in_local = sharedPreferences.getBoolean("confirm_delete_image_in_local", true);
         Global.baseActivity = baseActivity;
     }
 
+
+    public static SharedPreferences getSharedPreferences(@Nullable Context context) {
+        if (sharedPreferences != null)
+            return sharedPreferences;
+        sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences;
+    }
+
     public static void onBaseActivityDestroyed() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseActivity);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("confirm_save_image_on_local", confirm_save_image_on_local);
-        editor.putBoolean("confirm_delete_image_on_local", confirm_delete_image_in_local);
-        if (!editor.commit())
-            System.out.println("pref error");
+//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseActivity);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putBoolean("confirm_save_image_on_local", confirm_save_image_on_local);
+//        editor.putBoolean("confirm_delete_image_on_local", confirm_delete_image_in_local);
+//        if (!editor.commit())
+//            System.out.println("pref error");
+        System.out.println("Called destroy");
     }
 
 

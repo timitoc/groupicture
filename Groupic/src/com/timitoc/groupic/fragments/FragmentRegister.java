@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +77,7 @@ public class FragmentRegister extends Fragment {
                             JSONObject jsonResponse = new JSONObject(response);
                             if ("success".equals(jsonResponse.getString("status"))) {
                                 System.out.println("success to register user");
-                                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                                SharedPreferences sharedPref = Global.getSharedPreferences(getActivity());
                                 SharedPreferences.Editor editor = sharedPref.edit();
                                 editor.putString("username", username);
                                 editor.putString("password", password);

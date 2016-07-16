@@ -22,6 +22,7 @@ import java.util.Set;
 public class SaveLocalManager {
 
     public static ImageItem prepared;
+    public static final String PREFERENCE_TAG = "local_images_set";
 
     public static void prepare(ImageItem item) {
         prepared = item;
@@ -114,7 +115,7 @@ public class SaveLocalManager {
         private static SharedPreferences preferences;
         private static SharedPreferences.Editor editor;
         private static Set<String> filesSet;
-        private static final String PREFERENCE_TAG = "local_images_set";
+
 
         private static void init() {
             System.out.println("init called");
@@ -128,7 +129,7 @@ public class SaveLocalManager {
 
         public static void initializePreferenceData() {
             System.out.println("init continued");
-            preferences = PreferenceManager.getDefaultSharedPreferences(Global.baseActivity);
+            preferences = Global.getSharedPreferences(null);
 
             filesSet = preferences.getStringSet(PREFERENCE_TAG, new HashSet<String>());
             System.out.println(filesSet.toString());
@@ -142,6 +143,8 @@ public class SaveLocalManager {
         public static void saveFile(String fileName) {
             init();
             editor = preferences.edit();
+            editor.remove(PREFERENCE_TAG);
+            editor.commit();
             filesSet.add(fileName);
             editor.putStringSet(PREFERENCE_TAG, filesSet);
             boolean worked = editor.commit();
@@ -151,7 +154,7 @@ public class SaveLocalManager {
                 System.out.println("Successfully save file to preferences");
                 System.out.println(fileName);
                 System.out.println(filesSet.toString());
-                preferences = PreferenceManager.getDefaultSharedPreferences(Global.baseActivity);
+                //preferences = PreferenceManager.getDefaultSharedPreferences(Global.baseActivity);
                 filesSet = preferences.getStringSet(PREFERENCE_TAG, null);
                 System.out.println(filesSet.toString());
             }
@@ -160,6 +163,8 @@ public class SaveLocalManager {
         public static void deleteFile(String fileName) {
             init();
             editor = preferences.edit();
+            editor.remove(PREFERENCE_TAG);
+            editor.commit();
             filesSet.remove(fileName);
             editor.putStringSet(PREFERENCE_TAG, filesSet);
             boolean worked = editor.commit();

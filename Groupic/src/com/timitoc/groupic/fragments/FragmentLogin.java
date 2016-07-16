@@ -17,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.utils.SaveLocalManager;
 import com.timitoc.groupic.utils.interfaces.Consumer;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
@@ -48,13 +49,14 @@ public class FragmentLogin extends Fragment {
     }
 
     private void tryComplete() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences sharedPref = Global.getSharedPreferences(getActivity());
+        //System.out.println(sharedPref.getStringSet(SaveLocalManager.PREFERENCE_TAG, null).toString());
         if (Global.logging_out){
             Global.logging_out = false;
             Global.want_login = false;
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("want_login", Global.want_login);
-            editor.apply();
+            editor.commit();
             return;
         }
         Global.want_login = sharedPref.getBoolean("want_login", false);
@@ -201,12 +203,12 @@ public class FragmentLogin extends Fragment {
                         Global.want_login = ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).isChecked();
 
                         loginAttemptResponse.setText("Login succeeded");
-                        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences sharedPref = Global.getSharedPreferences(getActivity());
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("username", username);
                         editor.putString("password", password);
                         editor.putBoolean("want_login", Global.want_login);
-                        editor.apply();
+                        editor.commit();
 
                         Global.initializeSettings(getActivity());
                         Intent intent = new Intent(getActivity(), MainActivity.class);
