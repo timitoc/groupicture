@@ -29,7 +29,7 @@ public class AddNewDialogBox extends DialogFragment {
                             Global.addImage.run();
                         }
                         else {
-                            System.out.println("Want to take photo");
+                            Global.takePhoto.run();
                         }
                     }
                 });

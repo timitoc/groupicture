@@ -25,6 +25,7 @@ public class Global {
     public static final String MY_PRIVATE_KEY = "e0ac083d489e17881e5ebad362c0048d";
     public static final String MY_PUBLIC_KEY = "6f21f9c06e3a78f3ca345bc126967076";
     public static final int PICK_IMAGE_REQUEST = 1;
+    public static final int TAKE_PHOTO_REQUEST = 2;
 
     public static String phoneStoragePath = null;
     public static Activity baseActivity;
@@ -64,6 +65,12 @@ public class Global {
         @Override
         public void run() {
             System.out.println("nothing ever happens, and I wonder");
+        }
+    };
+    public static Runnable takePhoto = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println("Take Photo function not initialized");
         }
     };
 

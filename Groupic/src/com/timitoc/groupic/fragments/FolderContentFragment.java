@@ -1,5 +1,6 @@
 package com.timitoc.groupic.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -74,6 +75,12 @@ public class FolderContentFragment extends Fragment {
                         addImage();
                     }
                 };
+                Global.takePhoto = new Runnable() {
+                    @Override
+                    public void run() {
+                        takePhoto();
+                    }
+                };
                 new AddNewDialogBox().show(getFragmentManager(), "1");
             }
         };
@@ -90,6 +97,13 @@ public class FolderContentFragment extends Fragment {
 
     private void addImage() {
         showFileChooser();
+    }
+
+    private void takePhoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, Global.TAKE_PHOTO_REQUEST);
+        }
     }
 
     private void uploadImage() throws JSONException {
@@ -280,7 +294,7 @@ public class FolderContentFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Global.PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == Global.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
                 System.out.println(filePath.getEncodedPath());
@@ -291,5 +305,16 @@ public class FolderContentFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+        if (requestCode == Global.TAKE_PHOTO_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            bitmap = (Bitmap) extras.get("data");
+            System.out.println("Started uploading");
+            try {
+                uploadImage();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
