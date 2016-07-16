@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="This group has no password you can enter it"
-                android:textColor="@color/red"
+                android:textColor="@color/acad2"
             />
             <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:id="@+id/no_pass_enter"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="This group has a password"
-                android:textColor="@color/red"
+                android:textColor="@color/acad2"
         />
         <EditText
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -49,12 +49,18 @@
                 android:inputType="textPassword"
                 android:layout_below="@+id/info_has_pass"
                 android:focusable="true"
+                android:textColor="@color/white"
+                android:shadowColor="@color/acad3"
+                android:textColorHint="@color/acad3"
+                android:textCursorDrawable="@null"
         />
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/has_pass_enter"
                 android:layout_below="@+id/has_pass_input"
                 android:text="Enter group"
                 android:focusable="false"
+                android:background="@color/acad3"
+                android:textColor="@color/acad2"
         />
     </RelativeLayout>
 </RelativeLayout>
