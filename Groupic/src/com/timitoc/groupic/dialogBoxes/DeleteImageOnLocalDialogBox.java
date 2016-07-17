@@ -23,16 +23,12 @@ public class DeleteImageOnLocalDialogBox extends DialogFragment {
         builder.setMultiChoiceItems(new CharSequence[]{"Remove without asking"}, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                if (b) {
-                    isSet = true;
-                }
-                else
-                    isSet = false;
+                isSet = b;
             }
         }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Global.confirm_delete_image_in_local = !isSet;
+                Global.setConfirm_delete_image_in_local(!isSet);
                 SaveLocalManager.deletePrepared();
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
