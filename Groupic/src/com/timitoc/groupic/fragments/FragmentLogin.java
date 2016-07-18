@@ -1,6 +1,10 @@
 package com.timitoc.groupic.fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -17,6 +21,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.dialogBoxes.CreateFolderDialogBox;
+import com.timitoc.groupic.dialogBoxes.ProposeOfflineUseDialogBox;
+import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.SaveLocalManager;
 import com.timitoc.groupic.utils.interfaces.Consumer;
 import com.timitoc.groupic.utils.Encryptor;
@@ -75,7 +82,7 @@ public class FragmentLogin extends Fragment {
 
     }
 
-    private void correctCredentials(final String username, final String password, final Consumer<Boolean> consumer) throws JSONException {
+    private void correctCredentials(final String username, final String password, final Consumer<String> consumer) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         JSONObject jsonObject = new JSONObject();
@@ -102,16 +109,15 @@ public class FragmentLogin extends Fragment {
                             if ("success".equals(response.getString("status"))) {
                                 System.out.println("Success");
                                 Global.user_id = response.getInt("id");
-                                consumer.accept(true);
+                                consumer.accept("success");
                             }
                             else {
-                                consumer.accept(false);
-                                System.out.println("Failure");
+                                consumer.accept("invalid");
+                                System.out.println("Invalid username password combination");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            System.out.println("Error");
-                            consumer.accept(false);
+                            consumer.accept("error_json");
                         }
                     }
 
@@ -120,7 +126,7 @@ public class FragmentLogin extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(("That didn't work!\n") + error.getMessage());
-                consumer.accept(false);
+                consumer.accept("error_volley");
             }
         });
         System.out.println(jsonRequest.getUrl());
@@ -190,15 +196,22 @@ public class FragmentLogin extends Fragment {
         queue.add(strRequest);
     }*/
 
+    private void startMainActivity() {
+        Global.initializeSettings(getActivity());
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
     public void loginAttempt() {
         loginAttemptResponse.setText("Authenticating");
         final String username = ((TextView)mainView.findViewById(R.id.username_textbox)).getText().toString();
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox)).getText().toString();
         try {
-            correctCredentials(username, password, new Consumer<Boolean>(){
+            correctCredentials(username, password, new Consumer<String>(){
                 @Override
-                public void accept(Boolean h) {
-                    if (h) {
+                public void accept(String status) {
+                    if ("success".equals(status)) {
                         // auto log in?
                         Global.want_login = ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).isChecked();
 
@@ -209,23 +222,34 @@ public class FragmentLogin extends Fragment {
                         editor.putString("password", password);
                         editor.putBoolean("want_login", Global.want_login);
                         editor.commit();
-
-                        Global.initializeSettings(getActivity());
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
+                        ConnectionStateManager.setUsingState(ConnectionStateManager.UsingState.ONLINE);
+                        startMainActivity();
                     }
-                    else {
+                    else if ("invalid".equals(status)){
                         loginAttemptResponse.setText("Invalid username or password");
+                        createProposeOfflineDialog();
+                    }
+                    else if (status.startsWith("error")) {
+                        loginAttemptResponse.setText("Network error, are you connected to the internet?");
+                        createProposeOfflineDialog();
                     }
                 }
             });
         } catch (JSONException e) {
             e.printStackTrace();
-            loginAttemptResponse.setText("Network error occurred, please try again later");
+            loginAttemptResponse.setText("An error occurred, please try again later");
         }
     }
 
-
+    private void createProposeOfflineDialog() {
+        new ProposeOfflineUseDialogBox() {
+            @Override
+            public void goOffline() {
+                Global.user_id = -1;
+                ConnectionStateManager.setUsingState(ConnectionStateManager.UsingState.OFFLINE);
+                startMainActivity();
+            }
+        }.show(getFragmentManager(), "5");
+    }
 
 }

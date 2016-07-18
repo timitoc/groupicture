@@ -131,6 +131,8 @@ public class SaveLocalManager {
             System.out.println("init continued");
             preferences = Global.getSharedPreferences(null);
 
+
+
             filesSet = preferences.getStringSet(PREFERENCE_TAG, new HashSet<String>());
             System.out.println(filesSet.toString());
         }

@@ -32,6 +32,8 @@ public class Global {
     public static String phoneStoragePath = null;
     public static Activity baseActivity;
 
+
+
     private static SharedPreferences sharedPreferences = null;
 
 
