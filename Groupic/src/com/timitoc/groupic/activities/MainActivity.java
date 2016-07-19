@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 
         ArrayList<NavDrawerItem> navDrawerItems = new ArrayList<>();
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
 //        // Rate me
 //        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
@@ -150,12 +150,15 @@ public class MainActivity extends Activity {
                 // fragment = new FragmentSecond();
                 break;
             case 3:
-                fragment = new FragmentAbout();
+                fragment = new FragmentSecond();
                 break;
             case 4:
-                fragment = new FragmentHelp();
+                fragment = new FragmentAbout();
                 break;
             case 5:
+                fragment = new FragmentHelp();
+                break;
+            case 6:
                 Global.want_login = false;
                 Global.logging_out = true;
                 Intent intent = new Intent(this, LoginActivity.class);

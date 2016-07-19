@@ -17,30 +17,32 @@
                   android:id="@+id/username_textbox"
                   android:layout_below="@id/login_attempt_response"
                   android:textColor="@color/white"
-                  android:textColorHint="@color/white"
+                  android:textColorHint="@color/gray"
                   android:hint="username"
+                  android:textCursorDrawable="@null"
         />
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/password_textbox"
                   android:hint="password"
                   android:layout_below="@+id/username_textbox"
                   android:textColor="@color/white"
-                  android:textColorHint="@color/white"
+                  android:textColorHint="@color/gray"
                   android:inputType="textPassword"
+                  android:textCursorDrawable="@null"
         />
         <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/auto_login_checkbox"
                   android:layout_below="@+id/password_textbox"
                   android:textColor="@color/white"
+                  android:buttonTint="@color/white"
                   android:text="Auto Log in"
         />
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:id="@+id/login_request"
                 android:layout_below="@+id/auto_login_checkbox"
                 android:layout_centerVertical="true"
-                android:background="@color/acad3"
-                android:textColor="@color/acad2"
                 android:text="Log In"
 
         />

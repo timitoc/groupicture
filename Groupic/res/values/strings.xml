@@ -11,6 +11,7 @@
         <item >Home</item>
         <item >Rate me!</item>
         <item >Go Premium</item>
+        <item >Options</item>
         <item >About</item>
         <item >Help</item>
         <item >Log out</item>
@@ -22,6 +23,7 @@
         <item>@drawable/home</item>
         <item>@drawable/star</item>
         <item>@drawable/gopremium</item>
+        <item>@drawable/options</item>
         <item>@drawable/info</item>
         <item>@drawable/question</item>
         <item>@drawable/logout</item>

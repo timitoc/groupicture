@@ -50,8 +50,8 @@
                 android:layout_below="@+id/info_has_pass"
                 android:focusable="true"
                 android:textColor="@color/white"
-                android:shadowColor="@color/acad3"
-                android:textColorHint="@color/acad3"
+                android:shadowColor="@color/gray"
+                android:textColorHint="@color/gray"
                 android:textCursorDrawable="@null"
         />
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -59,8 +59,6 @@
                 android:layout_below="@+id/has_pass_input"
                 android:text="Enter group"
                 android:focusable="false"
-                android:background="@color/acad3"
-                android:textColor="@color/acad2"
         />
     </RelativeLayout>
 </RelativeLayout>

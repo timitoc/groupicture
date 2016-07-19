@@ -35,18 +35,16 @@
               android:layout_gravity="center_horizontal"    />
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:textColor="@color/white"
-              android:shadowColor="@color/acad3"
+              android:shadowColor="@color/gray"
               android:id="@+id/new_group_password"
               android:hint="Let this field empty for a free access group"
-              android:textColorHint="@color/acad3"
+              android:textColorHint="@color/gray"
               android:minHeight="100dp"
               android:textCursorDrawable="@null"
               android:layout_gravity="center_horizontal" android:inputType="textPassword"/>
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/new_group_button"
             android:layout_gravity="center_horizontal"
-            android:background="@color/acad3"
-            android:textColor="@color/acad2"
             android:text="Create"
     />
 </LinearLayout>
