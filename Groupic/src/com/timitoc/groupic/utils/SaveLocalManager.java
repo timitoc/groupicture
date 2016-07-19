@@ -1,14 +1,11 @@
 package com.timitoc.groupic.utils;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.StringRequest;
 import com.timitoc.groupic.models.ImageItem;
 
 import java.io.File;
@@ -22,7 +19,9 @@ import java.util.Set;
 public class SaveLocalManager {
 
     public static ImageItem prepared;
-    public static final String PREFERENCE_TAG = "local_images_set";
+    public static final String PREFERENCE_TAG_IMAGES = "local_images_set";
+    public static final String PREFERENCE_TAG_FILES = "local_files_set";
+    public static final String PREFERENCE_TAG_GROUPS = "local_groups_set";
 
     public static void prepare(ImageItem item) {
         prepared = item;
@@ -67,7 +66,7 @@ public class SaveLocalManager {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.flush();
             out.close();
-            PreferenceImageDataManager.saveFile(constructImageFileName(prepared));
+            PreferenceImageDataManager.saveFile(constructImageFileName(prepared), constructFilePrefName(prepared), constructGroupPrefName(prepared));
             Toast.makeText(Global.baseActivity, "Successfully saved file into memory", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,15 +94,30 @@ public class SaveLocalManager {
         return BitmapFactory.decodeFile(path);
     }
 
+    public static Set<String> getGroupsSet() {
+        return PreferenceImageDataManager.getGroupsSet();
+    }
+
     public static void makeError() {
         System.out.println("Couldn't save");
 
     }
 
     public static String constructImageFileName(ImageItem item) {
-        return "GI#" + Integer.toHexString(item.getId());
+        return "GI#" + Integer.toHexString(item.getParentFolder().getId()) +
+                "#"  + Integer.toHexString(item.getId());
     }
 
+    public static String constructFilePrefName(ImageItem item) {
+        return  "GI#" + Integer.toHexString(item.getParentFolder().getParentGroup().getId()) +
+                "#" + Integer.toHexString(item.getParentFolder().getId()) +
+                "#" + item.getParentFolder().getTitle();
+    }
+    public static String constructGroupPrefName(ImageItem item) {
+        return "GI#" + item.getParentFolder().getParentGroup().getId() +
+                "#" + item.getParentFolder().getParentGroup().getTitle() +
+                "#" + item.getParentFolder().getParentGroup().getDescription();
+    }
 
     public static boolean alreadySaved(ImageItem item) {
         return PreferenceImageDataManager.alreadySaved(constructImageFileName(item));
@@ -114,7 +128,9 @@ public class SaveLocalManager {
 
         private static SharedPreferences preferences;
         private static SharedPreferences.Editor editor;
+        private static Set<String> imagesSet;
         private static Set<String> filesSet;
+        private static Set<String> groupsSet;
 
 
         private static void init() {
@@ -124,7 +140,7 @@ public class SaveLocalManager {
         }
 
         public static boolean isPreferenceDataInitialized() {
-            return filesSet != null;
+            return imagesSet != null;
         }
 
         public static void initializePreferenceData() {
@@ -133,42 +149,71 @@ public class SaveLocalManager {
 
 
 
-            filesSet = preferences.getStringSet(PREFERENCE_TAG, new HashSet<String>());
-            System.out.println(filesSet.toString());
+            imagesSet = preferences.getStringSet(PREFERENCE_TAG_IMAGES, new HashSet<String>());
+            filesSet = preferences.getStringSet(PREFERENCE_TAG_FILES, new HashSet<String>());
+            groupsSet = preferences.getStringSet(PREFERENCE_TAG_GROUPS, new HashSet<String>());
+            System.out.println(imagesSet.toString());
+        }
+
+        public static Set<String> getGroupsSet() {
+            init();
+            return groupsSet;
         }
 
         public static boolean alreadySaved(String fileName) {
             init();
-            return filesSet.contains(fileName);
+            return imagesSet.contains(fileName);
         }
 
+        /**
+         * Old function, notation isn't viable for offline usage.
+         * @param fileName Name for the image to be marked in preferences
+         */
+        @Deprecated
         public static void saveFile(String fileName) {
             init();
             editor = preferences.edit();
-            editor.remove(PREFERENCE_TAG);
+            editor.remove(PREFERENCE_TAG_IMAGES);
             editor.commit();
-            filesSet.add(fileName);
-            editor.putStringSet(PREFERENCE_TAG, filesSet);
+            imagesSet.add(fileName);
+            editor.putStringSet(PREFERENCE_TAG_IMAGES, imagesSet);
             boolean worked = editor.commit();
             if (!worked)
                 System.out.println("Failed to delete file to preferences");
             else {
                 System.out.println("Successfully save file to preferences");
                 System.out.println(fileName);
-                System.out.println(filesSet.toString());
+                System.out.println(imagesSet.toString());
                 //preferences = PreferenceManager.getDefaultSharedPreferences(Global.baseActivity);
-                filesSet = preferences.getStringSet(PREFERENCE_TAG, null);
-                System.out.println(filesSet.toString());
+                imagesSet = preferences.getStringSet(PREFERENCE_TAG_IMAGES, null);
+                System.out.println(imagesSet.toString());
             }
+        }
+
+        public static void saveFile(String imagePrefName, String filePrefName, String groupPrefName) {
+            init();
+            editor = preferences.edit();
+            editor.remove(PREFERENCE_TAG_IMAGES);
+            editor.remove(PREFERENCE_TAG_FILES);
+            editor.remove(PREFERENCE_TAG_GROUPS);
+            editor.commit();
+            imagesSet.add(imagePrefName);
+            filesSet.add(filePrefName);
+            groupsSet.add(groupPrefName);
+            editor.putStringSet(PREFERENCE_TAG_IMAGES, imagesSet);
+            editor.putStringSet(PREFERENCE_TAG_FILES, filesSet);
+            editor.putStringSet(PREFERENCE_TAG_GROUPS, groupsSet);
+            if (!editor.commit())
+                System.out.println("Editor done goofed");
         }
 
         public static void deleteFile(String fileName) {
             init();
             editor = preferences.edit();
-            editor.remove(PREFERENCE_TAG);
+            editor.remove(PREFERENCE_TAG_IMAGES);
             editor.commit();
-            filesSet.remove(fileName);
-            editor.putStringSet(PREFERENCE_TAG, filesSet);
+            imagesSet.remove(fileName);
+            editor.putStringSet(PREFERENCE_TAG_IMAGES, imagesSet);
             boolean worked = editor.commit();
             if (!worked)
                 System.out.println("Failed to delete file from preferences");

@@ -47,4 +47,9 @@ public class ConnectionStateManager {
                 break;
         }
     }
+
+    public static void decreaseUsingState() {
+        if (usingState == UsingState.ONLINE)
+            setUsingState(UsingState.UNDEFINED);
+    }
 }

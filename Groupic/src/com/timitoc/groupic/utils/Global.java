@@ -123,4 +123,6 @@ public class Global {
         editor.remove("confirm_delete_image_on_local").commit();
         editor.putBoolean("confirm_delete_image_on_local", Global.confirm_delete_image_on_local).commit();
     }
+
+
 }

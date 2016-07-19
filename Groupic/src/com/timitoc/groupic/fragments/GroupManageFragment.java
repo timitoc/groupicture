@@ -94,7 +94,7 @@ public class GroupManageFragment extends Fragment {
 
     public void showFolderContent(FolderItem item) {
         System.out.println(item.getTitle() + " folder pressed ");
-        Fragment fragment = FolderContentFragment.newInstance(item.getId());
+        Fragment fragment = FolderContentFragment.newInstance(item);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.folder_content, fragment)
@@ -126,7 +126,7 @@ public class GroupManageFragment extends Fragment {
                                 System.out.println("Response array size: " + arr.length());
                                 for(int i=0; i < arr.length(); i++) {
                                     System.out.println(arr.getJSONObject(i).getString("title"));
-                                    folderItems.add(new FolderItem(arr.getJSONObject(i)));
+                                    folderItems.add(new FolderItem(arr.getJSONObject(i), groupItem));
                                 }
                             }
                             folderItemListView.setAdapter(adapter);

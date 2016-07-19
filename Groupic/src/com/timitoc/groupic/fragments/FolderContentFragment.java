@@ -24,6 +24,7 @@ import com.timitoc.groupic.adapters.MyImagesGridAdapter;
 import com.timitoc.groupic.dialogBoxes.AddNewDialogBox;
 import com.timitoc.groupic.dialogBoxes.DeleteImageOnLocalDialogBox;
 import com.timitoc.groupic.dialogBoxes.SaveImageOnLocalDialogBox;
+import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.ImageItem;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
@@ -46,14 +47,15 @@ public class FolderContentFragment extends Fragment {
     MyImagesGridAdapter adapter;
     View mainView;
     GridView gridView;
+    private FolderItem currentFolder;
     private int folderId;
     private Bitmap bitmap;
 
-    public static FolderContentFragment newInstance(int folderId) {
+    public static FolderContentFragment newInstance(FolderItem folderItem) {
         FolderContentFragment myFragment = new FolderContentFragment();
 
         Bundle args = new Bundle();
-        args.putInt("folder-id", folderId);
+        args.putSerializable("folder_item", folderItem);
         myFragment.setArguments(args);
 
         return myFragment;
@@ -63,12 +65,14 @@ public class FolderContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.folder_content_fragment, container, false);
         gridView = (GridView)mainView.findViewById(R.id.images_grid_view);
-        folderId = getArguments().getInt("folder-id");
+        currentFolder = (FolderItem) getArguments().getSerializable("folder_item");
+        folderId = currentFolder.getId();
+
         VolleySingleton.getInstance(getActivity());
         Global.onAddMenuItemClicked = new Runnable() {
             @Override
             public void run() {
-                Global.current_folder_id = folderId;
+                Global.current_folder_id = currentFolder.getId();
                 Global.addImage = new Runnable() {
                     @Override
                     public void run() {
@@ -252,7 +256,7 @@ public class FolderContentFragment extends Fragment {
                                 JSONArray imagesId = jsonResponse.getJSONArray("images");
                                 for (int i = 0; i < imagesId.length(); i++) {
                                     int image_id = imagesId.getInt(i);
-                                    ImageItem item = new ImageItem(image_id, "not_yet_implemented", buildImageRequestUrl(image_id));
+                                    ImageItem item = new ImageItem(image_id, "not_yet_implemented", buildImageRequestUrl(image_id), currentFolder);
                                     imageItems.add(item);
                                     System.out.println(item.getId() + " " + item.getRequestUrl());
                                 }
