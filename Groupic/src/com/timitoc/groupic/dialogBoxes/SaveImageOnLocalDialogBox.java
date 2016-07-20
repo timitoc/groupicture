@@ -23,16 +23,12 @@ public class SaveImageOnLocalDialogBox extends DialogFragment {
         builder.setMultiChoiceItems(new CharSequence[]{"Download without asking"}, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                if (b) {
-                    isSet = true;
-                }
-                else
-                    isSet = false;
+                isSet = b;
             }
         }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Global.confirm_save_image_on_local = !isSet;
+                Global.setConfirm_save_image_on_local(!isSet);
                 SaveLocalManager.savePrepared();
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {

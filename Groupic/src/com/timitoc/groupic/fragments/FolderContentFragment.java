@@ -204,7 +204,7 @@ public class FolderContentFragment extends Fragment {
 
     private void askToDeleteImageOnLocal(ImageItem item) {
         SaveLocalManager.prepare(item);
-        if (Global.confirm_delete_image_in_local) {
+        if (Global.isConfirm_delete_image_in_local()) {
             new DeleteImageOnLocalDialogBox().show(getFragmentManager(), "3");
         }
         else
@@ -213,7 +213,7 @@ public class FolderContentFragment extends Fragment {
 
     private void askToSaveImageOnLocal(ImageItem item) {
         SaveLocalManager.prepare(item);
-        if (Global.confirm_save_image_on_local) {
+        if (Global.isConfirm_save_image_on_local()) {
             new SaveImageOnLocalDialogBox().show(getFragmentManager(), "2");
         }
         else

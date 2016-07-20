@@ -17,8 +17,8 @@ public class Global {
 
     public static boolean want_login = false;
     public static boolean logging_out = false;
-    public static boolean confirm_save_image_on_local = true;
-    public static boolean confirm_delete_image_in_local = true;
+    private static boolean confirm_save_image_on_local = true;
+    private static boolean confirm_delete_image_on_local = true;
     public static boolean deleteIconIsPressed = false;
     public static int user_id = -1;
     public static int current_folder_id;
@@ -39,7 +39,7 @@ public class Global {
         phoneStoragePath = Environment.getExternalStorageDirectory().toString() + "/groupicture_images";
         sharedPreferences = baseActivity.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         confirm_save_image_on_local = sharedPreferences.getBoolean("confirm_save_image_on_local", true);
-        confirm_delete_image_in_local = sharedPreferences.getBoolean("confirm_delete_image_in_local", true);
+        confirm_delete_image_on_local = sharedPreferences.getBoolean("confirm_delete_image_in_local", true);
         Global.baseActivity = baseActivity;
     }
 
@@ -100,4 +100,25 @@ public class Global {
         return  Bitmap.createScaledBitmap(bitmap, width, newHeight, false);
     }
 
+    public static boolean isConfirm_save_image_on_local() {
+        return confirm_save_image_on_local;
+    }
+
+    public static void setConfirm_save_image_on_local(boolean confirm_save_image_on_local) {
+        Global.confirm_save_image_on_local = confirm_save_image_on_local;
+        SharedPreferences.Editor editor = getSharedPreferences(null).edit();
+        editor.remove("confirm_save_image_on_local").commit();
+        editor.putBoolean("confirm_save_image_on_local", Global.confirm_save_image_on_local).commit();
+    }
+
+    public static boolean isConfirm_delete_image_in_local() {
+        return confirm_delete_image_on_local;
+    }
+
+    public static void setConfirm_delete_image_in_local(boolean confirm_delete_image_in_local) {
+        Global.confirm_delete_image_on_local = confirm_delete_image_in_local;
+        SharedPreferences.Editor editor = getSharedPreferences(null).edit();
+        editor.remove("confirm_delete_image_on_local").commit();
+        editor.putBoolean("confirm_delete_image_on_local", Global.confirm_delete_image_on_local).commit();
+    }
 }
