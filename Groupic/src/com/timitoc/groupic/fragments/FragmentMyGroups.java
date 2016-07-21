@@ -167,6 +167,7 @@ public class FragmentMyGroups extends Fragment{
                                     System.out.println(arr.getJSONObject(i).getString("title"));
                                     groupItems.add(new GroupItem(arr.getJSONObject(i)));
                                 }
+                                ConnectionStateManager.increaseUsingState();
                                 groupItemListView.setAdapter(adapter);
                             }
                             else

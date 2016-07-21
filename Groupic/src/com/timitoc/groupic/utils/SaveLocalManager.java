@@ -20,7 +20,7 @@ public class SaveLocalManager {
 
     public static ImageItem prepared;
     public static final String PREFERENCE_TAG_IMAGES = "local_images_set";
-    public static final String PREFERENCE_TAG_FILES = "local_files_set";
+    public static final String PREFERENCE_TAG_FOLDERS = "local_folders_set";
     public static final String PREFERENCE_TAG_GROUPS = "local_groups_set";
 
     public static void prepare(ImageItem item) {
@@ -54,6 +54,8 @@ public class SaveLocalManager {
             throw new RuntimeException("No ImageItem prepared");
         System.out.println("Proceeding to delete item " + prepared.getId() + " " + prepared.getTitle());
         deleteBitmapOnLocal(constructImageFileName(prepared));
+        PreferenceImageDataManager.tryToDeleteFolder(prepared.getParentFolder().getId());
+        PreferenceImageDataManager.tryToDeleteGroup(prepared.getParentFolder().getParentGroup().getId());
     }
 
     public static void saveBitmapOnLocal(Bitmap bitmap) {
@@ -97,6 +99,9 @@ public class SaveLocalManager {
     public static Set<String> getGroupsSet() {
         return PreferenceImageDataManager.getGroupsSet();
     }
+    public static Set<String> getFoldersSet() { return PreferenceImageDataManager.getFoldersSet(); }
+    public static Set<String> getImagesSet() { return PreferenceImageDataManager.getImagesSet(); }
+
 
     public static void makeError() {
         System.out.println("Couldn't save");
@@ -129,7 +134,7 @@ public class SaveLocalManager {
         private static SharedPreferences preferences;
         private static SharedPreferences.Editor editor;
         private static Set<String> imagesSet;
-        private static Set<String> filesSet;
+        private static Set<String> foldersSet;
         private static Set<String> groupsSet;
 
 
@@ -150,14 +155,27 @@ public class SaveLocalManager {
 
 
             imagesSet = preferences.getStringSet(PREFERENCE_TAG_IMAGES, new HashSet<String>());
-            filesSet = preferences.getStringSet(PREFERENCE_TAG_FILES, new HashSet<String>());
+            foldersSet = preferences.getStringSet(PREFERENCE_TAG_FOLDERS, new HashSet<String>());
             groupsSet = preferences.getStringSet(PREFERENCE_TAG_GROUPS, new HashSet<String>());
+            /*imagesSet = new HashSet<>();
+            foldersSet = new HashSet<>();
+            groupsSet = new HashSet<>(); */
             System.out.println(imagesSet.toString());
         }
 
         public static Set<String> getGroupsSet() {
             init();
             return groupsSet;
+        }
+
+        public static Set<String> getFoldersSet() {
+            init();
+            return foldersSet;
+        }
+
+        public static Set<String> getImagesSet() {
+            init();
+            return imagesSet;
         }
 
         public static boolean alreadySaved(String fileName) {
@@ -194,14 +212,14 @@ public class SaveLocalManager {
             init();
             editor = preferences.edit();
             editor.remove(PREFERENCE_TAG_IMAGES);
-            editor.remove(PREFERENCE_TAG_FILES);
+            editor.remove(PREFERENCE_TAG_FOLDERS);
             editor.remove(PREFERENCE_TAG_GROUPS);
             editor.commit();
             imagesSet.add(imagePrefName);
-            filesSet.add(filePrefName);
+            foldersSet.add(filePrefName);
             groupsSet.add(groupPrefName);
             editor.putStringSet(PREFERENCE_TAG_IMAGES, imagesSet);
-            editor.putStringSet(PREFERENCE_TAG_FILES, filesSet);
+            editor.putStringSet(PREFERENCE_TAG_FOLDERS, foldersSet);
             editor.putStringSet(PREFERENCE_TAG_GROUPS, groupsSet);
             if (!editor.commit())
                 System.out.println("Editor done goofed");
@@ -220,6 +238,49 @@ public class SaveLocalManager {
             else
                 System.out.println("Successfully deleted file from preferences");
         }
+
+        public static void tryToDeleteFolder(int folderId) {
+            if (noImageInFolder(folderId)) {
+                for (String s : foldersSet) {
+                    if (s.split("#")[2].equals(Integer.toHexString(folderId))) {
+                        editor = preferences.edit();
+                        editor.remove(PREFERENCE_TAG_FOLDERS).commit();
+                        foldersSet.remove(s);
+                        editor.putStringSet(PREFERENCE_TAG_FOLDERS, foldersSet).commit();
+                        break;
+                    }
+                }
+            }
+        }
+
+        private static boolean noImageInFolder(int folderId) {
+            for (String s : imagesSet)
+                if (s.split("#")[1].equals(Integer.toHexString(folderId)))
+                    return  false;
+            return  true;
+        }
+
+        public static void tryToDeleteGroup(int groupId) {
+            if (noFolderInGroup(groupId)) {
+                for (String s : groupsSet) {
+                    if (s.split("#")[1].equals(Integer.toHexString(groupId))) {
+                        editor = preferences.edit();
+                        editor.remove(PREFERENCE_TAG_GROUPS).commit();
+                        groupsSet.remove(s);
+                        editor.putStringSet(PREFERENCE_TAG_GROUPS, groupsSet).commit();
+                        break;
+                    }
+                }
+            }
+        }
+
+        private static boolean noFolderInGroup(int groupId) {
+            for (String s : foldersSet)
+                if (s.split("#")[1].equals(Integer.toHexString(groupId)))
+                    return  false;
+            return  true;
+        }
+
     }
 
 }

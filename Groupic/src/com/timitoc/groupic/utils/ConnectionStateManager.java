@@ -52,4 +52,9 @@ public class ConnectionStateManager {
         if (usingState == UsingState.ONLINE)
             setUsingState(UsingState.UNDEFINED);
     }
+
+    public static void increaseUsingState() {
+        if (usingState == UsingState.UNDEFINED)
+            setUsingState(UsingState.ONLINE);
+    }
 }

@@ -17,9 +17,10 @@ public class FolderItem implements Serializable{
 
     }
 
-    public FolderItem(int id, String title){
+    public FolderItem(int id, String title, GroupItem parentGroup){
         this.id = id;
         this.title = title;
+        this.parentGroup = parentGroup;
     }
 
     public FolderItem(JSONObject jsonObject, GroupItem parentGroup) {
