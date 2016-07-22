@@ -34,7 +34,6 @@
                   android:id="@+id/auto_login_checkbox"
                   android:layout_below="@+id/password_textbox"
                   android:textColor="@color/white"
-                  android:buttonTint="@color/white"
                   android:text="Auto Log in"
         />
 
