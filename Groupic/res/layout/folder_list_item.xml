@@ -10,6 +10,12 @@
             android:textColor="@color/white"
             android:background="@color/acad1"
             android:textSize="25sp"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="5dp"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+    />
 
 </RelativeLayout>

@@ -4,11 +4,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -93,6 +95,23 @@ public class GroupManageFragment extends Fragment {
 
             }
         });
+        folderItemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                FolderItem item = (FolderItem) adapterView.getItemAtPosition(i);
+                int toastX, toastY;
+                toastX = (int) (view.getX() + view.getWidth());
+                toastY = (int) (view.getY() + view.getHeight());
+                showFolderTitle(item, toastX, toastY);
+                return true;
+            }
+        });
+    }
+
+    public void showFolderTitle(FolderItem item, int toastX, int toastY){
+        Toast toast= Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.LEFT, toastX, toastY);
+        toast.show();
     }
 
     public void showFolderContent(FolderItem item) {
@@ -133,6 +152,7 @@ public class GroupManageFragment extends Fragment {
                                 System.out.println("Response array size: " + arr.length());
                                 for(int i=0; i < arr.length(); i++) {
                                     System.out.println(arr.getJSONObject(i).getString("title"));
+
                                     folderItems.add(new FolderItem(arr.getJSONObject(i), groupItem));
                                 }
                                 folderItemListView.setAdapter(adapter);
