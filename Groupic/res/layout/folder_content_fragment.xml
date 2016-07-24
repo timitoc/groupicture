@@ -8,6 +8,7 @@
               android:id="@+id/images_grid_view"
               android:background="@color/acad3"
               android:numColumns="auto_fit"
+              android:columnWidth="75dp"
     >
 
     </GridView>

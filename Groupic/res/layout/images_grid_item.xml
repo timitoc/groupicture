@@ -7,7 +7,8 @@
     <com.timitoc.groupic.utils.CustomNetworkImageView
             android:id="@+id/network_image_view"
             android:layout_width="100dp" android:layout_height="100dp"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
+            android:padding="5dp"
 
     />
 

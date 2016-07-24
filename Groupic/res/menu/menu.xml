@@ -3,7 +3,7 @@
     <item
         android:id="@+id/con_state"
         android:icon="@drawable/online"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="Online">
 
     </item>
@@ -11,21 +11,21 @@
     <item
         android:id="@+id/refresh"
         android:icon="@drawable/refresh"
-        android:showAsAction="ifRoom"
-        android:title="Add">
+        android:showAsAction="always"
+        android:title="Refresh">
     </item>
 
     <item
             android:id="@+id/add_menu_item"
             android:icon="@drawable/plus"
-            android:showAsAction="ifRoom"
+            android:showAsAction="always"
             android:title="Add">
     </item>
 
     <item
         android:id="@+id/delete"
         android:icon="@drawable/delete"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="Delete" >
     </item>
 
