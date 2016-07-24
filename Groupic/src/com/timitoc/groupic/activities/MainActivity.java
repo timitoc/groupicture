@@ -20,10 +20,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
-import com.timitoc.groupic.fragments.FragmentGroups;
-import com.timitoc.groupic.fragments.FragmentLogin;
-import com.timitoc.groupic.fragments.FragmentRegister;
-import com.timitoc.groupic.fragments.FragmentSecond;
+import com.timitoc.groupic.fragments.*;
 import com.timitoc.groupic.fragments.about.FragmentAbout;
 import com.timitoc.groupic.fragments.help.FragmentHelp;
 import com.timitoc.groupic.models.NavDrawerItem;
@@ -151,7 +148,7 @@ public class MainActivity extends Activity {
                 // fragment = new FragmentSecond();
                 break;
             case 3:
-                fragment = new FragmentSecond();
+                fragment = new FragmentOptions();
                 break;
             case 4:
                 fragment = new FragmentAbout();

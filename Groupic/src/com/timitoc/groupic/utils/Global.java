@@ -41,7 +41,7 @@ public class Global {
         phoneStoragePath = Environment.getExternalStorageDirectory().toString() + "/groupicture_images";
         sharedPreferences = baseActivity.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         confirm_save_image_on_local = sharedPreferences.getBoolean("confirm_save_image_on_local", true);
-        confirm_delete_image_on_local = sharedPreferences.getBoolean("confirm_delete_image_in_local", true);
+        confirm_delete_image_on_local = sharedPreferences.getBoolean("confirm_delete_image_on_local", true);
         Global.baseActivity = baseActivity;
     }
 

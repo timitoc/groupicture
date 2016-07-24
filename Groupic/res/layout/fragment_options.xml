@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:background="@color/acad1">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center">
+        <CheckBox android:layout_width="match_parent" android:layout_height="match_parent"
+                android:text="Auto Log in"
+                  android:id="@+id/options_autologin"
+                android:textColor="@color/white"
+                android:layout_margin="10dp"
+        />
+        <CheckBox android:layout_width="match_parent" android:layout_height="match_parent"
+                android:text="Confirm Save"
+                  android:id="@+id/options_confirmsave"
+                android:textColor="@color/white"
+                  android:layout_margin="10dp"
+        />
+        <CheckBox android:layout_width="match_parent" android:layout_height="match_parent"
+                android:text="Confirm Remove"
+                  android:id="@+id/options_confirmremove"
+                android:textColor="@color/white"
+                  android:layout_margin="10dp"
+        />
+
+    </LinearLayout>
+</ScrollView>

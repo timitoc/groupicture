@@ -69,11 +69,11 @@ public class FragmentLogin extends Fragment {
         Global.want_login = sharedPref.getBoolean("want_login", false);
 
         ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).setChecked(Global.want_login);
+        String username = sharedPref.getString("username", "");
+        String password = sharedPref.getString("password", "");
         if (!Global.want_login){
             return;
         }
-        String username = sharedPref.getString("username", "");
-        String password = sharedPref.getString("password", "");
         if (!username.isEmpty() && !password.isEmpty()) {
             ((TextView)mainView.findViewById(R.id.username_textbox)).setText(username);
             ((TextView)mainView.findViewById(R.id.password_textbox)).setText(password);
