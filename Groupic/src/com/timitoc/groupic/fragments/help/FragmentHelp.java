@@ -3,7 +3,6 @@ package com.timitoc.groupic.fragments.help;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,9 @@ public class FragmentHelp extends Fragment{
                 setDisplay(0);
             }
         };
-        setButtonEvent((Button) mainView.findViewById(R.id.help_use), 0);
+        setButtonEvent((Button) mainView.findViewById(R.id.help_use1), 0);
+        setButtonEvent((Button) mainView.findViewById(R.id.help_use2), 1);
+        setButtonEvent((Button) mainView.findViewById(R.id.help_use3), 2);
         return mainView;
     }
     public void setButtonEvent(Button button, final int position) {
@@ -40,22 +41,26 @@ public class FragmentHelp extends Fragment{
     }
 
     public void setDisplay(int position) {
-        Fragment fragment = null;
+        Fragment fragment = new Fragment2Help();
+        Bundle args = new Bundle();
         switch (position) {
             case 0:
-                fragment = new Fragment2HelpUse();
+                args.putString("param1", getResources().getString(R.string.help_use1));
                 System.out.println("0");
+                break;
+            case 1:
+                args.putString("param1", getResources().getString(R.string.help_use2));
+                System.out.println("1");
+                break;
+            case 2:
+                args.putString("param1", getResources().getString(R.string.help_use3));
+                System.out.println("2");
                 break;
             default:
                 break;
         }
-        if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.help_frame_container, fragment).commit();
-        } else {
-            // error in creating fragment
-            Log.e("frgamentabout", "Error in creating fragment");
-        }
+        fragment.setArguments(args);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.help_frame_container, fragment).commit();
     }
 }

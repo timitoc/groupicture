@@ -86,8 +86,10 @@ public class SaveLocalManager {
         localDirectory.mkdirs();
         File imageFile = new File(localDirectory, imageFileName);
         PreferenceImageDataManager.deleteFile(imageFileName);
-        if (imageFile.exists())
+        if (imageFile.exists()) {
+            Toast.makeText(Global.baseActivity, "Successfully removed file from memory", Toast.LENGTH_SHORT).show();
             return imageFile.delete();
+        }
         return false;
     }
 

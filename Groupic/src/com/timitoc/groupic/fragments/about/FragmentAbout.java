@@ -41,26 +41,23 @@ public class FragmentAbout extends Fragment{
     }
 
     public void setDisplay(int position) {
-        Fragment fragment = null;
+        Fragment fragment = new Fragment2About();
+        Bundle args = new Bundle();
         switch (position) {
             case 0:
-                fragment = new Fragment2AboutUs();
+                args.putString("param1", getResources().getString(R.string.about_us));
                 System.out.println("0");
                 break;
             case 1:
-                fragment = new Fragment2AboutApp();
+                args.putString("param1", getResources().getString(R.string.about_app));
                 System.out.println("1");
                 break;
             default:
                 break;
         }
-        if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.about_frame_container, fragment).commit();
-        } else {
-            // error in creating fragment
-            Log.e("frgamentabout", "Error in creating fragment");
-        }
+        fragment.setArguments(args);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.about_frame_container, fragment).commit();
     }
 }

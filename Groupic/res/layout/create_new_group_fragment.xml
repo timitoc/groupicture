@@ -37,7 +37,7 @@
               android:textColor="@color/white"
               android:shadowColor="@color/gray"
               android:id="@+id/new_group_password"
-              android:hint="Let this field empty for a free access group"
+              android:hint="Leave this field empty for a free access group"
               android:textColorHint="@color/gray"
               android:minHeight="100dp"
               android:textCursorDrawable="@null"

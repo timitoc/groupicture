@@ -2,12 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" >
-
-    <LinearLayout android:gravity="center_horizontal" android:layout_width="fill_parent" style="?android:attr/buttonBarStyle" android:layout_height="wrap_content">
-        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use"
+              android:orientation="vertical">
+<HorizontalScrollView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/horizontalscroll"
+                        android:layout_margin="5dp">
+    <LinearLayout android:gravity="center_horizontal" android:layout_width="wrap_content" style="?android:attr/buttonBarStyle" android:layout_height="wrap_content">
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use1"
                 android:text="How do I use this app?"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use2"
+                android:text="What is the red/yellow/green button up there?"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use3"
+                android:text="How can I save pictures to my device?"/>
     </LinearLayout>
+</HorizontalScrollView>
 
     <FrameLayout
             android:id="@+id/help_frame_container"

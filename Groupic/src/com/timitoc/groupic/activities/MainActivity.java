@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
         Global.initializeSettings(this);
 
 	    mTitle = "closed";
-        mDrawerTitle = "opened";
+        mDrawerTitle = "Menu";
 
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
