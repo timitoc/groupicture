@@ -9,7 +9,7 @@ import com.timitoc.groupic.R;
 public class ConnectionStateManager {
 
     public enum UsingState {
-        ONLINE, OFFLINE, UNDEFINED;
+        ONLINE, OFFLINE, UNDEFINED
     }
     private static UsingState usingState = UsingState.UNDEFINED;
     private static MenuItem controller;
