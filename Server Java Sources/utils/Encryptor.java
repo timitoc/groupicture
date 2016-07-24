@@ -1,5 +1,6 @@
 package utils;
 
+import Global.Constants;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.io.UnsupportedEncodingException;
 import static java.lang.Math.random;
@@ -20,7 +21,7 @@ public class Encryptor {
 	
 	private static final String ALGO = "AES";
 	private static Cipher cipher;
-	static byte keyBytes[] = {'l', 'e', 'a', 'n', 'a', 'r', 'd', 'e', '1', '2', '3', '4', '5', '6', '7', '8'};
+	static byte keyBytes[] = Constants.KEY_BYTES;
 	
 	public static String encrypt(String s) throws Exception
 	{

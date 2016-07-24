@@ -5,6 +5,7 @@
  */
 package utils;
 
+import Global.Constants;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -61,11 +62,11 @@ public class DBHandler {
     
     public String connectToDB(String wantedConnection)
     {
-        String host = "127.8.17.2";
-        String port = "3306";
-        String dbName = "groupicture";
-        String username = "adminulQSh82";
-        String password = "Lw3n7wIMMVX8";
+        String host = Constants.SH_HOST;
+        String port = Constants.SH_PORT;
+        String dbName = Constants.DB_NAME;
+        String username = Constants.USERNAME;
+        String password = Constants.PASSWORD;
         String s;
         if ("remote".equals(wantedConnection)) {
             tableName = "remote";
@@ -73,9 +74,10 @@ public class DBHandler {
             return connectToDB(s, username, password);
         }
         else {
+            /// old version. For debugging purposes only.
             tableName = "local";
             s = "jdbc:mysql://" + "localhost" + ":" + "3306" + "/" + "Groupicture";
-            return connectToDB(s, "root", "123parola");
+            return connectToDB(s, "root", Constants.LOCAL_PASSWORD);
         }
     }
     
