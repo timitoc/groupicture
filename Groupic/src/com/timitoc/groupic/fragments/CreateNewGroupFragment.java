@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.interfaces.ServerStatusCallback;
@@ -46,6 +47,10 @@ public class CreateNewGroupFragment extends Fragment {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (ConnectionStateManager.getUsingState() != ConnectionStateManager.UsingState.ONLINE) {
+                    Toast.makeText(getActivity(), "Can't create groups while offline", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 System.out.println("Started creating group");
                 if (!checkInput())
                     return;

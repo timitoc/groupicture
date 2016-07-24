@@ -12,15 +12,17 @@ public class ImageItem implements Serializable{
     private int id;
     private String title;
     private String requestUrl;
+    private FolderItem parentFolder;
 
     public ImageItem(){
 
     }
 
-    public ImageItem(int id, String title, String requestUrl){
+    public ImageItem(int id, String title, String requestUrl, FolderItem parentFolder){
         this.id = id;
         this.title = title;
         this.requestUrl = requestUrl;
+        this.parentFolder = parentFolder;
     }
 
     public ImageItem(JSONObject jsonObject) {
@@ -58,5 +60,9 @@ public class ImageItem implements Serializable{
 
     public void setRequestUrl(String requestUrl) {
         this.requestUrl = requestUrl;
+    }
+
+    public FolderItem getParentFolder() {
+        return parentFolder;
     }
 }

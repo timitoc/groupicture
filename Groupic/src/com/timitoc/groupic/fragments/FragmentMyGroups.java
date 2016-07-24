@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyGroupsListAdapter;
-import com.timitoc.groupic.adapters.NavDrawerListAdapter;
 import com.timitoc.groupic.dialogBoxes.DeleteGroupDialogBox;
 import com.timitoc.groupic.models.GroupItem;
-import com.timitoc.groupic.utils.CustomRequest;
-import com.timitoc.groupic.utils.Encryptor;
-import com.timitoc.groupic.utils.Global;
+import com.timitoc.groupic.utils.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class FragmentMyGroups extends Fragment{
 
@@ -49,15 +48,16 @@ public class FragmentMyGroups extends Fragment{
 
     public void prepare() {
         ArrayList<GroupItem> groupItems = new ArrayList<>();
+
+        adapter = new MyGroupsListAdapter(getActivity(),
+                groupItems);
+        groupItemListView = (ListView) mainView.findViewById(R.id.list_my_groups);
+        groupItemListView.setAdapter(adapter);
         try {
             searchServerForMyGroups(groupItems);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapter = new MyGroupsListAdapter(getActivity(),
-                groupItems);
-        groupItemListView = (ListView) mainView.findViewById(R.id.list_my_groups);
-        groupItemListView.setAdapter(adapter);
         groupItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -138,6 +138,10 @@ public class FragmentMyGroups extends Fragment{
     }
 
     public void searchServerForMyGroups(final ArrayList<GroupItem> groupItems) throws JSONException {
+        if (ConnectionStateManager.getUsingState() == ConnectionStateManager.UsingState.OFFLINE) {
+            loadLocalSaves(groupItems);
+            return;
+        }
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         JSONObject jsonObject = new JSONObject();
@@ -163,10 +167,15 @@ public class FragmentMyGroups extends Fragment{
                                     System.out.println(arr.getJSONObject(i).getString("title"));
                                     groupItems.add(new GroupItem(arr.getJSONObject(i)));
                                 }
+                                ConnectionStateManager.increaseUsingState();
+                                groupItemListView.setAdapter(adapter);
                             }
-                            groupItemListView.setAdapter(adapter);
+                            else
+                                loadLocalSaves(groupItems);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            loadLocalSaves(groupItems);
                         }
                     }
 
@@ -175,11 +184,27 @@ public class FragmentMyGroups extends Fragment{
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(("That didn't work!\n") + error.getMessage());
-
+                loadLocalSaves(groupItems);
             }
         });
         System.out.println(jsonRequest.getUrl());
         queue.add(jsonRequest);
     }
+
+    private void loadLocalSaves(ArrayList<GroupItem> groupItems) {
+        ConnectionStateManager.decreaseUsingState();
+        Set<String> groupSet = SaveLocalManager.getGroupsSet();
+        for (String groupString : groupSet) {
+            String[] fields = groupString.split("#");
+            int id = Integer.parseInt(fields[1], 16);
+            String title = fields[2];
+            String description = fields[3];
+            GroupItem groupItem= new GroupItem(id, title, description);
+            groupItems.add(groupItem);
+        }
+
+        groupItemListView.setAdapter(adapter);
+    }
+
 
 }

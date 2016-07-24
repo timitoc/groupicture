@@ -24,11 +24,9 @@ import com.timitoc.groupic.adapters.MyImagesGridAdapter;
 import com.timitoc.groupic.dialogBoxes.AddNewDialogBox;
 import com.timitoc.groupic.dialogBoxes.DeleteImageOnLocalDialogBox;
 import com.timitoc.groupic.dialogBoxes.SaveImageOnLocalDialogBox;
+import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.ImageItem;
-import com.timitoc.groupic.utils.Encryptor;
-import com.timitoc.groupic.utils.Global;
-import com.timitoc.groupic.utils.SaveLocalManager;
-import com.timitoc.groupic.utils.VolleySingleton;
+import com.timitoc.groupic.utils.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by timi on 28.04.2016.
@@ -46,14 +45,15 @@ public class FolderContentFragment extends Fragment {
     MyImagesGridAdapter adapter;
     View mainView;
     GridView gridView;
+    private FolderItem currentFolder;
     private int folderId;
     private Bitmap bitmap;
 
-    public static FolderContentFragment newInstance(int folderId) {
+    public static FolderContentFragment newInstance(FolderItem folderItem) {
         FolderContentFragment myFragment = new FolderContentFragment();
 
         Bundle args = new Bundle();
-        args.putInt("folder-id", folderId);
+        args.putSerializable("folder_item", folderItem);
         myFragment.setArguments(args);
 
         return myFragment;
@@ -63,12 +63,14 @@ public class FolderContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.folder_content_fragment, container, false);
         gridView = (GridView)mainView.findViewById(R.id.images_grid_view);
-        folderId = getArguments().getInt("folder-id");
+        currentFolder = (FolderItem) getArguments().getSerializable("folder_item");
+        folderId = currentFolder.getId();
+
         VolleySingleton.getInstance(getActivity());
         Global.onAddMenuItemClicked = new Runnable() {
             @Override
             public void run() {
-                Global.current_folder_id = folderId;
+                Global.current_folder_id = currentFolder.getId();
                 Global.addImage = new Runnable() {
                     @Override
                     public void run() {
@@ -159,6 +161,7 @@ public class FolderContentFragment extends Fragment {
     private void prepare() {
         ArrayList<ImageItem> imageItems = new ArrayList<>();
         System.out.println("This folder id is " + folderId);
+        adapter = new MyImagesGridAdapter(getActivity(), imageItems);
 
         try {
             populateImageItems(imageItems);
@@ -168,7 +171,7 @@ public class FolderContentFragment extends Fragment {
 /*
         folderItems.add(new FolderItem(1, "titlu"));
         folderItems.add(new FolderItem(2, "yey"));*/
-        adapter = new MyImagesGridAdapter(getActivity(), imageItems);
+
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -234,6 +237,11 @@ public class FolderContentFragment extends Fragment {
     }
 
     void populateImageItems(final ArrayList<ImageItem> imageItems) throws JSONException {
+        if (ConnectionStateManager.getUsingState() == ConnectionStateManager.UsingState.OFFLINE) {
+            getImagesFromLocal(imageItems);
+            return;
+        }
+
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         final JSONObject params = new JSONObject();
@@ -252,17 +260,21 @@ public class FolderContentFragment extends Fragment {
                                 JSONArray imagesId = jsonResponse.getJSONArray("images");
                                 for (int i = 0; i < imagesId.length(); i++) {
                                     int image_id = imagesId.getInt(i);
-                                    ImageItem item = new ImageItem(image_id, "not_yet_implemented", buildImageRequestUrl(image_id));
+                                    ImageItem item = new ImageItem(image_id, "not_yet_implemented", buildImageRequestUrl(image_id), currentFolder);
                                     imageItems.add(item);
                                     System.out.println(item.getId() + " " + item.getRequestUrl());
                                 }
+                                ConnectionStateManager.increaseUsingState();
                                 gridView.setAdapter(adapter);
                             }
-                            else
+                            else {
                                 System.out.println("failed to get Images from folders");
+                                getImagesFromLocal(imageItems);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             System.out.println("exception to get Images from folders");
+                            getImagesFromLocal(imageItems);
                         }
                     }
                 },
@@ -272,6 +284,7 @@ public class FolderContentFragment extends Fragment {
                     public void onErrorResponse(VolleyError error)
                     {
                         System.out.println("Error " + error.getMessage());
+                        getImagesFromLocal(imageItems);
                     }
                 })
         {
@@ -288,6 +301,24 @@ public class FolderContentFragment extends Fragment {
         };
 
         queue.add(strRequest);
+    }
+
+    private void getImagesFromLocal(ArrayList<ImageItem> imageItems) {
+        ConnectionStateManager.decreaseUsingState();
+
+        Set<String> folderSet = SaveLocalManager.getImagesSet();
+        for (String folderString : folderSet) {
+            String[] fields = folderString.split("#");
+            if (fields.length < 3)
+                continue;
+            int folderId = Integer.parseInt(fields[1], 16);
+            int imageId = Integer.parseInt(fields[2], 16);
+            if (folderId == currentFolder.getId()) {
+                ImageItem imageItem = new ImageItem(imageId, "not_yet_implemented", "", currentFolder);
+                imageItems.add(imageItem);
+            }
+        }
+        gridView.setAdapter(adapter);
     }
 
     @Override

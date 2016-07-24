@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.models.GroupItem;
+import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.interfaces.GroupEnterCallback;
@@ -80,8 +81,10 @@ public class SearchGroupsFragment extends Fragment{
         catch (JSONException e) {
             e.printStackTrace();
         }
-        adapter = new MyGroupsListAdapter(getActivity(), groupItems, createGroupEnterEvent());
-
+        if (ConnectionStateManager.getUsingState() != ConnectionStateManager.UsingState.OFFLINE)
+            adapter = new MyGroupsListAdapter(getActivity(), groupItems, createGroupEnterEvent());
+        else
+            adapter = new MyGroupsListAdapter(getActivity(), groupItems);
         foundGroups.setAdapter(adapter);
         /*foundGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

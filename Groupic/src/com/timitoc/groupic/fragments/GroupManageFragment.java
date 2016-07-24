@@ -20,13 +20,16 @@ import com.timitoc.groupic.adapters.MyFoldersListAdapter;
 import com.timitoc.groupic.dialogBoxes.AddNewDialogBox;
 import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.GroupItem;
+import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
+import com.timitoc.groupic.utils.SaveLocalManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by timi on 28.04.2016.
@@ -73,14 +76,14 @@ public class GroupManageFragment extends Fragment {
             }
         };
         ArrayList<FolderItem> folderItems = new ArrayList<>();
+        adapter = new MyFoldersListAdapter(getActivity(),
+                folderItems);
+        folderItemListView = (ListView) mainView.findViewById(R.id.list_group_folders);
         try {
             searchServerForGroupFolders(folderItems);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapter = new MyFoldersListAdapter(getActivity(),
-                folderItems);
-        folderItemListView = (ListView) mainView.findViewById(R.id.list_group_folders);
         folderItemListView.setAdapter(adapter);
         folderItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -94,7 +97,7 @@ public class GroupManageFragment extends Fragment {
 
     public void showFolderContent(FolderItem item) {
         System.out.println(item.getTitle() + " folder pressed ");
-        Fragment fragment = FolderContentFragment.newInstance(item.getId());
+        Fragment fragment = FolderContentFragment.newInstance(item);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.folder_content, fragment)
@@ -103,6 +106,10 @@ public class GroupManageFragment extends Fragment {
     }
 
     public void searchServerForGroupFolders(final ArrayList<FolderItem> folderItems) throws JSONException {
+        if (ConnectionStateManager.getUsingState() == ConnectionStateManager.UsingState.OFFLINE) {
+            getFoldersFromLocal(folderItems);
+            return;
+        }
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         JSONObject jsonObject = new JSONObject();
@@ -126,15 +133,20 @@ public class GroupManageFragment extends Fragment {
                                 System.out.println("Response array size: " + arr.length());
                                 for(int i=0; i < arr.length(); i++) {
                                     System.out.println(arr.getJSONObject(i).getString("title"));
-                                    folderItems.add(new FolderItem(arr.getJSONObject(i)));
+                                    folderItems.add(new FolderItem(arr.getJSONObject(i), groupItem));
                                 }
+                                folderItemListView.setAdapter(adapter);
+                                ConnectionStateManager.increaseUsingState();
+                                if (!adapter.isEmpty())
+                                    showFolderContent((FolderItem)adapter.getItem(0));
                             }
-                            folderItemListView.setAdapter(adapter);
-                            if (!adapter.isEmpty())
-                                showFolderContent((FolderItem)adapter.getItem(0));
+                            else {
+                                getFoldersFromLocal(folderItems);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            getFoldersFromLocal(folderItems);
                         }
                     }
 
@@ -143,10 +155,30 @@ public class GroupManageFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(("That didn't work!\n") + error.getMessage());
-
+                getFoldersFromLocal(folderItems);
             }
         });
         System.out.println(jsonRequest.getUrl());
         queue.add(jsonRequest);
     }
+
+    private void getFoldersFromLocal(ArrayList<FolderItem> folderItems) {
+        ConnectionStateManager.decreaseUsingState();
+
+        Set<String> folderSet = SaveLocalManager.getFoldersSet();
+        for (String folderString : folderSet) {
+            String[] fields = folderString.split("#");
+            int groupId = Integer.parseInt(fields[1], 16);
+            int folderId = Integer.parseInt(fields[2], 16);
+            String title = fields[3];
+            if (groupId == groupItem.getId()) {
+                FolderItem folderItem= new FolderItem(folderId, title, groupItem);
+                folderItems.add(folderItem);
+            }
+        }
+        folderItemListView.setAdapter(adapter);
+        if (!adapter.isEmpty())
+            showFolderContent((FolderItem)adapter.getItem(0));
+    }
+
 }

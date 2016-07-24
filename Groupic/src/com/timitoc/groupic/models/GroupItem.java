@@ -20,6 +20,7 @@ public class GroupItem implements Serializable {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.hasPassword = false;
     }
 
     public GroupItem(JSONObject jsonObject) {

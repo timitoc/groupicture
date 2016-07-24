@@ -27,6 +27,7 @@ import com.timitoc.groupic.fragments.FragmentSecond;
 import com.timitoc.groupic.fragments.about.FragmentAbout;
 import com.timitoc.groupic.fragments.help.FragmentHelp;
 import com.timitoc.groupic.models.NavDrawerItem;
+import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Global;
 
 import java.util.ArrayList;
@@ -188,6 +189,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        ConnectionStateManager.setController(menu.getItem(0));
         return true;
     }
 

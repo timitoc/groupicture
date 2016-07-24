@@ -32,6 +32,8 @@ public class Global {
     public static String phoneStoragePath = null;
     public static Activity baseActivity;
 
+
+
     private static SharedPreferences sharedPreferences = null;
 
 
@@ -121,4 +123,6 @@ public class Global {
         editor.remove("confirm_delete_image_on_local").commit();
         editor.putBoolean("confirm_delete_image_on_local", Global.confirm_delete_image_on_local).commit();
     }
+
+
 }
