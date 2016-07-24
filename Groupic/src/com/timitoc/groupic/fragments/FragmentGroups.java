@@ -3,21 +3,25 @@ package com.timitoc.groupic.fragments;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.models.GroupsFragmentModel;
+import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.utils.Global;
 
 public class FragmentGroups extends Fragment {
     View mainView;
+    GroupsFragmentModel model;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView =  inflater.inflate(R.layout.fragment_groups, container, false);
-        setDisplay(0);
+
         setButtonEvent((Button) mainView.findViewById(R.id.your_groups), 0);
         setButtonEvent((Button) mainView.findViewById(R.id.search_groups), 1);
         setButtonEvent((Button) mainView.findViewById(R.id.create_new), 2);
@@ -33,8 +37,21 @@ public class FragmentGroups extends Fragment {
                 setDisplay(2);
             }
         };
+
+        if (getArguments() != null && getArguments().containsKey("groups-model"))
+            model = (GroupsFragmentModel) this.getArguments().getSerializable("groups-model");
+        if (savedInstanceState == null)
+            setDisplay(0);
+
         return mainView;
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable("groups-model", model);
+    }
+
 
     public void setButtonEvent(Button button, final int position) {
         System.out.println("Setting " + position);
@@ -47,15 +64,22 @@ public class FragmentGroups extends Fragment {
 
     public void setDisplay(int position) {
         Fragment fragment = null;
+        Bundle args;
         switch (position) {
             case 0:
                 fragment = new FragmentMyGroups();
                 break;
             case 1:
                 fragment = new SearchGroupsFragment();
+                args = new Bundle();
+                args.putSerializable("search-model", model.searchModel);
+                fragment.setArguments(args);
                 break;
             case 2:
                 fragment = new CreateNewGroupFragment();
+                args = new Bundle();
+                args.putSerializable("create-model", model.createModel);
+                fragment.setArguments(args);
                 break;
             default:
                 break;

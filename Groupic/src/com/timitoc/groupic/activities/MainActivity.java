@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -23,6 +24,8 @@ import com.timitoc.groupic.adapters.NavDrawerListAdapter;
 import com.timitoc.groupic.fragments.*;
 import com.timitoc.groupic.fragments.about.FragmentAbout;
 import com.timitoc.groupic.fragments.help.FragmentHelp;
+import com.timitoc.groupic.models.GroupsFragmentModel;
+import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.models.NavDrawerItem;
 import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Global;
@@ -34,14 +37,11 @@ public class MainActivity extends Activity {
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    // nav drawer title
     private CharSequence mDrawerTitle;
-
-    // used to store app title
     private CharSequence mTitle;
-
-    // slide menu items
     private String[] navMenuTitles;
+
+    public GroupsFragmentModel groupsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,8 @@ public class MainActivity extends Activity {
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
-        for (String s : navMenuTitles)
-            System.out.println(s);
+        //for (String s : navMenuTitles)
+            ///System.out.println(s);
 
         // nav drawer icons from resources
         TypedArray navMenuIcons = getResources()
@@ -110,8 +110,13 @@ public class MainActivity extends Activity {
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            displayView(0);
+            groupsModel = new GroupsFragmentModel();
         }
+        else {
+            groupsModel = (GroupsFragmentModel) savedInstanceState.getSerializable("groups-model");
+        }
+        if (savedInstanceState == null)
+            displayView(0);
     }
 
     private class SlideMenuClickListener implements
@@ -137,9 +142,13 @@ public class MainActivity extends Activity {
     private void displayView(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
+        Bundle args;
         switch (position) {
             case 0:
                 fragment = new FragmentGroups();
+                args = new Bundle();
+                args.putSerializable("groups-model", groupsModel);
+                fragment.setArguments(args);
                 break;
             case 1:
                 // fragment = new FragmentSecond();
@@ -242,6 +251,12 @@ public class MainActivity extends Activity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable("groups-model", groupsModel);
     }
 
     @Override
