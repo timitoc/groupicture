@@ -39,5 +39,4 @@ captures/
 *.jks
 
 #Credentials
-src/com/timitoc/groupic/utils/Credentials.java
-./src/com/timitoc/groupic/utils/Credentials.java
+Groupic/src/com/timitoc/groupic/utils/Credentials.java
