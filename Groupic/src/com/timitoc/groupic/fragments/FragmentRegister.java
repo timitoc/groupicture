@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
@@ -17,6 +19,8 @@ import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.ImageItem;
+import com.timitoc.groupic.models.LoginFragmentModel;
+import com.timitoc.groupic.models.RegisterFragmentModel;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import org.json.JSONArray;
@@ -33,6 +37,7 @@ public class FragmentRegister extends Fragment {
     View mainView;
     Button registerRequest;
     TextView registerAttemptResponse;
+    RegisterFragmentModel model;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +50,36 @@ public class FragmentRegister extends Fragment {
                 registerAttempt();
             }
         });
+        if (getArguments() != null && getArguments().containsKey("register-model"))
+            model = (RegisterFragmentModel) this.getArguments().getSerializable("register-model");
+        useModel();
         return mainView;
+    }
+
+    public void setModel(RegisterFragmentModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable("register-model", model);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onPause() {
+        model.setUsername(((EditText)mainView.findViewById(R.id.username_textbox_r)).getText().toString());
+        model.setPassword(((EditText)mainView.findViewById(R.id.password_textbox_r)).getText().toString());
+        model.setNickname(((EditText)mainView.findViewById(R.id.name_textbox_r)).getText().toString());
+
+        System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.getNickname());
+        super.onPause();
+    }
+
+    private void useModel() {
+        ((EditText)mainView.findViewById(R.id.username_textbox_r)).setText(model.getUsername());
+        ((EditText)mainView.findViewById(R.id.password_textbox_r)).setText(model.getPassword());
+        ((EditText)mainView.findViewById(R.id.name_textbox_r)).setText(model.getNickname());
     }
 
     private boolean validCredentials() {

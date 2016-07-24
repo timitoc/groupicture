@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -23,6 +25,7 @@ import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.dialogBoxes.CreateFolderDialogBox;
 import com.timitoc.groupic.dialogBoxes.ProposeOfflineUseDialogBox;
+import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.SaveLocalManager;
 import com.timitoc.groupic.utils.interfaces.Consumer;
@@ -38,10 +41,13 @@ public class FragmentLogin extends Fragment {
     View mainView;
     Button loginRequest;
     TextView loginAttemptResponse;
+    LoginFragmentModel model;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
         mainView = inflater.inflate(R.layout.fragment_login, container, false);
         loginRequest = (Button) mainView.findViewById(R.id.login_request);
         loginAttemptResponse = (TextView) mainView.findViewById(R.id.login_attempt_response);
@@ -51,8 +57,35 @@ public class FragmentLogin extends Fragment {
                 loginAttempt();
             }
         });
-        tryComplete();
+        System.out.println("Called create with instance " + (savedInstanceState != null));
+        if (getArguments() != null && getArguments().containsKey("login-model"))
+            model = (LoginFragmentModel) this.getArguments().getSerializable("login-model");
+        if (model == null || model.isEmpty())
+            tryComplete();
+        else {
+            System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.isChecked());
+            useModel();
+        }
+       // }
         return mainView;
+    }
+
+    public void setModel(LoginFragmentModel model) {
+        this.model = model;
+    }
+
+    private void useModel() {
+        ((EditText)mainView.findViewById(R.id.username_textbox)).setText(model.getUsername());
+        ((EditText)mainView.findViewById(R.id.password_textbox)).setText(model.getPassword());
+        ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).setChecked(model.isChecked());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        System.out.println("Called save");
+        savedInstanceState.putString("login-username", ((EditText)mainView.findViewById(R.id.username_textbox)).getText().toString());
+        savedInstanceState.putSerializable("login-model", model);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     private void tryComplete() {
@@ -75,8 +108,8 @@ public class FragmentLogin extends Fragment {
             return;
         }
         if (!username.isEmpty() && !password.isEmpty()) {
-            ((TextView)mainView.findViewById(R.id.username_textbox)).setText(username);
-            ((TextView)mainView.findViewById(R.id.password_textbox)).setText(password);
+            ((EditText)mainView.findViewById(R.id.username_textbox)).setText(username);
+            ((EditText)mainView.findViewById(R.id.password_textbox)).setText(password);
             loginAttempt();
         }
 
@@ -132,6 +165,19 @@ public class FragmentLogin extends Fragment {
         System.out.println(jsonRequest.getUrl());
         queue.add(jsonRequest);
     }
+
+    @Override
+    public void onPause() {
+        System.out.println("Login paused");
+        System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.isChecked());
+        model.setUsername(((EditText)mainView.findViewById(R.id.username_textbox)).getText().toString());
+        model.setPassword(((EditText)mainView.findViewById(R.id.password_textbox)).getText().toString());
+        model.setChecked(((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).isChecked());
+        System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.isChecked());
+        super.onPause();
+    }
+
+
 
 
    /* private void correctCredentials(final String username, final String password, final Consumer<Boolean> consumer) throws JSONException {
