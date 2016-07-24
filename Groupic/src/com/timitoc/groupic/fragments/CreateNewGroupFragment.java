@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.models.CreateNewGroupFragmentModel;
 import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
@@ -34,13 +35,35 @@ public class CreateNewGroupFragment extends Fragment {
 
     View mainView;
     Button createButton;
+    CreateNewGroupFragmentModel model;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("Creation");
         mainView = inflater.inflate(R.layout.create_new_group_fragment, container, false);
         createButton = (Button) mainView.findViewById(R.id.new_group_button);
+        if (getArguments() != null && getArguments().containsKey("create-model"))
+            model = (CreateNewGroupFragmentModel) getArguments().getSerializable("create-model");
+        populate();
         prepare();
         return  mainView;
+    }
+
+    @Override
+    public void onPause() {
+        String name = ((EditText) mainView.findViewById(R.id.new_group_name)).getText().toString();
+        String description = ((EditText) mainView.findViewById(R.id.new_group_description)).getText().toString();
+        String password = ((EditText) mainView.findViewById(R.id.new_group_password)).getText().toString();
+        model.setName(name);
+        model.setDescription(description);
+        model.setPassword(password);
+        super.onPause();
+    }
+
+    private void populate() {
+        ((EditText) mainView.findViewById(R.id.new_group_name)).setText(model.getName());
+        ((EditText) mainView.findViewById(R.id.new_group_description)).setText(model.getDescription());
+        ((EditText) mainView.findViewById(R.id.new_group_password)).setText(model.getPassword());
     }
 
     void prepare() {

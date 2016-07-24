@@ -11,10 +11,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,7 +20,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyGroupsListAdapter;
+import com.timitoc.groupic.models.CreateNewGroupFragmentModel;
 import com.timitoc.groupic.models.GroupItem;
+import com.timitoc.groupic.models.SearchGroupsFragmentModel;
 import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
@@ -46,14 +45,34 @@ public class SearchGroupsFragment extends Fragment{
     ListView foundGroups;
     MyGroupsListAdapter adapter;
     GroupItem selectedItem;
+    SearchGroupsFragmentModel model;
+    ArrayList<GroupItem> loadedGroupItems;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.search_groups_fragment, container, false);
         searchView = (SearchView)mainView.findViewById(R.id.groups_search_bar);
         foundGroups = (ListView)mainView.findViewById(R.id.list_found_groups);
+        if (getArguments() != null && getArguments().containsKey("search-model"))
+            model = (SearchGroupsFragmentModel) getArguments().getSerializable("search-model");
         prepare();
+        populate();
         return  mainView;
+    }
+
+    @Override
+    public void onPause() {
+        String query = searchView.getQuery().toString();
+        model.setQuery(query);
+        model.setGroupItems(loadedGroupItems);
+        super.onPause();
+    }
+
+    void populate() {
+        searchView.setQuery(model.getQuery(), false);
+        loadedGroupItems = model.getGroupItems();
+        adapter = new MyGroupsListAdapter(getActivity(), model.getGroupItems(), createGroupEnterEvent());
+        foundGroups.setAdapter(adapter);
     }
 
     void prepare() {
@@ -74,17 +93,17 @@ public class SearchGroupsFragment extends Fragment{
     }
 
     void searchForGroups() {
-        ArrayList<GroupItem> groupItems = new ArrayList<>();
+        loadedGroupItems = new ArrayList<>();
         try {
-            getGroupsFromServer(groupItems);
+            getGroupsFromServer(loadedGroupItems);
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
         if (ConnectionStateManager.getUsingState() != ConnectionStateManager.UsingState.OFFLINE)
-            adapter = new MyGroupsListAdapter(getActivity(), groupItems, createGroupEnterEvent());
+            adapter = new MyGroupsListAdapter(getActivity(), loadedGroupItems, createGroupEnterEvent());
         else
-            adapter = new MyGroupsListAdapter(getActivity(), groupItems);
+            adapter = new MyGroupsListAdapter(getActivity(), loadedGroupItems);
         foundGroups.setAdapter(adapter);
         /*foundGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
