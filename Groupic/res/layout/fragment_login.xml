@@ -20,6 +20,8 @@
                   android:textColorHint="@color/gray"
                   android:hint="username"
                   android:textCursorDrawable="@null"
+                  android:imeOptions="actionNext"
+                  android:singleLine="true"
         />
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/password_textbox"
@@ -29,6 +31,7 @@
                   android:textColorHint="@color/gray"
                   android:inputType="textPassword"
                   android:textCursorDrawable="@null"
+                  android:singleLine="true"
         />
         <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:id="@+id/auto_login_checkbox"

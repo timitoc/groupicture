@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
+                                                  xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  android:background="@color/acad1"
+>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:background="@color/acad1"
               android:layout_width="match_parent"
@@ -15,3 +19,4 @@
             android:textSize="25sp" />
 
 </LinearLayout>
+</ScrollView>

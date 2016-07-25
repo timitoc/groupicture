@@ -6,7 +6,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:background="@color/acad1">
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content" android:text="Name"
@@ -17,30 +17,29 @@
               android:id="@+id/new_group_name"
               android:textCursorDrawable="@null"
               android:textColor="@color/white"
-              android:shadowColor="@color/acad3"
-              android:minHeight="100dp"
-              android:layout_gravity="center_horizontal"    />
+              android:layout_gravity="center_horizontal"
+              android:imeOptions="actionNext"
+              android:singleLine="true"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Description"
               android:textColor="@color/white"
               android:layout_gravity="center_horizontal"    />
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:textColor="@color/white"
-              android:shadowColor="@color/acad3"
               android:textCursorDrawable="@null"
               android:id="@+id/new_group_description"
-              android:minHeight="100dp"
-              android:layout_gravity="center_horizontal"    />
+              android:layout_gravity="center_horizontal"
+              android:imeOptions="actionNext"
+              android:singleLine="true"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Password"
               android:textColor="@color/white"
               android:layout_gravity="center_horizontal"    />
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:textColor="@color/white"
-              android:shadowColor="@color/gray"
               android:id="@+id/new_group_password"
-              android:hint="Leave this field empty for a free access group"
+              android:hint="Leave this field empty for a group with free access"
               android:textColorHint="@color/gray"
-              android:minHeight="100dp"
               android:textCursorDrawable="@null"
+              android:singleLine="true"
               android:layout_gravity="center_horizontal" android:inputType="textPassword"/>
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/new_group_button"
