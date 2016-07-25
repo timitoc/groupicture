@@ -15,7 +15,10 @@
             android:layout_height="wrap_content"
             android:background="@color/acad1"
             android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:layout_margin="5dp"
+            android:autoLink="web"
+    />
 
 </LinearLayout>
 </ScrollView>

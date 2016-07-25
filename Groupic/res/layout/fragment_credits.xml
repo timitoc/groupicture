@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout android:gravity="center_horizontal" android:layout_width="fill_parent" style="?android:attr/buttonBarStyle" android:layout_height="wrap_content">
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/credits1"
+                android:text="Icons"/>
+    </LinearLayout>
+
+    <FrameLayout
+            android:id="@+id/credits_frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+</LinearLayout>
