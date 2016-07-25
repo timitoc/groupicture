@@ -42,6 +42,7 @@ public class FragmentMyGroups extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_my_groups, container, false);
+        System.out.println("Creating view");
         prepare();
         return  mainView;
     }
