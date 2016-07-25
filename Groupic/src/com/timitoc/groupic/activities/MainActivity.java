@@ -2,9 +2,7 @@ package com.timitoc.groupic.activities;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -17,15 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
 import com.timitoc.groupic.fragments.*;
-import com.timitoc.groupic.fragments.about.FragmentAbout;
-import com.timitoc.groupic.fragments.help.FragmentHelp;
+import com.timitoc.groupic.fragments.FragmentAbout;
+import com.timitoc.groupic.fragments.FragmentHelp;
 import com.timitoc.groupic.models.GroupsFragmentModel;
-import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.models.NavDrawerItem;
 import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Global;
@@ -151,10 +147,10 @@ public class MainActivity extends Activity {
                 fragment.setArguments(args);
                 break;
             case 1:
-                // fragment = new FragmentSecond();
+                // fragment = new FragmentText();
                 break;
             case 2:
-                // fragment = new FragmentSecond();
+                // fragment = new FragmentText();
                 break;
             case 3:
                 fragment = new FragmentOptions();

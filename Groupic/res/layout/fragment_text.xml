@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:background="@color/acad1"
+                                                  xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  android:background="@color/acad1"
 >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:background="@color/acad1"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
               android:orientation="vertical" >
 
     <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textForHelp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/acad1"

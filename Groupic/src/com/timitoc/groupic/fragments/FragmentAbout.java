@@ -1,9 +1,8 @@
-package com.timitoc.groupic.fragments.about;
+package com.timitoc.groupic.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,7 @@ public class FragmentAbout extends Fragment{
     }
 
     public void setDisplay(int position) {
-        Fragment fragment = new Fragment2About();
+        Fragment fragment = new FragmentText();
         Bundle args = new Bundle();
         switch (position) {
             case 0:
