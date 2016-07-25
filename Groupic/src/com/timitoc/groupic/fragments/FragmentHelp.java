@@ -1,4 +1,4 @@
-package com.timitoc.groupic.fragments.help;
+package com.timitoc.groupic.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -41,7 +41,7 @@ public class FragmentHelp extends Fragment{
     }
 
     public void setDisplay(int position) {
-        Fragment fragment = new Fragment2Help();
+        Fragment fragment = new FragmentText();
         Bundle args = new Bundle();
         switch (position) {
             case 0:
