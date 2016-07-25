@@ -131,7 +131,8 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() == 0) {
+        if(getFragmentManager().getBackStackEntryCount() <= 1) {
+            System.out.println("Mno amu ce?");
             super.onBackPressed();
         }
         else {
@@ -178,8 +179,17 @@ public class MainActivity extends Activity {
 
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
+            if (fragmentManager.findFragmentById(R.id.frame_container) == null) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_container, fragment)
+                        .commit();
+            }
+            else {
+                fragmentManager.beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.frame_container, fragment)
+                        .commit();
+            }
 
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
