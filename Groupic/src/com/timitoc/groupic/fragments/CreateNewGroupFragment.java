@@ -146,6 +146,9 @@ public class CreateNewGroupFragment extends Fragment {
                                 System.out.println("jsonResponse detail " + jsonResponse.get("detail"));
                             if ("success".equals(jsonResponse.getString("status"))) {
                                 Toast.makeText(getActivity(), "Group created successfully", Toast.LENGTH_SHORT).show();
+                                ((EditText) mainView.findViewById(R.id.new_group_name)).getText().clear();
+                                ((EditText) mainView.findViewById(R.id.new_group_description)).getText().clear();
+                                ((EditText) mainView.findViewById(R.id.new_group_password)).getText().clear();
                                 int group_id = jsonResponse.getInt("id");
                                 System.out.println("Obtained id is: " + group_id);
                                 mapGroupToUser(group_id, getActivity(), password);
