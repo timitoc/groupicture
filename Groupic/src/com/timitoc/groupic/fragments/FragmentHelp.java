@@ -15,11 +15,17 @@ import com.timitoc.groupic.utils.Global;
  */
 public class FragmentHelp extends Fragment{
     View mainView;
+    int displayScreen;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView =  inflater.inflate(R.layout.fragment_help, container, false);
-        setDisplay(0);
+        if (savedInstanceState == null)
+            displayScreen = 0;
+        else {
+            displayScreen = savedInstanceState.getInt("display");
+        }
+        setDisplay(displayScreen);
         Global.onRefreshMenuItemClicked = new Runnable() {
             @Override
             public void run() {
@@ -43,14 +49,13 @@ public class FragmentHelp extends Fragment{
     public void setDisplay(int position) {
         Fragment fragment = new FragmentText();
         Bundle args = new Bundle();
+        displayScreen = position;
         switch (position) {
             case 0:
                 args.putString("param1", getResources().getString(R.string.help_use1));
-                System.out.println("0");
                 break;
             case 1:
                 args.putString("param1", getResources().getString(R.string.help_use2));
-                System.out.println("1");
                 break;
             case 2:
                 args.putString("param1", getResources().getString(R.string.help_use3));
@@ -62,5 +67,11 @@ public class FragmentHelp extends Fragment{
         fragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.help_frame_container, fragment).commit();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("display", displayScreen);
+        super.onSaveInstanceState(savedInstanceState);
     }
 }

@@ -15,6 +15,7 @@ import com.timitoc.groupic.utils.Global;
  */
 public class FragmentAbout extends Fragment{
     View mainView;
+    int displayScreen;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -25,7 +26,12 @@ public class FragmentAbout extends Fragment{
                 setDisplay(0);
             }
         };
-        setDisplay(0);
+        if (savedInstanceState == null)
+            displayScreen = 0;
+        else {
+            displayScreen = savedInstanceState.getInt("display");
+        }
+        setDisplay(displayScreen);
         setButtonEvent((Button) mainView.findViewById(R.id.about_us), 0);
         setButtonEvent((Button) mainView.findViewById(R.id.about_the_app), 1);
         return mainView;
@@ -42,14 +48,13 @@ public class FragmentAbout extends Fragment{
     public void setDisplay(int position) {
         Fragment fragment = new FragmentText();
         Bundle args = new Bundle();
+        displayScreen = position;
         switch (position) {
             case 0:
                 args.putString("param1", getResources().getString(R.string.about_us));
-                System.out.println("0");
                 break;
             case 1:
                 args.putString("param1", getResources().getString(R.string.about_app));
-                System.out.println("1");
                 break;
             default:
                 break;
@@ -57,5 +62,10 @@ public class FragmentAbout extends Fragment{
         fragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.about_frame_container, fragment).commit();
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("display", displayScreen);
+        super.onSaveInstanceState(savedInstanceState);
     }
 }

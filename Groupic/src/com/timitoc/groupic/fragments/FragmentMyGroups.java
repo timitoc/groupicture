@@ -39,6 +39,7 @@ public class FragmentMyGroups extends Fragment{
     ListView groupItemListView;
     View mainView;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_my_groups, container, false);
@@ -165,7 +166,7 @@ public class FragmentMyGroups extends Fragment{
                                 JSONArray arr = response.getJSONArray("groups");
                                 System.out.println("Response array size: " + arr.length());
                                 for(int i=0; i < arr.length(); i++) {
-                                    System.out.println(arr.getJSONObject(i).getString("title"));
+                                    //System.out.println(arr.getJSONObject(i).getString("title"));
                                     groupItems.add(new GroupItem(arr.getJSONObject(i)));
                                 }
                                 ConnectionStateManager.increaseUsingState();
