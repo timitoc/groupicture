@@ -164,7 +164,8 @@ public class FolderContentFragment extends Fragment {
         adapter = new MyImagesGridAdapter(getActivity(), imageItems);
 
         try {
-            populateImageItems(imageItems);
+            if (isAdded())
+                populateImageItems(imageItems);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -224,7 +225,9 @@ public class FolderContentFragment extends Fragment {
     }
 
     private String buildImageRequestUrl(int image_id) throws JSONException {
-        String url = getString(R.string.image_service_url);
+        /// Hack quick fix for Fragment not attached to activity
+            //String url = getString(R.string.image_service_url);
+        String url = ("http://groupicture-timionjava.rhcloud.com/ImageService");
         Uri.Builder builder = Uri.parse(url).buildUpon();
 
         builder.appendQueryParameter("public_key", Global.MY_PUBLIC_KEY);

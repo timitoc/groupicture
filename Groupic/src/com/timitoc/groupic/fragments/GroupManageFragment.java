@@ -44,6 +44,8 @@ public class GroupManageFragment extends Fragment {
     MyFoldersListAdapter adapter;
     ListView folderItemListView;
 
+    int listedFolderPosition;
+
     public static GroupManageFragment newInstance(GroupItem groupItem) {
         GroupManageFragment myFragment = new GroupManageFragment();
 
@@ -59,6 +61,11 @@ public class GroupManageFragment extends Fragment {
         mainView = inflater.inflate(R.layout.group_manage_fragment, container, false);
         groupItem =  (GroupItem) getArguments().getSerializable("group_item");
         Global.current_group_id = groupItem.getId();
+        if (savedInstanceState == null)
+            listedFolderPosition = 0;
+        else {
+            listedFolderPosition = savedInstanceState.getInt("listed");
+        }
         prepare();
         return mainView;
     }
@@ -91,6 +98,7 @@ public class GroupManageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FolderItem item = (FolderItem) adapterView.getItemAtPosition(i);
+                listedFolderPosition = i;
                 showFolderContent(item);
 
             }
@@ -120,7 +128,6 @@ public class GroupManageFragment extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.folder_content, fragment)
-                .addToBackStack(null)
                 .commit();
     }
 
@@ -158,7 +165,7 @@ public class GroupManageFragment extends Fragment {
                                 folderItemListView.setAdapter(adapter);
                                 ConnectionStateManager.increaseUsingState();
                                 if (!adapter.isEmpty())
-                                    showFolderContent((FolderItem)adapter.getItem(0));
+                                    showFolderContent((FolderItem)adapter.getItem(listedFolderPosition));
                             }
                             else {
                                 getFoldersFromLocal(folderItems);
@@ -199,6 +206,12 @@ public class GroupManageFragment extends Fragment {
         folderItemListView.setAdapter(adapter);
         if (!adapter.isEmpty())
             showFolderContent((FolderItem)adapter.getItem(0));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("listed", listedFolderPosition);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 }
