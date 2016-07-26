@@ -35,6 +35,9 @@ public class FragmentHelp extends Fragment{
         setButtonEvent((Button) mainView.findViewById(R.id.help_use1), 0);
         setButtonEvent((Button) mainView.findViewById(R.id.help_use2), 1);
         setButtonEvent((Button) mainView.findViewById(R.id.help_use3), 2);
+        setButtonEvent((Button) mainView.findViewById(R.id.help_use4), 3);
+        setButtonEvent((Button) mainView.findViewById(R.id.help_use5), 4);
+        setButtonEvent((Button) mainView.findViewById(R.id.help_use6), 5);
         return mainView;
     }
     public void setButtonEvent(Button button, final int position) {
@@ -59,7 +62,15 @@ public class FragmentHelp extends Fragment{
                 break;
             case 2:
                 args.putString("param1", getResources().getString(R.string.help_use3));
-                System.out.println("2");
+                break;
+            case 3:
+                args.putString("param1", getResources().getString(R.string.help_use4));
+                break;
+            case 4:
+                args.putString("param1", getResources().getString(R.string.help_use5));
+                break;
+            case 5:
+                args.putString("param1", getResources().getString(R.string.help_use6));
                 break;
             default:
                 break;

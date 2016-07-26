@@ -36,7 +36,7 @@
     <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
               android:textColor="@color/white"
               android:id="@+id/new_group_password"
-              android:hint="Leave this field empty for a group with free access"
+              android:hint="Leave empty for free access"
               android:textColorHint="@color/gray"
               android:textCursorDrawable="@null"
               android:singleLine="true"

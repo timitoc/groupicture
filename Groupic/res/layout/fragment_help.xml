@@ -7,11 +7,17 @@
                         android:layout_margin="5dp">
     <LinearLayout android:gravity="center_horizontal" android:layout_width="wrap_content" style="?android:attr/buttonBarStyle" android:layout_height="wrap_content">
         <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use1"
-                android:text="How do I use this app?"/>
+                android:text="- How do I use this app? -"/>
         <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use2"
-                android:text="What is the red/yellow/green button up there?"/>
+                android:text="- The connection signal icon -"/>
         <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use3"
-                android:text="How can I save pictures to my device?"/>
+                android:text="- Saving data locally -"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use4"
+                android:text="- Entering/Leaving groups -"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use5"
+                android:text="- Adding pictures -"/>
+        <Button android:layout_width="wrap_content" android:layout_height="fill_parent" style="?android:attr/buttonBarButtonStyle"  android:id="@+id/help_use6"
+                android:text="- Deleting pictures -"/>
     </LinearLayout>
 </HorizontalScrollView>
 

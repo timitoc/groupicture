@@ -44,12 +44,14 @@
     <string name="image_service_url">http://groupicture-timionjava.rhcloud.com/ImageService</string>
 
     <!-- Strings for texts -->
-    <string name="help_use1">\tYou can start using Groupic with just 3 easy steps!\n\t\t1. register/log in;\n\t\t2. create or join a group;\n\t\t3. start organizing and sharing pictures with your friends.</string>
-    <string name="help_use2">\tHold click on a picture to save it to your own device\n\t\t Hold it again on the same picture to delete it from the device. The pictures are not readable from the files manager, however it will load faster next time you enter the respective group. You can clear the defaults in the options menu.</string>
-    <string name="help_use3">\tHooooohohooo.</string>
-    <string name="credits1">Icons made by www.freepik.com and www.google.com from www.flaticon.com and adapted by us using Photoshop.</string>
+    <string name="help_use1">You can start using Groupic with just 3 easy steps!\n\t\t1. register/log in;\n\t\t2. create or join a group;\n\t\t3. start organizing and sharing pictures with your friends.</string>
+    <string name="help_use2">\tThe signal is green when the user is connected to an account and the phone has a good internet connection (the user will hardly have any problems trying to enter groups, add pictures, etc).\n\tThe signal is yellow when the user is connected to an account but the phone has a bad internet connection (the user may have some problems trying to navigate through the application but usually a refresh solves the connectivity problem)\n\tThe signal is red when the user is not connected to any account; the user can choose to use the application as a guest, only being able to see the pictures they saved to their phone.</string>
+    <string name="help_use3">\tUsers can save data to their phone; by doing that, they are able to use the application offline or without logging on in their account.\n\tTo save a picture locally, the user have to hold down on the respective picture; they will be asked to confirm whether they really want to download the picture or not.</string>
+    <string name="help_use4">\tThe user can search for a group name or description and enter it if they know the password or if the group has does not have one.\n\tTo leave a group, the user has to "activate" the delete button by pressing it once. Once the delete button is active, one simple click on a group will ask the user if they want to remove it from their groups.</string>
+    <string name="help_use5">\tThe user has to first enter a group and select a folder where the picture should be saved.\n\tAfter that, the user can either choose a picture from their gallery or take one using their camera.</string>
+    <string name="help_use6">\tAlthough the user may not like a picture, other users might still need it for some reason. That is why there is no posibility to delete a picture once it has been uploaded.\n\tHowever, the user can delete the locally saved copy of any pictures he downloads first.</string>
+    <string name="credits1">Icons made by www.freepik.com and www.google.com (cc3.0) from www.flaticon.com and adapted by us using Photoshop.</string>
     <string name="about_us">\tThe Groupic application was developed by\n\tArdelean Andrei-Timotei (timitoc@yahoo.com)\nand\n\tGoran Constantin-Cornel (cornelg7@yahoo.com)</string>
     <string name="about_app">\tGroupic is a simple way to organize photos in your family or in a group of friends. Join groups with people so that you can share with them both important moments of your life and other boring stuff such as school essays and homework.\n\tIt\'s never been easier!</string>
-    <string name="stergepls">kjhsauidg</string>
 
 </resources>
