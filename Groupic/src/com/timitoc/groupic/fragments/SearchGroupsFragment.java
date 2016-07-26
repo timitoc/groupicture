@@ -105,6 +105,7 @@ public class SearchGroupsFragment extends Fragment{
         else
             adapter = new MyGroupsListAdapter(getActivity(), loadedGroupItems);
         foundGroups.setAdapter(adapter);
+
         /*foundGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -191,6 +192,9 @@ public class SearchGroupsFragment extends Fragment{
                                 System.out.println("Successfully loaded groups");
                                 JSONArray arr = jsonResponse.getJSONArray("groups");
                                 System.out.println("Response array size: " + arr.length());
+                                if (arr.length() == 0){
+                                    Toast.makeText(getActivity(), "No results", Toast.LENGTH_SHORT).show();
+                                }
                                 for(int i=0; i < arr.length(); i++) {
                                     System.out.println(arr.getJSONObject(i).getString("title"));
                                     groupItems.add(new GroupItem(arr.getJSONObject(i)));
