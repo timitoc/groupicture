@@ -13,6 +13,7 @@ import com.timitoc.groupic.fragments.FragmentLogin;
 import com.timitoc.groupic.fragments.FragmentRegister;
 import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.models.RegisterFragmentModel;
+import com.timitoc.groupic.utils.Global;
 
 /**
  * Created by timi on 25.04.2016.
@@ -31,6 +32,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.login_layout);
+        Global.LOGIN_API_URL = getString(R.string.api_service_url);
         /*if (savedInstanceState != null) {
             if (loginFragment == null)
                 loginFragment = getFragmentManager().getFragment(savedInstanceState, "login-fragment");

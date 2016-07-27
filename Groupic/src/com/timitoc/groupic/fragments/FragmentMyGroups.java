@@ -24,6 +24,7 @@ import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.dialogBoxes.DeleteGroupDialogBox;
 import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.utils.*;
+import com.timitoc.groupic.utils.interfaces.Consumer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,12 +40,16 @@ public class FragmentMyGroups extends Fragment{
     ListView groupItemListView;
     View mainView;
 
+    public FragmentMyGroups() {
+        //this.setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_my_groups, container, false);
         System.out.println("Creating view");
         prepare();
+
         return  mainView;
     }
 
@@ -74,31 +79,30 @@ public class FragmentMyGroups extends Fragment{
     }
 
     private void promptDeleteGroup(final GroupItem item) {
-        new DeleteGroupDialogBox(){
+        DeleteGroupDialogBox.newInstance(new Consumer<Boolean>() {
             @Override
-            public void leave() {
-                try {
-                    unmapGroupFromUser(item);
-                    Toast.makeText(getActivity(), "Successfully left group", Toast.LENGTH_SHORT).show();
-                    Global.onRefreshMenuItemClicked.run();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    System.out.println("Exception rised");
+            public void accept(Boolean aBoolean) {
+                if (aBoolean) {
+                    try {
+                        unmapGroupFromUser(item);
+                        if (getActivity() != null && isAdded())
+                            Toast.makeText(getActivity(), "Successfully left group", Toast.LENGTH_SHORT).show();
+                        Global.onRefreshMenuItemClicked.run();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        System.out.println("Exception rised");
+                    }
                 }
-            }
-
-            @Override
-            public void cancel() {
 
             }
-        }.show(getFragmentManager(), "4");
+        }).show(getChildFragmentManager(), "4");
     }
 
 
     private void enterGroupView(GroupItem item) {
         Fragment fragment = GroupManageFragment.newInstance(item);
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = this.getParentFragment().getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment)
                     .addToBackStack(null)
@@ -109,8 +113,8 @@ public class FragmentMyGroups extends Fragment{
     }
 
     private void unmapGroupFromUser(GroupItem groupItem) throws JSONException {
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url = getString(R.string.api_service_url);
+        RequestQueue queue = Volley.newRequestQueue(Global.baseActivity);
+        String url = Global.LOGIN_API_URL;
         //JSONObject jsonObject = new JSONObject();
         Map<String, String> map = new HashMap<String, String>();
         map.put("function", "unmap_group_from_user");

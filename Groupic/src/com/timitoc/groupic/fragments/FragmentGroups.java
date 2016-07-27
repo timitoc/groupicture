@@ -18,6 +18,10 @@ public class FragmentGroups extends Fragment {
     View mainView;
     GroupsFragmentModel model;
 
+    public FragmentGroups() {
+        //this.setRetainInstance(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView =  inflater.inflate(R.layout.fragment_groups, container, false);
@@ -38,12 +42,20 @@ public class FragmentGroups extends Fragment {
             }
         };
 
+
+
         if (getArguments() != null && getArguments().containsKey("groups-model"))
             model = (GroupsFragmentModel) this.getArguments().getSerializable("groups-model");
         if (savedInstanceState == null)
             setDisplay(0);
 
         return mainView;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        System.out.println("Hidden chanded in big framgena,t groupsd");
     }
 
     @Override
@@ -85,7 +97,7 @@ public class FragmentGroups extends Fragment {
                 break;
         }
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getChildFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.groups_frame_container, fragment).commit();
         } else {
