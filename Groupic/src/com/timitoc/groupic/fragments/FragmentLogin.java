@@ -14,10 +14,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.*;
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -249,41 +246,53 @@ public class FragmentLogin extends Fragment {
         getActivity().finish();
     }
 
+    private String[] aux = {"username", "password"};
+    private boolean invalid(String data, int str)
+    {
+        for (int i = 0; i < data.length(); i++)
+            if (!Character.isDigit(data.charAt(i)) && !Character.isLetter(data.charAt(i)) && !(data.charAt(i) == ' ')){
+                String error = data.charAt(i) + " is not allowed in " + aux[str] + ".";
+                loginAttemptResponse.setText(error);
+                return true;
+            }
+        return false;
+    }
+
     public void loginAttempt() {
         loginAttemptResponse.setText("Authenticating");
         final String username = ((TextView)mainView.findViewById(R.id.username_textbox)).getText().toString();
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox)).getText().toString();
-        try {
-            correctCredentials(username, password, new Consumer<String>(){
-                @Override
-                public void accept(String status) {
-                    if ("success".equals(status)) {
-                        // auto log in?
-                        Global.want_login = ((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).isChecked();
+        if (!invalid(username, 0) && !invalid(password, 1)) {
+            try {
+                correctCredentials(username, password, new Consumer<String>() {
+                    @Override
+                    public void accept(String status) {
+                        if ("success".equals(status)) {
+                            // auto log in?
+                            Global.want_login = ((CheckBox) mainView.findViewById(R.id.auto_login_checkbox)).isChecked();
 
-                        loginAttemptResponse.setText("Login succeeded");
-                        SharedPreferences sharedPref = Global.getSharedPreferences(getActivity());
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("username", username);
-                        editor.putString("password", password);
-                        editor.putBoolean("want_login", Global.want_login);
-                        editor.commit();
-                        ConnectionStateManager.setUsingState(ConnectionStateManager.UsingState.ONLINE);
-                        startMainActivity();
+                            loginAttemptResponse.setText("Login succeeded");
+                            SharedPreferences sharedPref = Global.getSharedPreferences(getActivity());
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("username", username);
+                            editor.putString("password", password);
+                            editor.putBoolean("want_login", Global.want_login);
+                            editor.commit();
+                            ConnectionStateManager.setUsingState(ConnectionStateManager.UsingState.ONLINE);
+                            startMainActivity();
+                        } else if ("invalid".equals(status)) {
+                            loginAttemptResponse.setText("Invalid username or password");
+                            createProposeOfflineDialog();
+                        } else if (status.startsWith("error")) {
+                            loginAttemptResponse.setText("Network error, are you connected to the internet?");
+                            createProposeOfflineDialog();
+                        }
                     }
-                    else if ("invalid".equals(status)){
-                        loginAttemptResponse.setText("Invalid username or password");
-                        createProposeOfflineDialog();
-                    }
-                    else if (status.startsWith("error")) {
-                        loginAttemptResponse.setText("Network error, are you connected to the internet?");
-                        createProposeOfflineDialog();
-                    }
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-            loginAttemptResponse.setText("An error occurred, please try again later");
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+                loginAttemptResponse.setText("An error occurred, please try again later");
+            }
         }
     }
 

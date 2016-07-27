@@ -9,10 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.*;
 import com.android.volley.*;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -82,13 +79,6 @@ public class FragmentRegister extends Fragment {
         ((EditText)mainView.findViewById(R.id.name_textbox_r)).setText(model.getNickname());
     }
 
-    private boolean validCredentials() {
-        final String username = ((TextView)mainView.findViewById(R.id.username_textbox_r)).getText().toString();
-        final String password = ((TextView)mainView.findViewById(R.id.password_textbox_r)).getText().toString();
-        final String name = ((TextView)mainView.findViewById(R.id.name_textbox_r)).getText().toString();
-        return username.length() > 0 && password.length() > 4 && name.length() > 0;
-    }
-
     public void saveUserInDatabase() throws JSONException {
         final String username = ((TextView)mainView.findViewById(R.id.username_textbox_r)).getText().toString();
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox_r)).getText().toString();
@@ -156,6 +146,39 @@ public class FragmentRegister extends Fragment {
 
     }
 
+    private String[] aux = {"username", "password", "nickname"};
+    private boolean invalid(String data, int str) {
+        for (int i = 0; i < data.length(); i++)
+            if (!Character.isDigit(data.charAt(i)) && !Character.isLetter(data.charAt(i)) && !(data.charAt(i) == ' ')){
+                String error = data.charAt(i) + " is not allowed in " + aux[str] + ".";
+                registerAttemptResponse.setText(error);
+                return true;
+            }
+        return false;
+    }
+
+    private boolean tooShort(String data, int str){
+        if (data.length() == 0){
+            String error = aux[str] + " is too short";
+            registerAttemptResponse.setText(error);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validCredentials() {
+        final String username = ((TextView)mainView.findViewById(R.id.username_textbox_r)).getText().toString();
+        final String password = ((TextView)mainView.findViewById(R.id.password_textbox_r)).getText().toString();
+        final String name = ((TextView)mainView.findViewById(R.id.name_textbox_r)).getText().toString();
+
+        if (password.length() < 5){
+            String error = "Password too short";
+            registerAttemptResponse.setText(error);
+            return false;
+        }
+        return !tooShort(username, 0) && !tooShort(name, 2) && !invalid(username, 0) && !invalid(password, 1) && !invalid(name, 2);
+    }
+
     public void registerAttempt() {
         if (validCredentials()) {
             try {
@@ -164,9 +187,6 @@ public class FragmentRegister extends Fragment {
                 e.printStackTrace();
                 registerAttemptResponse.setText("Network error occurred please try again latter");
             }
-        }
-        else {
-            registerAttemptResponse.setText("Invalid username, password combination");
         }
     }
 

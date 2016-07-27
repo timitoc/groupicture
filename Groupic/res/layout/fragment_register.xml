@@ -10,7 +10,7 @@ android:background="@color/acad1">
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:textColor="@color/white"
                   android:id="@+id/register_attempt_response"
-                  android:text=""
+                  android:text="Only spaces, a-Z and 0-9 characters allowed"
         />
 
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -18,10 +18,12 @@ android:background="@color/acad1">
                   android:textColorHint="@color/gray"
                   android:id="@+id/name_textbox_r"
                   android:layout_below="@id/register_attempt_response"
+                  android:layout_centerHorizontal="true"
                   android:hint="nickname"
                   android:textCursorDrawable="@null"
                   android:imeOptions="actionNext"
                   android:singleLine="true"
+                  android:maxLength="100"
         />
 
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -29,20 +31,24 @@ android:background="@color/acad1">
                   android:textColorHint="@color/gray"
                   android:id="@+id/username_textbox_r"
                   android:layout_below="@id/name_textbox_r"
+                  android:layout_centerHorizontal="true"
                   android:hint="username"
                   android:textCursorDrawable="@null"
                   android:imeOptions="actionNext"
                   android:singleLine="true"
+                  android:maxLength="50"
         />
         <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:textColor="@color/white"
                   android:textColorHint="@color/gray"
                   android:id="@+id/password_textbox_r"
+                  android:layout_centerHorizontal="true"
                   android:hint="password"
                   android:layout_below="@+id/username_textbox_r"
                   android:inputType="textPassword"
                   android:textCursorDrawable="@null"
                   android:singleLine="true"
+                  android:maxLength="100"
         />
 
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
