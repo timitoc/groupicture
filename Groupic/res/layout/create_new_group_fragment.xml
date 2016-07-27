@@ -15,10 +15,13 @@
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/new_group_name"
+              android:hint="Only spaces, a-Z and 0-9 characters allowed"
+              android:textColorHint="@color/gray"
               android:textCursorDrawable="@null"
               android:textColor="@color/white"
               android:layout_gravity="center_horizontal"
               android:imeOptions="actionNext"
+              android:maxLength="50"
               android:singleLine="true"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Description"
               android:textColor="@color/white"
@@ -27,8 +30,11 @@
               android:textColor="@color/white"
               android:textCursorDrawable="@null"
               android:id="@+id/new_group_description"
+              android:hint="Only spaces, a-Z and 0-9 characters allowed"
+              android:textColorHint="@color/gray"
               android:layout_gravity="center_horizontal"
               android:imeOptions="actionNext"
+              android:maxLength="300"
               android:singleLine="true"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Password"
               android:textColor="@color/white"
@@ -39,6 +45,7 @@
               android:hint="Leave empty for free access"
               android:textColorHint="@color/gray"
               android:textCursorDrawable="@null"
+              android:maxLength="60"
               android:singleLine="true"
               android:layout_gravity="center_horizontal" android:inputType="textPassword"/>
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"

@@ -89,12 +89,15 @@ public class CreateNewGroupFragment extends Fragment {
         });
     }
 
-    private boolean invalid(String data)
+    private String[] aux = {"name", "description", "password"};
+    private boolean invalid(String data, int str)
     {
-        if (data == null || data.isEmpty())
-            return true;
-        if (data.contains("\n") || data.contains("\r"))
-            return  true;
+        for (int i = 0; i < data.length(); i++)
+            if (!Character.isDigit(data.charAt(i)) && !Character.isLetter(data.charAt(i)) && !(data.charAt(i) == ' ')){
+                String error = data.charAt(i) + " is not allowed in " + aux[str] + ".";
+                Toast.makeText(this.getActivity(), error, Toast.LENGTH_SHORT).show();
+                return true;
+            }
         return false;
     }
 
@@ -113,15 +116,11 @@ public class CreateNewGroupFragment extends Fragment {
         System.out.println("the password hash is " + Encryptor.hash(password));
         return false;*/
 
-        if (invalid(name)) {
-            Toast.makeText(this.getActivity(), "Invalid name or description", Toast.LENGTH_SHORT).show();
+        if (name.isEmpty()) {
+            Toast.makeText(this.getActivity(), "Empty name.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!password.isEmpty() && invalid(password)) {
-            Toast.makeText(this.getActivity(), "Invalid password", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
+        return !(invalid(name, 0) || invalid(description, 1) || (!password.isEmpty() && invalid(password, 2)));
     }
 
     private void createNewGroup(String name, String description, final String password) throws JSONException {
