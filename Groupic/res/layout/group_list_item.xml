@@ -53,6 +53,8 @@
                 android:shadowColor="@color/gray"
                 android:textColorHint="@color/gray"
                 android:textCursorDrawable="@null"
+                android:maxLength="100"
+                android:singleLine="true"
         />
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/has_pass_enter"
