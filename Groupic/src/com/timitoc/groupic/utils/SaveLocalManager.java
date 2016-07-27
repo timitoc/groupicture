@@ -30,6 +30,7 @@ public class SaveLocalManager {
     public static void savePrepared() {
         if (prepared == null)
             throw new RuntimeException("No ImageItem prepared");
+        Toast.makeText(Global.baseActivity, "Saving...", Toast.LENGTH_SHORT).show();
         System.out.println("Proceeding to save item " + prepared.getId() + " " + prepared.getTitle());
         ImageLoader loader = VolleySingleton.getInstance(null).getImageLoader();
         loader.get(prepared.getRequestUrl(), new ImageLoader.ImageListener() {
@@ -52,6 +53,7 @@ public class SaveLocalManager {
     public static void deletePrepared() {
         if (prepared == null)
             throw new RuntimeException("No ImageItem prepared");
+        Toast.makeText(Global.baseActivity, "Deleting...", Toast.LENGTH_SHORT).show();
         System.out.println("Proceeding to delete item " + prepared.getId() + " " + prepared.getTitle());
         deleteBitmapOnLocal(constructImageFileName(prepared));
         PreferenceImageDataManager.tryToDeleteFolder(prepared.getParentFolder().getId());
