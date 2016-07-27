@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +31,21 @@ public class CreateFolderDialogBox extends DialogFragment{
 
     View mainView;
 
+    private boolean invalid(String data)
+    {
+        if (data.length() == 0){
+            Toast.makeText(this.getActivity(), "Name can not be empty", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        for (int i = 0; i < data.length(); i++)
+            if (!Character.isDigit(data.charAt(i)) && !Character.isLetter(data.charAt(i)) && !(data.charAt(i) == ' ')){
+                String error = data.charAt(i) + " is not allowed when creating folders.";
+                Toast.makeText(this.getActivity(), error, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        return false;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -42,12 +58,13 @@ public class CreateFolderDialogBox extends DialogFragment{
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String name = ((TextView)mainView.findViewById(R.id.folder_create_name)).getText().toString();
-                        try {
-                            createFolder(name);
-                        }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                            giveError();
+                        if (!invalid(name)) {
+                            try {
+                                createFolder(name);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                giveError();
+                            }
                         }
                     }
                 })

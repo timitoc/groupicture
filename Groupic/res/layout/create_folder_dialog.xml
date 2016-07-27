@@ -9,13 +9,15 @@
     />
     <EditText
             android:id="@+id/folder_create_name"
+            android:maxLength="30"
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/gray"
             android:layout_marginTop="4dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="16dp"
-            android:hint="name"/>
+            android:hint="Only spaces, a-Z and 0-9 characters allowed"/>
 
 </LinearLayout>
