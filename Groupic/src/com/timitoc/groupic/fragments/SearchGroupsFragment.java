@@ -130,6 +130,16 @@ public class SearchGroupsFragment extends Fragment{
         });*/
     }
 
+    private boolean invalid(String data)
+    {
+        for (int i = 0; i < data.length(); i++)
+            if (!Character.isDigit(data.charAt(i)) && !Character.isLetter(data.charAt(i)) && !(data.charAt(i) == ' ')){
+                String error = data.charAt(i) + " is not allowed in group password.";
+                Toast.makeText(this.getActivity(), error, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        return false;
+    }
 
     private GroupEnterCallback createGroupEnterEvent() {
         return new GroupEnterCallback() {
@@ -141,7 +151,8 @@ public class SearchGroupsFragment extends Fragment{
                         return;
                     }
                     System.out.println("The input password is " + input + " for group " + groupItem.getTitle());
-                    CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), input, createFeedback(feedbackInfo));
+                    if (!invalid(input))
+                        CreateNewGroupFragment.mapGroupToUser(groupItem.getId(), getActivity(), input, createFeedback(feedbackInfo));
 
                     //new ConfirmGroupEnteringDialog().show(getFragmentManager(), "3");
                 }
