@@ -12,15 +12,17 @@ public class FolderItem implements Serializable{
     private String title;
     private int id;
     private GroupItem parentGroup;
+    private int color;
 
     public FolderItem(){
 
     }
 
-    public FolderItem(int id, String title, GroupItem parentGroup){
+    public FolderItem(int id, String title, GroupItem parentGroup, int color){
         this.id = id;
         this.title = title;
         this.parentGroup = parentGroup;
+        this.color = color;
     }
 
     public FolderItem(JSONObject jsonObject, GroupItem parentGroup) {
@@ -57,5 +59,12 @@ public class FolderItem implements Serializable{
 
     public GroupItem getParentGroup() {
         return parentGroup;
+    }
+
+    public int getColor() {
+        return color;
+    }
+    public void setColor(int color) {
+        this.color = color;
     }
 }

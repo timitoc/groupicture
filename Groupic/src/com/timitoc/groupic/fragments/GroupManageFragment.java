@@ -43,6 +43,7 @@ public class GroupManageFragment extends Fragment {
     GroupItem groupItem;
     MyFoldersListAdapter adapter;
     ListView folderItemListView;
+    private int prevClicked;
 
     int listedFolderPosition;
 
@@ -58,6 +59,7 @@ public class GroupManageFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        prevClicked = -1;
         mainView = inflater.inflate(R.layout.group_manage_fragment, container, false);
         groupItem =  (GroupItem) getArguments().getSerializable("group_item");
         Global.current_group_id = groupItem.getId();
@@ -94,10 +96,16 @@ public class GroupManageFragment extends Fragment {
             e.printStackTrace();
         }
         folderItemListView.setAdapter(adapter);
+
         folderItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FolderItem item = (FolderItem) adapterView.getItemAtPosition(i);
+                if (prevClicked != -1){
+                    folderItemListView.getChildAt(prevClicked).setBackgroundColor(getResources().getColor(R.color.acad1));
+                }
+                folderItemListView.getChildAt(i).setBackgroundColor(getResources().getColor(R.color.acad3));
+                prevClicked = i;
                 listedFolderPosition = i;
                 showFolderContent(item);
 
@@ -199,13 +207,14 @@ public class GroupManageFragment extends Fragment {
             int folderId = Integer.parseInt(fields[2], 16);
             String title = fields[3];
             if (groupId == groupItem.getId()) {
-                FolderItem folderItem= new FolderItem(folderId, title, groupItem);
+                FolderItem folderItem= new FolderItem(folderId, title, groupItem, getResources().getColor(R.color.transparent));
                 folderItems.add(folderItem);
             }
         }
         folderItemListView.setAdapter(adapter);
-        if (!adapter.isEmpty())
+        if (!adapter.isEmpty()) {
             showFolderContent((FolderItem)adapter.getItem(0));
+        }
     }
 
     @Override

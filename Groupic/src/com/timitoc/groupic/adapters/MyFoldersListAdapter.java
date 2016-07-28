@@ -52,6 +52,7 @@ public class MyFoldersListAdapter extends BaseAdapter {
         TextView txtTitle = (TextView) convertView.findViewById(R.id.folder_title);
 
         txtTitle.setText(groupItems.get(position).getTitle());
+        txtTitle.setBackgroundColor(groupItems.get(position).getColor());
 
         return convertView;
     }

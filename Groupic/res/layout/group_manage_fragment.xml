@@ -14,6 +14,7 @@
             android:divider="@color/white"
             android:dividerHeight="2dp"
             android:background="@color/acad1"
+
     />
 
     <FrameLayout
