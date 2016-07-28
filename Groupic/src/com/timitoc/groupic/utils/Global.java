@@ -15,7 +15,7 @@ import java.io.ByteArrayOutputStream;
  */
 public class Global {
 
-    public static String LOGIN_API_URL;
+    public static String API_SERVICE_URL;
     public static boolean want_login = false;
     public static boolean logging_out = false;
     private static boolean confirm_save_image_on_local = true;

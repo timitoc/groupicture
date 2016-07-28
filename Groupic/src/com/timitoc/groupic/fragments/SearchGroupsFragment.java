@@ -20,7 +20,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.MyGroupsListAdapter;
-import com.timitoc.groupic.models.CreateNewGroupFragmentModel;
 import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.models.SearchGroupsFragmentModel;
 import com.timitoc.groupic.utils.ConnectionStateManager;
@@ -121,7 +120,7 @@ public class SearchGroupsFragment extends Fragment{
         else
             adapter = new MyGroupsListAdapter(getActivity(), loadedGroupItems);
         foundGroups.setAdapter(adapter);
-        EndlessScrollListener.getInstance(this).reset();
+        EndlessScrollListener.getInstance(null).reset();
         /*try {
             getGroupsFromServer(loadedGroupItems, currentPage*PAGE_SIZE);
         }
@@ -269,8 +268,8 @@ public class SearchGroupsFragment extends Fragment{
     }
 
     void getGroupsFromServer(final ArrayList<GroupItem> groupItems, int offset) throws JSONException {
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url = getString(R.string.api_service_url);
+        RequestQueue queue = Volley.newRequestQueue(Global.baseActivity);
+        String url = Global.API_SERVICE_URL;
         final JSONObject params = new JSONObject();
         params.put("query", searchView.getQuery());
         params.put("offset", offset);
@@ -293,6 +292,7 @@ public class SearchGroupsFragment extends Fragment{
                                 JSONArray arr = jsonResponse.getJSONArray("groups");
                                 System.out.println("Response array size: " + arr.length());
                                 if (arr.length() == 0){
+                                    if (getActivity() != null && isAdded())
                                     Toast.makeText(getActivity(), "No more results", Toast.LENGTH_SHORT).show();
                                 }
                                 for(int i=0; i < arr.length(); i++) {
