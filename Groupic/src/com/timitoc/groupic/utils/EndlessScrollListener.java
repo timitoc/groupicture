@@ -1,28 +1,31 @@
 package com.timitoc.groupic.utils;
 
 import android.widget.AbsListView;
-import android.widget.StackView;
 import com.timitoc.groupic.fragments.SearchGroupsFragment;
 
 /**
- * Taken from http://benjii.me/2010/08/endless-scrolling-listview-in-android/
+ * Inspired from http://benjii.me/2010/08/endless-scrolling-listview-in-android/
+ * but strongly modified and adapted.
  */
 public class EndlessScrollListener implements AbsListView.OnScrollListener {
 
     public static EndlessScrollListener instance;
 
-    private int visibleThreshold = 1;
     private int currentPage = 0;
     private int previousTotal = 0;
     private boolean loading = true;
     private SearchGroupsFragment callback;
 
+    ///My improvised multi tone
     public static EndlessScrollListener getInstance(SearchGroupsFragment callback) {
-        if (instance == null)
+        if (callback != null)
             instance = new EndlessScrollListener(callback);
         return instance;
     }
 
+    private EndlessScrollListener(SearchGroupsFragment callback) {
+        this.callback = callback;
+    }
     public void reset() {
         currentPage = 0;
         previousTotal = 0;
@@ -30,18 +33,9 @@ public class EndlessScrollListener implements AbsListView.OnScrollListener {
         callback.searchForNextGroups(currentPage);
     }
 
-    private EndlessScrollListener(SearchGroupsFragment callback) {
-        this.callback = callback;
-    }
-
-    private EndlessScrollListener(int visibleThreshold) {
-        this.visibleThreshold = visibleThreshold;
-    }
-
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,
-                         int visibleItemCount, int totalItemCount) {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         if (loading) {
             if (totalItemCount > previousTotal) {
                 loading = false;
@@ -49,9 +43,9 @@ public class EndlessScrollListener implements AbsListView.OnScrollListener {
                 currentPage++;
             }
         }
+        int visibleThreshold = 1;
         if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
             callback.searchForNextGroups(currentPage);
-            System.out.println("Started loading groups from page " + (currentPage));
             loading = true;
         }
     }

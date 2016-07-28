@@ -8,7 +8,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,7 +113,7 @@ public class FragmentMyGroups extends Fragment{
 
     private void unmapGroupFromUser(GroupItem groupItem) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(Global.baseActivity);
-        String url = Global.LOGIN_API_URL;
+        String url = Global.API_SERVICE_URL;
         //JSONObject jsonObject = new JSONObject();
         Map<String, String> map = new HashMap<String, String>();
         map.put("function", "unmap_group_from_user");

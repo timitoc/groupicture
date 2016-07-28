@@ -32,7 +32,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.login_layout);
-        Global.LOGIN_API_URL = getString(R.string.api_service_url);
+        Global.API_SERVICE_URL = getString(R.string.api_service_url);
         /*if (savedInstanceState != null) {
             if (loginFragment == null)
                 loginFragment = getFragmentManager().getFragment(savedInstanceState, "login-fragment");
