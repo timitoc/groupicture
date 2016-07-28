@@ -25,6 +25,7 @@ import com.timitoc.groupic.models.GroupItem;
 import com.timitoc.groupic.models.SearchGroupsFragmentModel;
 import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Encryptor;
+import com.timitoc.groupic.utils.EndlessScrollListener;
 import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.interfaces.GroupEnterCallback;
 import com.timitoc.groupic.utils.interfaces.ServerStatusCallback;
@@ -40,6 +41,9 @@ import java.util.Map;
  * Created by timi on 02.05.2016.
  */
 public class SearchGroupsFragment extends Fragment{
+
+    public static final int PAGE_SIZE = 10;
+
     View mainView;
     SearchView searchView;
     ListView foundGroups;
@@ -47,6 +51,8 @@ public class SearchGroupsFragment extends Fragment{
     GroupItem selectedItem;
     SearchGroupsFragmentModel model;
     ArrayList<GroupItem> loadedGroupItems;
+
+    private int currentPage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,12 +82,13 @@ public class SearchGroupsFragment extends Fragment{
     }
 
     void prepare() {
+        foundGroups.setOnScrollListener(EndlessScrollListener.getInstance(this));
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 System.out.println("Start searching with query " + searchView.getQuery());
-                searchForGroups();
+                searchForFirstGroups();
                 return false;
             }
 
@@ -92,19 +99,35 @@ public class SearchGroupsFragment extends Fragment{
         });
     }
 
-    void searchForGroups() {
-        loadedGroupItems = new ArrayList<>();
+    public void searchForNextGroups(int page) {
+        System.out.println("want page " + page);
+        if (adapter == null)
+            return;
+        currentPage = page;
         try {
-            getGroupsFromServer(loadedGroupItems);
+            getGroupsFromServer(loadedGroupItems, currentPage*PAGE_SIZE);
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void searchForFirstGroups() {
+        currentPage = 0;
+        loadedGroupItems = new ArrayList<>();
         if (ConnectionStateManager.getUsingState() != ConnectionStateManager.UsingState.OFFLINE)
             adapter = new MyGroupsListAdapter(getActivity(), loadedGroupItems, createGroupEnterEvent());
         else
             adapter = new MyGroupsListAdapter(getActivity(), loadedGroupItems);
         foundGroups.setAdapter(adapter);
+        EndlessScrollListener.getInstance(this).reset();
+        /*try {
+            getGroupsFromServer(loadedGroupItems, currentPage*PAGE_SIZE);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }*/
 
         /*foundGroups.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -245,6 +268,78 @@ public class SearchGroupsFragment extends Fragment{
         queue.add(strRequest);
     }
 
+    void getGroupsFromServer(final ArrayList<GroupItem> groupItems, int offset) throws JSONException {
+        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
+        String url = getString(R.string.api_service_url);
+        final JSONObject params = new JSONObject();
+        params.put("query", searchView.getQuery());
+        params.put("offset", offset);
+        params.put("size", PAGE_SIZE);
+        final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
+
+        StringRequest strRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            System.out.println("jsonResponse status " + jsonResponse.getString("status"));
+                            if (jsonResponse.has("detail"))
+                                System.out.println("jsonResponse detail " + jsonResponse.get("detail"));
+                            if ("success".equals(jsonResponse.getString("status"))) {
+                                System.out.println("Successfully loaded groups");
+                                JSONArray arr = jsonResponse.getJSONArray("groups");
+                                System.out.println("Response array size: " + arr.length());
+                                if (arr.length() == 0){
+                                    Toast.makeText(getActivity(), "No more results", Toast.LENGTH_SHORT).show();
+                                }
+                                for(int i=0; i < arr.length(); i++) {
+                                    //System.out.println(arr.getJSONObject(i).getString("title"));
+                                    groupItems.add(new GroupItem(arr.getJSONObject(i)));
+                                }
+                                adapter.notifyDataSetChanged();
+                                ConnectionStateManager.increaseUsingState();
+                            }
+                            else
+                                noticeNetworkError();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            noticeNetworkError();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        System.out.println("Error " + error.getMessage());
+                        noticeNetworkError();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> paramap = new HashMap<>();
+                paramap.put("function", "search_for_groups");
+                paramap.put("public_key", Global.MY_PUBLIC_KEY);
+                paramap.put("data", params.toString());
+                paramap.put("hash", hash);
+                return paramap;
+            }
+        };
+
+        queue.add(strRequest);
+    }
+
+    private void noticeNetworkError()
+    {
+        Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+        ConnectionStateManager.decreaseUsingState();
+    }
 
     /// Fragment out-of-use, delete if stick to plan A.
     @SuppressLint("ValidFragment")
