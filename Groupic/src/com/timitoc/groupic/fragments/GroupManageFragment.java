@@ -90,11 +90,7 @@ public class GroupManageFragment extends Fragment {
         adapter = new MyFoldersListAdapter(getActivity(),
                 folderItems);
         folderItemListView = (ListView) mainView.findViewById(R.id.list_group_folders);
-        try {
-            searchServerForGroupFolders(folderItems);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
         folderItemListView.setAdapter(adapter);
 
         folderItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,6 +118,12 @@ public class GroupManageFragment extends Fragment {
                 return true;
             }
         });
+
+        try {
+            searchServerForGroupFolders(folderItems);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showFolderTitle(FolderItem item, int toastX, int toastY){
@@ -170,10 +172,18 @@ public class GroupManageFragment extends Fragment {
 
                                     folderItems.add(new FolderItem(arr.getJSONObject(i), groupItem));
                                 }
-                                folderItemListView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
                                 ConnectionStateManager.increaseUsingState();
-                                if (!adapter.isEmpty())
-                                    showFolderContent((FolderItem)adapter.getItem(listedFolderPosition));
+                                if (!adapter.isEmpty()) {
+                                    folderItemListView.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            folderItemListView.getChildAt(listedFolderPosition).setBackgroundColor(getResources().getColor(R.color.acad3));
+                                            prevClicked = listedFolderPosition;
+                                        }
+                                    });
+                                    showFolderContent((FolderItem) adapter.getItem(listedFolderPosition));
+                                }
                             }
                             else {
                                 getFoldersFromLocal(folderItems);
