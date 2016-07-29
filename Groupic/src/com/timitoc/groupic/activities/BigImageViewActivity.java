@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -40,7 +41,10 @@ public class BigImageViewActivity extends Activity {
         setContentView(R.layout.big_image_view_layout);
 
         String requestUrl = getIntent().getStringExtra("request_url");
-        currentIndex = getIntent().getIntExtra("index", 0);
+        if (savedInstanceState == null)
+            currentIndex = getIntent().getIntExtra("index", 0);
+        else
+            currentIndex = savedInstanceState.getInt("last-index");
         requestArray = getIntent().getStringArrayExtra("request_array");
         imageItems = (ArrayList<ImageItem>) getIntent().getSerializableExtra("image_items_list");
 
@@ -125,6 +129,11 @@ public class BigImageViewActivity extends Activity {
                 System.out.println("error " + error.getMessage());
             }
         });
+    }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("last-index", currentIndex);
     }
 }
