@@ -3,11 +3,11 @@ package com.timitoc.groupic.fragments;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * Created by timi on 02.05.2016.
  */
-public class SearchGroupsFragment extends Fragment{
+public class SearchGroupsFragment extends Fragment {
 
     public static final int PAGE_SIZE = 10;
 

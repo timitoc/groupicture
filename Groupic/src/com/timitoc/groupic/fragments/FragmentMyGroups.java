@@ -4,11 +4,12 @@ package com.timitoc.groupic.fragments;
  * Created by timi on 21.04.2016.
  */
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class FragmentMyGroups extends Fragment{
+public class FragmentMyGroups extends Fragment {
 
     MyGroupsListAdapter adapter;
     ListView groupItemListView;

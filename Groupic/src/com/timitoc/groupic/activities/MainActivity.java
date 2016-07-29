@@ -1,13 +1,14 @@
 package com.timitoc.groupic.activities;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -28,7 +29,7 @@ import com.timitoc.groupic.utils.Global;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -177,7 +178,7 @@ public class MainActivity extends Activity {
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             if (fragmentManager.findFragmentById(R.id.frame_container) == null) {
                 fragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment)
