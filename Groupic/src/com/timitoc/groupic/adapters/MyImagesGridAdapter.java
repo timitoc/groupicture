@@ -12,10 +12,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.ImageItem;
-import com.timitoc.groupic.utils.CustomNetworkImageView;
-import com.timitoc.groupic.utils.Global;
-import com.timitoc.groupic.utils.SaveLocalManager;
-import com.timitoc.groupic.utils.VolleySingleton;
+import com.timitoc.groupic.utils.*;
 
 import java.util.ArrayList;
 
@@ -64,10 +61,19 @@ public class MyImagesGridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        ViewHolder holder;
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater)
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.images_grid_item, null);
+            holder = new ViewHolder((CustomNetworkImageView) convertView.findViewById(R.id.network_image_view));
+            convertView.setTag(holder);
+        }
+        else {
+            holder = (ViewHolder) convertView.getTag();
+            //holder.image.setImageUrl(null, loader);
+            //holder.image.setImageBitmap(null);
         }
 
         ImageItem imageItem = imageItems.get(position);
@@ -81,12 +87,13 @@ public class MyImagesGridAdapter extends BaseAdapter {
 
         }
         else {
-            NetworkImageView networkImageView = (NetworkImageView) convertView.findViewById(R.id.network_image_view);
-            networkImageView.setDefaultImageResId(R.drawable.ic_launcher);
-            networkImageView.setAdjustViewBounds(true);
-            networkImageView.setImageUrl(imageItems.get(position).getRequestUrl(), loader);
+            holder.image.setDefaultImageResId(R.drawable.ic_launcher);
+            //holder.image.setAdjustViewBounds(true);
+            //holder.image.setImageBitmap(null);
+            //holder.image.setImageUrl(null, loader);
+            holder.image.setImageUrl(imageItems.get(position).getRequestUrl(), loader);
+            System.out.println("Adapter request to get view for image on position " + position + " with id " + imageItems.get(position).getId() + " with url " + imageItems.get(position).getRequestUrl());
         }
-        System.out.println("Adapter request to get view for image on position " + position + " with id " + imageItems.get(position).getId());
 
         return convertView;
     }

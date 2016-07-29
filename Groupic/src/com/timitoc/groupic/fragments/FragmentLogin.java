@@ -278,6 +278,8 @@ public class FragmentLogin extends Fragment {
                             editor.putString("password", password);
                             editor.putBoolean("want_login", Global.want_login);
                             editor.commit();
+                            Global.user_username = username;
+                            Global.user_password = password;
                             ConnectionStateManager.setUsingState(ConnectionStateManager.UsingState.ONLINE);
                             startMainActivity();
                         } else if ("invalid".equals(status)) {

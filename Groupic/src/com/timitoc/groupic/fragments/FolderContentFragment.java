@@ -109,7 +109,7 @@ public class FolderContentFragment extends Fragment {
     }
 
     private void uploadImage() throws JSONException {
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
+        //RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         Uri.Builder builder = Uri.parse(url).buildUpon();
         builder.appendQueryParameter("function", "upload_image_in_folder");
@@ -155,7 +155,7 @@ public class FolderContentFragment extends Fragment {
         };
 
         System.out.println(strRequest.getUrl());
-        queue.add(strRequest);
+        VolleySingleton.getInstance(null).addToRequestQueue(strRequest);
     }
 
     private void prepare() {
@@ -177,6 +177,9 @@ public class FolderContentFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //CustomNetworkImageView cust = (CustomNetworkImageView) (view.findViewById(R.id.network_image_view));
+                //System.out.println(cust.getTag());
+                //cust.setImageUrl(cust.getTag().toString(), VolleySingleton.getInstance(null).getImageLoader());
                 ImageItem item = (ImageItem) adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(getActivity(), BigImageViewActivity.class);
                 intent.putExtra("request_url", item.getRequestUrl());
@@ -245,7 +248,7 @@ public class FolderContentFragment extends Fragment {
             return;
         }
 
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
+
         String url = getString(R.string.api_service_url);
         final JSONObject params = new JSONObject();
         params.put("id", folderId); /// id-ul folderului curent
@@ -268,7 +271,7 @@ public class FolderContentFragment extends Fragment {
                                     System.out.println(item.getId() + " " + item.getRequestUrl());
                                 }
                                 ConnectionStateManager.increaseUsingState();
-                                gridView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
                             }
                             else {
                                 System.out.println("failed to get Images from folders");
@@ -303,7 +306,7 @@ public class FolderContentFragment extends Fragment {
             }
         };
 
-        queue.add(strRequest);
+        VolleySingleton.getInstance(null).addToRequestQueue(strRequest);
     }
 
     private void getImagesFromLocal(ArrayList<ImageItem> imageItems) {

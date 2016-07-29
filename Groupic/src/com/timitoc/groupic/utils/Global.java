@@ -22,6 +22,8 @@ public class Global {
     private static boolean confirm_delete_image_on_local = true;
     public static boolean deleteIconIsPressed = false;
     public static int user_id = -1;
+    public static String user_username;
+    public static String user_password;
     public static int current_folder_id;
     public static int current_group_id;
     public static final String MY_PRIVATE_KEY = Credentials.MY_PRIVATE_KEY;

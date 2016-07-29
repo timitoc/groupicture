@@ -6,6 +6,7 @@ package com.timitoc.groupic.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.activities.LoginActivity;
 import com.timitoc.groupic.adapters.MyGroupsListAdapter;
 import com.timitoc.groupic.dialogBoxes.DeleteGroupDialogBox;
 import com.timitoc.groupic.models.GroupItem;
@@ -155,6 +157,8 @@ public class FragmentMyGroups extends Fragment{
         builder.appendQueryParameter("public_key", Global.MY_PUBLIC_KEY);
         JSONObject params = new JSONObject();
         params.put("id", Global.user_id);
+        params.put("username", Global.user_username);
+        params.put("password", Encryptor.hash(Global.user_password));
         String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
         builder.appendQueryParameter("data", params.toString());
         builder.appendQueryParameter("hash", hash);
@@ -164,8 +168,9 @@ public class FragmentMyGroups extends Fragment{
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            System.out.println(response.getString("status"));
-                            if ("success".equals(response.getString("status"))) {
+                            String status = response.getString("status");
+                            System.out.println(status);
+                            if ("success".equals(status)) {
                                 JSONArray arr = response.getJSONArray("groups");
                                 System.out.println("Response array size: " + arr.length());
                                 for(int i=0; i < arr.length(); i++) {
@@ -175,8 +180,17 @@ public class FragmentMyGroups extends Fragment{
                                 ConnectionStateManager.increaseUsingState();
                                 groupItemListView.setAdapter(adapter);
                             }
-                            else
+                            else {
+                                if ("failure".equals(status) && "error_auth_user_credentials".equals(response.getString("detail"))) {
+                                    System.out.println("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOORRRR");
+                                    if (getActivity() != null && isAdded()) {
+                                        Toast.makeText(getActivity(), "Authentication error", Toast.LENGTH_SHORT).show();
+                                        logout();
+                                    }
+
+                                }
                                 loadLocalSaves(groupItems);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -194,6 +208,14 @@ public class FragmentMyGroups extends Fragment{
         });
         System.out.println(jsonRequest.getUrl());
         queue.add(jsonRequest);
+    }
+
+    private void logout() {
+        Global.want_login = false;
+        Global.logging_out = true;
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private void loadLocalSaves(ArrayList<GroupItem> groupItems) {
