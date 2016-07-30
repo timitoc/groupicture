@@ -1,8 +1,12 @@
 package com.timitoc.groupic.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -50,6 +54,7 @@ public class LoginActivity extends Activity {
             loginModel = (LoginFragmentModel) savedInstanceState.getSerializable("login-model");
             registerModel = (RegisterFragmentModel) savedInstanceState.getSerializable("register-model");
         }
+        disclaim();
         if (savedInstanceState == null)
             displayView(0);
 
@@ -67,7 +72,28 @@ public class LoginActivity extends Activity {
                 displayView(1);
             }
         });
+    }
 
+    private void disclaim() {
+        final SharedPreferences pref = this.getSharedPreferences(Global.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        boolean accepted = pref.getBoolean("accepted", false);
+        if (!accepted) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.disclaimer_string)
+                    .setCancelable(false)
+                    .setPositiveButton("Agree", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putBoolean("accepted", true);
+                            editor.commit();
+                        }
+                    })
+                    .setNegativeButton("Disagree", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            System.exit(0);
+                        }
+                    }).show();
+        }
     }
 
     void displayView(int position) {

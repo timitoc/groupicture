@@ -53,5 +53,14 @@
     <string name="credits1">Icons made by www.freepik.com and www.google.com (cc3.0) from www.flaticon.com and adapted by us using Photoshop.</string>
     <string name="about_us">\tThe Groupic application was developed by\n\tArdelean Andrei-Timotei (timitoc@yahoo.com)\nand\n\tGoran Constantin-Cornel (cornelg7@yahoo.com)</string>
     <string name="about_app">\tGroupic is a simple way to organize photos in your family or in a group of friends. Join groups with people so that you can share with them both important moments of your life and other boring stuff such as school essays and homework.\n\tIt\'s never been easier!</string>
+    <string name="disclaimer_string">"DISCLAIMER:\n
+        Groupicture, android app (\"APP\").
+        The founders of this APP (\"WE\", \"US\").
+
+        THE MATERIALS CONTAINED WITHIN THE APP ARE PROVIDED "AS IS" WITHOUT  WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT\n
+        WE assume no responsibility for errors or omissions in these materials. WE do not warrant the accuracy or completeness of the information, text, graphics, links or other items contained within these materials. \n
+        WE reserve the right to edit, use or delete any photos uploaded using the app for any reason WE feel it needs it without notice to the author. \n
+        In no event shall US be liable for any incidental or consequential damages, lost revenues or lost profits, costs or expenses of any kind however incurred, lost data, or any indirect damages or as a result of or in respect of any goods or services purchased or any transactions entered into using, relying on or otherwise in respect of the use of these materials even if we have been informed of the possibility thereof.\n
+        "</string>
 
 </resources>

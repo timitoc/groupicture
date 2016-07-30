@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="apk" build-on-make="true" name="Groupic">
+    <output-path>$PROJECT_DIR$/out/artifacts/Groupic</output-path>
+    <properties id="android-properties">
+      <options>
+        <option name="keyStoreUrl" value="file://" />
+        <option name="proGuardCfgFiles">
+          <list>
+            <option value="file://%MODULE_SDK_HOME%/tools/proguard/proguard-android.txt" />
+          </list>
+        </option>
+      </options>
+    </properties>
+    <root id="archive" name="Groupic.apk">
+      <element id="android-final-package" facet="Groupic/android/Android" />
+      <element id="library" level="project" name="android-support-v4" />
+      <element id="library" level="project" name="android-support-v7-appcompat" />
+      <element id="library" level="project" name="org.apache.http.legacy" />
+    </root>
+  </artifact>
+</component>
