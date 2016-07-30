@@ -15,12 +15,6 @@ public class RegisterFragmentModel implements Serializable{
         nickname = "";
     }
 
-    public RegisterFragmentModel(String username, String password, String nickname) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-    }
-
     public boolean isEmpty() {
         return username.isEmpty() && password.isEmpty() && nickname.isEmpty();
     }

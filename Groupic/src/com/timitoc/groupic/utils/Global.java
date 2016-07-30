@@ -56,13 +56,7 @@ public class Global {
         return sharedPreferences;
     }
 
-    public static void onBaseActivityDestroyed() {
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseActivity);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putBoolean("confirm_save_image_on_local", confirm_save_image_on_local);
-//        editor.putBoolean("confirm_delete_image_on_local", confirm_delete_image_in_local);
-//        if (!editor.commit())
-//            System.out.println("pref error");
+    public static void onBaseActivityDestroyed() {;
         System.out.println("Called destroy");
     }
 
@@ -126,6 +120,5 @@ public class Global {
         editor.remove("confirm_delete_image_on_local").commit();
         editor.putBoolean("confirm_delete_image_on_local", Global.confirm_delete_image_on_local).commit();
     }
-
 
 }

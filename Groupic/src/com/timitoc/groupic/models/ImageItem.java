@@ -14,10 +14,6 @@ public class ImageItem implements Serializable{
     private String requestUrl;
     private FolderItem parentFolder;
 
-    public ImageItem(){
-
-    }
-
     public ImageItem(int id, String title, String requestUrl, FolderItem parentFolder){
         this.id = id;
         this.title = title;
@@ -56,10 +52,6 @@ public class ImageItem implements Serializable{
 
     public String getRequestUrl() {
         return requestUrl;
-    }
-
-    public void setRequestUrl(String requestUrl) {
-        this.requestUrl = requestUrl;
     }
 
     public FolderItem getParentFolder() {

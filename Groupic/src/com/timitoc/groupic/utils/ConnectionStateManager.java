@@ -14,7 +14,6 @@ public class ConnectionStateManager {
     private static UsingState usingState = UsingState.UNDEFINED;
     private static MenuItem controller;
 
-
     public static UsingState getUsingState() {
         return usingState;
     }
@@ -29,7 +28,7 @@ public class ConnectionStateManager {
         calibrateControllerState();
     }
 
-    public static void calibrateControllerState() {
+    private static void calibrateControllerState() {
         if (controller == null)
             return;
         switch (usingState) {

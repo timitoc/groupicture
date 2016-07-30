@@ -18,10 +18,10 @@ import java.util.Set;
  */
 public class SaveLocalManager {
 
-    public static ImageItem prepared;
-    public static final String PREFERENCE_TAG_IMAGES = "local_images_set";
-    public static final String PREFERENCE_TAG_FOLDERS = "local_folders_set";
-    public static final String PREFERENCE_TAG_GROUPS = "local_groups_set";
+    private static ImageItem prepared;
+    private static final String PREFERENCE_TAG_IMAGES = "local_images_set";
+    private static final String PREFERENCE_TAG_FOLDERS = "local_folders_set";
+    private static final String PREFERENCE_TAG_GROUPS = "local_groups_set";
 
     public static void prepare(ImageItem item) {
         prepared = item;
@@ -60,7 +60,7 @@ public class SaveLocalManager {
         PreferenceImageDataManager.tryToDeleteGroup(prepared.getParentFolder().getParentGroup().getId());
     }
 
-    public static void saveBitmapOnLocal(Bitmap bitmap) {
+    private static void saveBitmapOnLocal(Bitmap bitmap) {
         File localDirectory = new File(Global.phoneStoragePath);
         localDirectory.mkdirs();
         File imageFile = new File (localDirectory, constructImageFileName(prepared));
@@ -107,22 +107,22 @@ public class SaveLocalManager {
     public static Set<String> getImagesSet() { return PreferenceImageDataManager.getImagesSet(); }
 
 
-    public static void makeError() {
+    private static void makeError() {
         System.out.println("Couldn't save");
 
     }
 
-    public static String constructImageFileName(ImageItem item) {
+    private static String constructImageFileName(ImageItem item) {
         return "GI#" + Integer.toHexString(item.getParentFolder().getId()) +
                 "#"  + Integer.toHexString(item.getId());
     }
 
-    public static String constructFilePrefName(ImageItem item) {
+    private static String constructFilePrefName(ImageItem item) {
         return  "GI#" + Integer.toHexString(item.getParentFolder().getParentGroup().getId()) +
                 "#" + Integer.toHexString(item.getParentFolder().getId()) +
                 "#" + item.getParentFolder().getTitle();
     }
-    public static String constructGroupPrefName(ImageItem item) {
+    private static String constructGroupPrefName(ImageItem item) {
         return "GI#" + item.getParentFolder().getParentGroup().getId() +
                 "#" + item.getParentFolder().getParentGroup().getTitle() +
                 "#" + item.getParentFolder().getParentGroup().getDescription();
@@ -148,11 +148,11 @@ public class SaveLocalManager {
                 PreferenceImageDataManager.initializePreferenceData();
         }
 
-        public static boolean isPreferenceDataInitialized() {
+        static boolean isPreferenceDataInitialized() {
             return imagesSet != null;
         }
 
-        public static void initializePreferenceData() {
+        static void initializePreferenceData() {
             System.out.println("init continued");
             preferences = Global.getSharedPreferences(null);
 
@@ -167,52 +167,27 @@ public class SaveLocalManager {
             System.out.println(imagesSet.toString());
         }
 
-        public static Set<String> getGroupsSet() {
+        static Set<String> getGroupsSet() {
             init();
             return groupsSet;
         }
 
-        public static Set<String> getFoldersSet() {
+        static Set<String> getFoldersSet() {
             init();
             return foldersSet;
         }
 
-        public static Set<String> getImagesSet() {
+        static Set<String> getImagesSet() {
             init();
             return imagesSet;
         }
 
-        public static boolean alreadySaved(String fileName) {
+        static boolean alreadySaved(String fileName) {
             init();
             return imagesSet.contains(fileName);
         }
 
-        /**
-         * Old function, notation isn't viable for offline usage.
-         * @param fileName Name for the image to be marked in preferences
-         */
-        @Deprecated
-        public static void saveFile(String fileName) {
-            init();
-            editor = preferences.edit();
-            editor.remove(PREFERENCE_TAG_IMAGES);
-            editor.commit();
-            imagesSet.add(fileName);
-            editor.putStringSet(PREFERENCE_TAG_IMAGES, imagesSet);
-            boolean worked = editor.commit();
-            if (!worked)
-                System.out.println("Failed to delete file to preferences");
-            else {
-                System.out.println("Successfully save file to preferences");
-                System.out.println(fileName);
-                System.out.println(imagesSet.toString());
-                //preferences = PreferenceManager.getDefaultSharedPreferences(Global.baseActivity);
-                imagesSet = preferences.getStringSet(PREFERENCE_TAG_IMAGES, null);
-                System.out.println(imagesSet.toString());
-            }
-        }
-
-        public static void saveFile(String imagePrefName, String filePrefName, String groupPrefName) {
+        static void saveFile(String imagePrefName, String filePrefName, String groupPrefName) {
             init();
             editor = preferences.edit();
             editor.remove(PREFERENCE_TAG_IMAGES);
@@ -229,7 +204,7 @@ public class SaveLocalManager {
                 System.out.println("Editor done goofed");
         }
 
-        public static void deleteFile(String fileName) {
+        static void deleteFile(String fileName) {
             init();
             editor = preferences.edit();
             editor.remove(PREFERENCE_TAG_IMAGES);
@@ -243,7 +218,7 @@ public class SaveLocalManager {
                 System.out.println("Successfully deleted file from preferences");
         }
 
-        public static void tryToDeleteFolder(int folderId) {
+        static void tryToDeleteFolder(int folderId) {
             if (noImageInFolder(folderId)) {
                 for (String s : foldersSet) {
                     if (s.split("#")[2].equals(Integer.toHexString(folderId))) {
@@ -264,7 +239,7 @@ public class SaveLocalManager {
             return  true;
         }
 
-        public static void tryToDeleteGroup(int groupId) {
+        static void tryToDeleteGroup(int groupId) {
             if (noFolderInGroup(groupId)) {
                 for (String s : groupsSet) {
                     if (s.split("#")[1].equals(Integer.toHexString(groupId))) {
