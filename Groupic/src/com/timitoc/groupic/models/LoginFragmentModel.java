@@ -1,8 +1,5 @@
 package com.timitoc.groupic.models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 
 /**

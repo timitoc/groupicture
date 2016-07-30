@@ -32,7 +32,7 @@ public class Global {
     public static final int TAKE_PHOTO_REQUEST = 2;
 
     public static String SHARED_PREFERENCES_NAME = "groupicture-pref";
-    public static String phoneStoragePath = null;
+    static String phoneStoragePath = null;
     public static Activity baseActivity;
 
 

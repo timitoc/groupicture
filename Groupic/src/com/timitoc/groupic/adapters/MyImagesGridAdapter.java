@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.timitoc.groupic.R;
-import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.ImageItem;
-import com.timitoc.groupic.utils.*;
+import com.timitoc.groupic.utils.CustomNetworkImageView;
+import com.timitoc.groupic.utils.SaveLocalManager;
+import com.timitoc.groupic.utils.ViewHolder;
+import com.timitoc.groupic.utils.VolleySingleton;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,5 @@
 package com.timitoc.groupic.models;
 
-import com.timitoc.groupic.fragments.SearchGroupsFragment;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,7 +10,7 @@ public class SearchGroupsFragmentModel implements Serializable {
     private String query;
     private ArrayList<GroupItem> groupItems;
 
-    SearchGroupsFragmentModel() {
+    public SearchGroupsFragmentModel() {
         query = "";
         groupItems = new ArrayList<>();
     }

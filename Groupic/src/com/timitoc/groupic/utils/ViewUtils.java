@@ -1,13 +1,9 @@
 package com.timitoc.groupic.utils;
 
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
-import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.*;
-import com.timitoc.groupic.R;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 
 import java.lang.reflect.Method;
 
