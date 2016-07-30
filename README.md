@@ -15,7 +15,7 @@ android-support-v4 si android-support-v7-appcompat pentru compatibilitate cu ver
 Clasa Base64 autor:  Robert Harder rob@iharder.                              
 Clasa CustomRequest autor: LOG_TAG                
 Clasa CustomNetworkImageView autor: param            
-De asemenea m-am inspirat din: http://benjii.me/2010/08/endless-scrolling-listview-in-android                         
+De asemenea ne-am inspirat din: http://benjii.me/2010/08/endless-scrolling-listview-in-android                         
 http://stackoverflow.com/questions/20639464/actionbaractivity-with-actionbardrawertoggle-not-using-drawerimageres          
 http://stackoverflow.com/questions/4139288/android-how-to-handle-right-to-left-swipe-gestures                  
 
