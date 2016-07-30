@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.FolderItem;
-import com.timitoc.groupic.models.GroupItem;
 
 import java.util.ArrayList;
 

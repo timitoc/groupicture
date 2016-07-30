@@ -1,27 +1,25 @@
 package com.timitoc.groupic.fragments;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import com.android.volley.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.R;
-import com.timitoc.groupic.models.ImageItem;
-import com.timitoc.groupic.models.LoginFragmentModel;
+import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.models.RegisterFragmentModel;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import com.timitoc.groupic.utils.VolleySingleton;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

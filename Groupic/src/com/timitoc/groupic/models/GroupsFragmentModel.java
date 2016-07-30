@@ -1,7 +1,5 @@
 package com.timitoc.groupic.models;
 
-import com.timitoc.groupic.fragments.CreateNewGroupFragment;
-
 import java.io.Serializable;
 
 /**
