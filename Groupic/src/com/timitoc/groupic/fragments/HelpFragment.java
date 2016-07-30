@@ -13,7 +13,7 @@ import com.timitoc.groupic.utils.Global;
 /**
  * Created by Cornel on 02.05.2016.
  */
-public class FragmentHelp extends Fragment{
+public class HelpFragment extends Fragment{
     View mainView;
     int displayScreen;
 
@@ -41,7 +41,6 @@ public class FragmentHelp extends Fragment{
         return mainView;
     }
     public void setButtonEvent(Button button, final int position) {
-        System.out.println("Setting " + position);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setDisplay(position);
@@ -50,7 +49,7 @@ public class FragmentHelp extends Fragment{
     }
 
     public void setDisplay(int position) {
-        Fragment fragment = new FragmentText();
+        Fragment fragment = new TextFragment();
         Bundle args = new Bundle();
         displayScreen = position;
         switch (position) {

@@ -13,8 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.timitoc.groupic.R;
-import com.timitoc.groupic.fragments.FragmentLogin;
-import com.timitoc.groupic.fragments.FragmentRegister;
+import com.timitoc.groupic.fragments.LoginFragment;
+import com.timitoc.groupic.fragments.RegisterFragment;
 import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.models.RegisterFragmentModel;
 import com.timitoc.groupic.utils.Global;
@@ -25,8 +25,8 @@ import com.timitoc.groupic.utils.Global;
 public class LoginActivity extends Activity {
 
     Button chooseLog, chooseRegister;
-    FragmentLogin loginFragment;
-    FragmentRegister registerFragment;
+    LoginFragment loginFragment;
+    RegisterFragment registerFragment;
     LoginFragmentModel loginModel;
     RegisterFragmentModel registerModel;
 
@@ -37,14 +37,6 @@ public class LoginActivity extends Activity {
 
         setContentView(R.layout.login_layout);
         Global.API_SERVICE_URL = getString(R.string.api_service_url);
-        /*if (savedInstanceState != null) {
-            if (loginFragment == null)
-                loginFragment = getFragmentManager().getFragment(savedInstanceState, "login-fragment");
-            if (registerFragment == null)
-                registerFragment = getFragmentManager().getFragment(savedInstanceState, "register-fragment");
-        }
-        else
-            displayView(0);*/
 
         if (savedInstanceState == null) {
             loginModel = new LoginFragmentModel();
@@ -102,14 +94,14 @@ public class LoginActivity extends Activity {
         Bundle args;
         switch (position) {
             case 0:
-                loginFragment = new FragmentLogin();
+                loginFragment = new LoginFragment();
                 args = new Bundle();
                 args.putSerializable("login-model", loginModel);
                 loginFragment.setArguments(args);
                 fragment = loginFragment;
                 break;
             case 1:
-                registerFragment = new FragmentRegister();
+                registerFragment = new RegisterFragment();
                 args = new Bundle();
                 args.putSerializable("register-model", registerModel);
                 registerFragment.setArguments(args);
@@ -132,10 +124,6 @@ public class LoginActivity extends Activity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        /*if (loginFragment != null && loginFragment.isAdded())
-            getFragmentManager().putFragment(savedInstanceState, "login-fragment", loginFragment);
-        if (registerFragment != null && registerFragment.isAdded())
-            getFragmentManager().putFragment(savedInstanceState, "register-fragment", registerFragment);*/
         savedInstanceState.putSerializable("login-model", loginModel);
         savedInstanceState.putSerializable("register-model", registerModel);
     }

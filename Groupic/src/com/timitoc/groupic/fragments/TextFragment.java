@@ -11,7 +11,7 @@ import com.timitoc.groupic.R;
 /**
  * Created by Cornel on 02.05.2016.
  */
-public class FragmentText extends Fragment{
+public class TextFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.fragment_text, container, false);

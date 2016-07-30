@@ -15,7 +15,7 @@ import com.timitoc.groupic.utils.Global;
  * Created by Cornel on 24.07.2016.
  */
 
-public class FragmentOptions extends Fragment {
+public class OptionsFragment extends Fragment {
     private View mainView;
     private CheckBox autologin, confirmsave, confirmremove;
 

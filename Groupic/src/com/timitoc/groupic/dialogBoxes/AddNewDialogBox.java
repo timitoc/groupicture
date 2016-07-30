@@ -20,12 +20,10 @@ public class AddNewDialogBox extends DialogFragment {
                 .setItems(R.array.add_new_items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0 ){
-                            System.out.println("Want to add folder");
                             AddNewDialogBox.this.getDialog().cancel();
                             new CreateFolderDialogBox().show(getFragmentManager(), "2");
                         }
                         else if (which == 1) {
-                            System.out.println("Want to add image from gallery in folder " + Global.current_folder_id);
                             Global.addImage.run();
                         }
                         else {

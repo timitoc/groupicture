@@ -23,18 +23,15 @@ import com.timitoc.groupic.R;
 import com.timitoc.groupic.dialogBoxes.CreateFolderDialogBox;
 import com.timitoc.groupic.dialogBoxes.ProposeOfflineUseDialogBox;
 import com.timitoc.groupic.models.LoginFragmentModel;
-import com.timitoc.groupic.utils.ConnectionStateManager;
-import com.timitoc.groupic.utils.SaveLocalManager;
+import com.timitoc.groupic.utils.*;
 import com.timitoc.groupic.utils.interfaces.Consumer;
-import com.timitoc.groupic.utils.Encryptor;
-import com.timitoc.groupic.utils.Global;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by timi on 25.04.2016.
  */
-public class FragmentLogin extends Fragment {
+public class LoginFragment extends Fragment {
     View mainView;
     Button loginRequest;
     TextView loginAttemptResponse;
@@ -54,21 +51,14 @@ public class FragmentLogin extends Fragment {
                 loginAttempt();
             }
         });
-        System.out.println("Called create with instance " + (savedInstanceState != null));
         if (getArguments() != null && getArguments().containsKey("login-model"))
             model = (LoginFragmentModel) this.getArguments().getSerializable("login-model");
         if (model == null || model.isEmpty())
             tryComplete();
         else {
-            System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.isChecked());
             useModel();
         }
-       // }
         return mainView;
-    }
-
-    public void setModel(LoginFragmentModel model) {
-        this.model = model;
     }
 
     private void useModel() {
@@ -79,7 +69,6 @@ public class FragmentLogin extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        System.out.println("Called save");
         savedInstanceState.putString("login-username", ((EditText)mainView.findViewById(R.id.username_textbox)).getText().toString());
         savedInstanceState.putSerializable("login-model", model);
         super.onSaveInstanceState(savedInstanceState);
@@ -87,7 +76,6 @@ public class FragmentLogin extends Fragment {
 
     private void tryComplete() {
         SharedPreferences sharedPref = Global.getSharedPreferences(getActivity());
-        //System.out.println(sharedPref.getStringSet(SaveLocalManager.PREFERENCE_TAG, null).toString());
         if (Global.logging_out){
             Global.logging_out = false;
             Global.want_login = false;
@@ -113,7 +101,6 @@ public class FragmentLogin extends Fragment {
     }
 
     private void correctCredentials(final String username, final String password, final Consumer<String> consumer) throws JSONException {
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         JSONObject jsonObject = new JSONObject();
         Uri.Builder builder = Uri.parse(url).buildUpon();
@@ -126,7 +113,6 @@ public class FragmentLogin extends Fragment {
 
 
         String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
-        System.out.println("Hash str: " + params.toString() + Global.MY_PRIVATE_KEY);
         builder.appendQueryParameter("data", params.toString());
         builder.appendQueryParameter("hash", hash);
 
@@ -135,15 +121,12 @@ public class FragmentLogin extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            System.out.println(response.getString("status"));
                             if ("success".equals(response.getString("status"))) {
-                                System.out.println("Success");
                                 Global.user_id = response.getInt("id");
                                 consumer.accept("success");
                             }
                             else {
                                 consumer.accept("invalid");
-                                System.out.println("Invalid username password combination");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -159,85 +142,16 @@ public class FragmentLogin extends Fragment {
                 consumer.accept("error_volley");
             }
         });
-        System.out.println(jsonRequest.getUrl());
-        queue.add(jsonRequest);
+        VolleySingleton.getInstance(getActivity()).getRequestQueue().add(jsonRequest);
     }
 
     @Override
     public void onPause() {
-        System.out.println("Login paused");
-        System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.isChecked());
         model.setUsername(((EditText)mainView.findViewById(R.id.username_textbox)).getText().toString());
         model.setPassword(((EditText)mainView.findViewById(R.id.password_textbox)).getText().toString());
         model.setChecked(((CheckBox)mainView.findViewById(R.id.auto_login_checkbox)).isChecked());
-        System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.isChecked());
         super.onPause();
     }
-
-
-
-
-   /* private void correctCredentials(final String username, final String password, final Consumer<Boolean> consumer) throws JSONException {
-
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        String url = getString(R.string.api_service_url);
-        final JSONObject params = new JSONObject();
-        params.put("username", username);
-        params.put("password", password);
-
-        final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
-
-        StringRequest strRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response)
-                    {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            if ("success".equals(jsonResponse.getString("status"))) {
-                                System.out.println("success to login user");
-                                consumer.accept(true);
-                            }
-                            else {
-                                System.out.println("failed to login user with status " + jsonResponse.getString("status"));
-                                System.out.println("failed to login user with detail " + jsonResponse.getString("detail"));
-                                //System.out.println("Received username " + jsonResponse.getString("username"));
-                                //System.out.println("Received password " + jsonResponse.getString("password"));
-                                consumer.accept(false);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            consumer.accept(false);
-                            System.out.println("exception to login user");
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        System.out.println("Error " + error.getMessage());
-                        consumer.accept(false);
-                    }
-                })
-        {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                System.out.println("want params");
-                Map<String, String> paramap = new HashMap<>();
-                paramap.put("function", "login_user");
-                paramap.put("public_key", Global.MY_PUBLIC_KEY);
-                paramap.put("data", params.toString());
-                paramap.put("hash", hash);
-                return paramap;
-            }
-        };
-        System.out.println(strRequest.getUrl());
-        queue.add(strRequest);
-    }*/
 
     private void startMainActivity() {
         Global.initializeSettings(getActivity());
@@ -268,9 +182,7 @@ public class FragmentLogin extends Fragment {
                     @Override
                     public void accept(String status) {
                         if ("success".equals(status)) {
-                            // auto log in?
                             Global.want_login = ((CheckBox) mainView.findViewById(R.id.auto_login_checkbox)).isChecked();
-
                             loginAttemptResponse.setText("Login succeeded");
                             SharedPreferences sharedPref = Global.getSharedPreferences(getActivity());
                             SharedPreferences.Editor editor = sharedPref.edit();

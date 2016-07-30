@@ -39,7 +39,6 @@ public class CreateNewGroupFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("Creation");
         mainView = inflater.inflate(R.layout.create_new_group_fragment, container, false);
         createButton = (Button) mainView.findViewById(R.id.new_group_button);
         if (getArguments() != null && getArguments().containsKey("create-model"))
@@ -74,7 +73,6 @@ public class CreateNewGroupFragment extends Fragment {
                     Toast.makeText(getActivity(), "Can't create groups while offline", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                System.out.println("Started creating group");
                 if (!checkInput())
                     return;
                 try {
@@ -106,15 +104,9 @@ public class CreateNewGroupFragment extends Fragment {
      * @return Returns true if input is sanitized.
      */
     private boolean checkInput() {
-        // Better feedback coming soon
-
         String name = ((EditText) mainView.findViewById(R.id.new_group_name)).getText().toString();
         String description = ((EditText) mainView.findViewById(R.id.new_group_description)).getText().toString();
         String password = ((EditText) mainView.findViewById(R.id.new_group_password)).getText().toString();
-
-        /*System.out.println("the password is " + password);
-        System.out.println("the password hash is " + Encryptor.hash(password));
-        return false;*/
 
         if (name.isEmpty()) {
             Toast.makeText(this.getActivity(), "Empty name.", Toast.LENGTH_SHORT).show();
@@ -149,14 +141,17 @@ public class CreateNewGroupFragment extends Fragment {
                                 ((EditText) mainView.findViewById(R.id.new_group_description)).getText().clear();
                                 ((EditText) mainView.findViewById(R.id.new_group_password)).getText().clear();
                                 int group_id = jsonResponse.getInt("id");
-                                System.out.println("Obtained id is: " + group_id);
                                 mapGroupToUser(group_id, getActivity(), password);
+                                ConnectionStateManager.increaseUsingState();
                             }
-                            else
+                            else {
                                 Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                                ConnectionStateManager.decreaseUsingState();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                            ConnectionStateManager.decreaseUsingState();
                         }
                     }
                 },
@@ -167,6 +162,7 @@ public class CreateNewGroupFragment extends Fragment {
                     {
                         System.out.println("Error " + error.getMessage());
                         Toast.makeText(getActivity(), "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                        ConnectionStateManager.decreaseUsingState();
                     }
                 })
         {
@@ -211,10 +207,7 @@ public class CreateNewGroupFragment extends Fragment {
                             JSONObject jsonResponse = new JSONObject(response);
                             if (callback != null)
                                 callback.onStatus(jsonResponse.getString("status"), jsonResponse.getString("detail"));
-                            if ("success".equals(jsonResponse.getString("status")))
-                                System.out.println("e bine");
-                            else {
-                                //Toast.makeText(activity, "Network error, are you connected to the internet?", Toast.LENGTH_SHORT).show();
+                            if (!"success".equals(jsonResponse.getString("status"))) {
                                 System.out.println(jsonResponse.getString("status") + " " + jsonResponse.getString("detail"));
                             }
                         } catch (JSONException e) {
@@ -247,5 +240,4 @@ public class CreateNewGroupFragment extends Fragment {
 
         queue.add(strRequest);
     }
-
 }

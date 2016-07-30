@@ -11,16 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.GroupsFragmentModel;
-import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.utils.Global;
 
-public class FragmentGroups extends Fragment {
+public class GroupsFragment extends Fragment {
     View mainView;
     GroupsFragmentModel model;
-
-    public FragmentGroups() {
-        //this.setRetainInstance(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,8 +37,6 @@ public class FragmentGroups extends Fragment {
             }
         };
 
-
-
         if (getArguments() != null && getArguments().containsKey("groups-model"))
             model = (GroupsFragmentModel) this.getArguments().getSerializable("groups-model");
         if (savedInstanceState == null)
@@ -55,7 +48,6 @@ public class FragmentGroups extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        System.out.println("Hidden chanded in big framgena,t groupsd");
     }
 
     @Override
@@ -66,7 +58,6 @@ public class FragmentGroups extends Fragment {
 
 
     public void setButtonEvent(Button button, final int position) {
-        System.out.println("Setting " + position);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setDisplay(position);
@@ -79,7 +70,7 @@ public class FragmentGroups extends Fragment {
         Bundle args;
         switch (position) {
             case 0:
-                fragment = new FragmentMyGroups();
+                fragment = new MyGroupsFragment();
                 break;
             case 1:
                 fragment = new SearchGroupsFragment();
@@ -100,9 +91,6 @@ public class FragmentGroups extends Fragment {
             FragmentManager fragmentManager = getChildFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.groups_frame_container, fragment).commit();
-        } else {
-            // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
         }
     }
 

@@ -1,6 +1,5 @@
 package com.timitoc.groupic.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -11,7 +10,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +18,8 @@ import android.widget.ListView;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.adapters.NavDrawerListAdapter;
 import com.timitoc.groupic.fragments.*;
-import com.timitoc.groupic.fragments.FragmentAbout;
-import com.timitoc.groupic.fragments.FragmentHelp;
+import com.timitoc.groupic.fragments.AboutFragment;
+import com.timitoc.groupic.fragments.HelpFragment;
 import com.timitoc.groupic.models.GroupsFragmentModel;
 import com.timitoc.groupic.models.NavDrawerItem;
 import com.timitoc.groupic.utils.ConnectionStateManager;
@@ -46,18 +44,12 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         Global.initializeSettings(this);
 
-	    mTitle = "closed";
+	    mTitle = "Menu";
         mDrawerTitle = "Menu";
 
-        // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
-        //for (String s : navMenuTitles)
-            ///System.out.println(s);
-
-        // nav drawer icons from resources
-        TypedArray navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);
+        TypedArray navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
@@ -66,47 +58,27 @@ public class MainActivity extends FragmentActivity {
 
         for (int i = 0; i < navMenuTitles.length; i++)
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
-//        // Rate me
-//        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-//        // Go premium
-//        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-//        // About
-//        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-//        // Help
-//        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-//        // Log out
-//        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
-
 
         navMenuIcons.recycle();
-        NavDrawerListAdapter adapter = new NavDrawerListAdapter(getApplicationContext(),
-                navDrawerItems);
+        NavDrawerListAdapter adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
         mDrawerList.setAdapter(adapter);
 
-        // enabling action bar app icon and behaving it as toggle button
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        //getActionBar().setHomeButtonEnabled(true);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.app_name, // nav drawer open - description for accessibility
-                R.string.app_name // nav drawer close - description for accessibility
-        ) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {
             public void onDrawerClosed(View view) {
                 getActionBar().setTitle(mTitle);
-                // calling onPrepareOptionsMenu() to show action bar icons
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
                 getActionBar().setTitle(mDrawerTitle);
-                // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
         };
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
         if (savedInstanceState == null) {
-            // on first time display view for first nav item
             groupsModel = new GroupsFragmentModel();
         }
         else {
@@ -116,12 +88,9 @@ public class MainActivity extends FragmentActivity {
             displayView(0);
     }
 
-    private class SlideMenuClickListener implements
-            ListView.OnItemClickListener {
+    private class SlideMenuClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-            // display view for selected nav drawer item
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             displayView(position);
         }
     }
@@ -129,7 +98,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         if(getFragmentManager().getBackStackEntryCount() <= 1) {
-            System.out.println("Mno amu ce?");
             super.onBackPressed();
         }
         else {
@@ -138,33 +106,32 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void displayView(int position) {
-        // update the main content by replacing fragments
         Fragment fragment = null;
         Bundle args;
         switch (position) {
             case 0:
-                fragment = new FragmentGroups();
+                fragment = new GroupsFragment();
                 args = new Bundle();
                 args.putSerializable("groups-model", groupsModel);
                 fragment.setArguments(args);
                 break;
             case 1:
-                // fragment = new FragmentText();
+                // fragment = new TextFragment();
                 break;
             case 2:
-                // fragment = new FragmentText();
+                // fragment = new TextFragment();
                 break;
             case 3:
-                fragment = new FragmentOptions();
+                fragment = new OptionsFragment();
                 break;
             case 4:
-                fragment = new FragmentAbout();
+                fragment = new AboutFragment();
                 break;
             case 5:
-                fragment = new FragmentHelp();
+                fragment = new HelpFragment();
                 break;
             case 6:
-                fragment = new FragmentCredits();
+                fragment = new CreditsFragment();
                 break;
             case 7:
                 Global.want_login = false;
@@ -180,25 +147,17 @@ public class MainActivity extends FragmentActivity {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             if (fragmentManager.findFragmentById(R.id.frame_container) == null) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment)
-                        .commit();
+                fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
             }
             else {
-                fragmentManager.beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.frame_container, fragment)
-                        .commit();
+                fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.frame_container, fragment).commit();
             }
 
-            // update selected item and title, then close the drawer
+
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
-        } else {
-            // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
         }
     }
 
@@ -211,12 +170,10 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // toggle nav drawer on selecting action bar app icon/title
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
-        // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.refresh:
                 Global.onRefreshMenuItemClicked.run(); return true;
@@ -227,21 +184,15 @@ public class MainActivity extends FragmentActivity {
                 if (Global.deleteIconIsPressed)
                     item.setIcon(R.drawable.delete_pressed);
                 else
-                    item.setIcon(R.drawable.delete);
-                System.out.println("miPhoto"); return true;
+                    item.setIcon(R.drawable.delete); return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    /***
-     * Called when invalidateOptionsMenu() is triggered
-     */
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
-        //boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        //menu.findItem(R.id.miCompose).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -251,15 +202,9 @@ public class MainActivity extends FragmentActivity {
         getActionBar().setTitle(mTitle);
     }
 
-    /**
-     * When using the ActionBarDrawerToggle, you must call it during
-     * onPostCreate() and onConfigurationChanged()...
-     */
-
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
 
@@ -272,7 +217,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
@@ -280,6 +224,5 @@ public class MainActivity extends FragmentActivity {
     protected void onDestroy() {
         Global.onBaseActivityDestroyed();
         super.onDestroy();
-
     }
 }
