@@ -30,7 +30,6 @@ public class CreditsFragment extends Fragment{
         return mainView;
     }
     public void setButtonEvent(Button button, final int position) {
-        System.out.println("Setting " + position);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setDisplay(position);
@@ -44,7 +43,6 @@ public class CreditsFragment extends Fragment{
         switch (position) {
             case 0:
                 args.putString("param1", getResources().getString(R.string.credits1));
-                System.out.println("0");
                 break;
             default:
                 break;

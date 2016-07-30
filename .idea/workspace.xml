@@ -29,51 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CreditsFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreditsFragment.java">
+      <file leaf-file-name="SearchGroupsFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/SearchGroupsFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TextFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/TextFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/activities/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="121" column="49" selection-start-line="121" selection-start-column="49" selection-end-line="121" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AboutFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/AboutFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="48" column="36" selection-start-line="48" selection-start-column="36" selection-end-line="48" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HelpFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/HelpFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="32">
-              <caret line="42" column="32" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
+            <state relative-caret-position="151">
+              <caret line="240" column="27" selection-start-line="240" selection-start-column="27" selection-end-line="240" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -102,11 +62,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Groupic/res/layout/fragment2_help_save.xml" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/help/Fragment2HelpSaveToDevice.java" />
-        <option value="$PROJECT_DIR$/Groupic/res/layout/fragment2_help_use.xml" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/help/Fragment2HelpUse.java" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/help/FragmentHelp.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/about/Fragment2AboutUs.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/about/Fragment2About.java" />
         <option value="$PROJECT_DIR$/Groupic/res/layout/fragment2_about.xml" />
@@ -123,7 +78,6 @@
         <option value="$PROJECT_DIR$/Groupic/res/layout/fragment_help.xml" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/FragmentHelp.java" />
         <option value="$PROJECT_DIR$/Groupic/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreateNewGroupFragment.java" />
         <option value="$PROJECT_DIR$/Groupic/res/layout/create_new_group_fragment.xml" />
         <option value="$PROJECT_DIR$/Groupic/res/layout/create_folder_dialog.xml" />
         <option value="$PROJECT_DIR$/Groupic/res/layout/fragment_register.xml" />
@@ -131,7 +85,6 @@
         <option value="$PROJECT_DIR$/Groupic/res/layout/fragment_login.xml" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/FragmentRegister.java" />
         <option value="$PROJECT_DIR$/Groupic/res/layout/group_list_item.xml" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/SearchGroupsFragment.java" />
         <option value="$PROJECT_DIR$/Groupic/res/layout/folder_content_fragment.xml" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/models/GroupItem.java" />
         <option value="$PROJECT_DIR$/Groupic/res/layout/group_manage_fragment.xml" />
@@ -139,7 +92,6 @@
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/models/FolderItem.java" />
         <option value="$PROJECT_DIR$/Groupic/res/values/color.xml" />
         <option value="$PROJECT_DIR$/Groupic/res/layout/folder_list_item.xml" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/GroupManageFragment.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/activities/BigImageViewActivity.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/activities/LoginActivity.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/adapters/MyGroupsListAdapter.java" />
@@ -148,11 +100,19 @@
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/dialogBoxes/AddNewDialogBox.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/dialogBoxes/CreateFolderDialogBox.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/dialogBoxes/DeleteGroupDialogBox.java" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreditsFragment.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/FragmentText.java" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/AboutFragment.java" />
-        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/HelpFragment.java" />
         <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/activities/MainActivity.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/AboutFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreateNewGroupFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreditsFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/FolderContentFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/GroupManageFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/GroupsFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/HelpFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/LoginFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/MyGroupsFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/RegisterFragment.java" />
+        <option value="$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/SearchGroupsFragment.java" />
       </list>
     </option>
   </component>
@@ -818,9 +778,9 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32866043" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3847352" sideWeight="0.5030628" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27102804" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42056075" sideWeight="0.49693722" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17687596" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32866043" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -856,7 +816,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -865,48 +825,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Groupic/res/layout/login_layout.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
-          <folding>
-            <element signature="e#719#742#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/res/layout/fragment_second.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/res/layout/fragment2_about.xml" />
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/about/Fragment2About.java" />
-    <entry file="file://$PROJECT_DIR$/Groupic/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/res/values/arrays.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Groupic/res/layout/main.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -970,14 +888,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/RegisterFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="164" column="9" selection-start-line="164" selection-start-column="9" selection-end-line="164" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Groupic/res/layout/fragment_register.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -1029,22 +939,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreateNewGroupFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="191" column="29" selection-start-line="191" selection-start-column="29" selection-end-line="191" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/SearchGroupsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="134" column="47" selection-start-line="134" selection-start-column="47" selection-end-line="134" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Groupic/res/layout/fragment_help.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -1078,14 +972,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/LoginFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="287" column="0" selection-start-line="287" selection-start-column="0" selection-end-line="287" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/adt-bundle-windows-x86_64-20130729/sdk/sources/android-23/java/io/Serializable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="478">
@@ -1097,6 +983,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1152,14 +1039,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/GroupManageFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="147" column="9" selection-start-line="147" selection-start-column="9" selection-end-line="147" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Groupic/res/layout/big_image_view_layout.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -1192,7 +1071,7 @@
         <state relative-caret-position="401">
           <caret line="125" column="54" selection-start-line="125" selection-start-column="54" selection-end-line="125" selection-end-column="54" />
           <folding>
-            <element signature="e#2577#2603#0" expanded="true" />
+            <element signature="e#2577#2603#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1280,42 +1159,137 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreditsFragment.java">
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/utils/VolleySingleton.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+        <state relative-caret-position="38">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/AboutFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="48" column="36" selection-start-line="48" selection-start-column="36" selection-end-line="48" selection-end-column="44" />
+        <state relative-caret-position="34">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/HelpFragment.java">
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreateNewGroupFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="42" column="32" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
+        <state relative-caret-position="795">
+          <caret line="241" column="5" selection-start-line="241" selection-start-column="5" selection-end-line="241" selection-end-column="5" />
+          <folding>
+            <element signature="e#5123#5158#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/CreditsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/TextFragment.java">
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/FolderContentFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
+        <state relative-caret-position="-255">
+          <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/GroupManageFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="164" column="69" selection-start-line="164" selection-start-column="69" selection-end-line="164" selection-end-column="69" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/activities/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="121" column="49" selection-start-line="121" selection-start-column="49" selection-end-line="121" selection-end-column="49" />
+        <state relative-caret-position="1445">
+          <caret line="112" column="34" selection-start-line="112" selection-start-column="34" selection-end-line="112" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/HelpFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-336">
+          <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/GroupsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="820">
+          <caret line="93" column="9" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
+          <folding>
+            <element signature="e#1676#1677#0" expanded="true" />
+            <element signature="e#1721#1722#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/LoginFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="208" column="13" selection-start-line="208" selection-start-column="13" selection-end-line="208" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/adt-bundle-windows-x86_64-20130729/sdk/sources/android-23/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/MyGroupsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-391">
+          <caret line="172" column="42" selection-start-line="172" selection-start-column="42" selection-end-line="172" selection-end-column="42" />
+          <folding>
+            <element signature="e#5167#5202#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/OptionsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-272">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/RegisterFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-867">
+          <caret line="112" column="42" selection-start-line="112" selection-start-column="42" selection-end-line="112" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/TextFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Groupic/src/com/timitoc/groupic/fragments/SearchGroupsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="240" column="27" selection-start-line="240" selection-start-column="27" selection-end-line="240" selection-end-column="27" />
           <folding />
         </state>
       </provider>

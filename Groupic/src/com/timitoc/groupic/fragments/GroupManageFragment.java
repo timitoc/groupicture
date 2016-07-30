@@ -22,10 +22,7 @@ import com.timitoc.groupic.adapters.MyFoldersListAdapter;
 import com.timitoc.groupic.dialogBoxes.AddNewDialogBox;
 import com.timitoc.groupic.models.FolderItem;
 import com.timitoc.groupic.models.GroupItem;
-import com.timitoc.groupic.utils.ConnectionStateManager;
-import com.timitoc.groupic.utils.Encryptor;
-import com.timitoc.groupic.utils.Global;
-import com.timitoc.groupic.utils.SaveLocalManager;
+import com.timitoc.groupic.utils.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -133,7 +130,6 @@ public class GroupManageFragment extends Fragment {
     }
 
     public void showFolderContent(FolderItem item) {
-        System.out.println(item.getTitle() + " folder pressed ");
         Fragment fragment = FolderContentFragment.newInstance(item);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -146,7 +142,7 @@ public class GroupManageFragment extends Fragment {
             getFoldersFromLocal(folderItems);
             return;
         }
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
+
         String url = getString(R.string.api_service_url);
         JSONObject jsonObject = new JSONObject();
         Uri.Builder builder = Uri.parse(url).buildUpon();
@@ -163,13 +159,10 @@ public class GroupManageFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            System.out.println(response.getString("status"));
                             if ("success".equals(response.getString("status"))) {
                                 JSONArray arr = response.getJSONArray("groups");
                                 System.out.println("Response array size: " + arr.length());
                                 for(int i=0; i < arr.length(); i++) {
-                                    System.out.println(arr.getJSONObject(i).getString("title"));
-
                                     folderItems.add(new FolderItem(arr.getJSONObject(i), groupItem));
                                 }
                                 adapter.notifyDataSetChanged();
@@ -204,7 +197,7 @@ public class GroupManageFragment extends Fragment {
             }
         });
         System.out.println(jsonRequest.getUrl());
-        queue.add(jsonRequest);
+        VolleySingleton.getInstance(this.getActivity()).getRequestQueue().add(jsonRequest);
     }
 
     private void getFoldersFromLocal(ArrayList<FolderItem> folderItems) {

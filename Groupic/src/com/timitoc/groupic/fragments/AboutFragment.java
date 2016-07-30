@@ -37,7 +37,6 @@ public class AboutFragment extends Fragment {
         return mainView;
     }
     public void setButtonEvent(Button button, final int position) {
-        System.out.println("Setting " + position);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setDisplay(position);

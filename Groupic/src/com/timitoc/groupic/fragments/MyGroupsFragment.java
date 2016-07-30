@@ -42,14 +42,9 @@ public class MyGroupsFragment extends Fragment {
     ListView groupItemListView;
     View mainView;
 
-    public MyGroupsFragment() {
-        //this.setRetainInstance(true);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_my_groups, container, false);
-        System.out.println("Creating view");
         prepare();
 
         return  mainView;
@@ -92,7 +87,6 @@ public class MyGroupsFragment extends Fragment {
                         Global.onRefreshMenuItemClicked.run();
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        System.out.println("Exception rised");
                     }
                 }
 
@@ -110,14 +104,11 @@ public class MyGroupsFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         }
-        else
-            Log.e("MainActivity", "Error in creating fragment");
     }
 
     private void unmapGroupFromUser(GroupItem groupItem) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(Global.baseActivity);
         String url = Global.API_SERVICE_URL;
-        //JSONObject jsonObject = new JSONObject();
         Map<String, String> map = new HashMap<String, String>();
         map.put("function", "unmap_group_from_user");
         map.put("public_key", Global.MY_PUBLIC_KEY);
@@ -140,7 +131,6 @@ public class MyGroupsFragment extends Fragment {
                     System.out.println(("That didn't work!\n") + error.getMessage());
                 }
         });
-        System.out.println(customRequest.getUrl());
         queue.add(customRequest);
 
     }
@@ -150,7 +140,6 @@ public class MyGroupsFragment extends Fragment {
             loadLocalSaves(groupItems);
             return;
         }
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         JSONObject jsonObject = new JSONObject();
         Uri.Builder builder = Uri.parse(url).buildUpon();
@@ -170,12 +159,10 @@ public class MyGroupsFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             String status = response.getString("status");
-                            System.out.println(status);
                             if ("success".equals(status)) {
                                 JSONArray arr = response.getJSONArray("groups");
                                 System.out.println("Response array size: " + arr.length());
                                 for(int i=0; i < arr.length(); i++) {
-                                    //System.out.println(arr.getJSONObject(i).getString("title"));
                                     groupItems.add(new GroupItem(arr.getJSONObject(i)));
                                 }
                                 ConnectionStateManager.increaseUsingState();
@@ -183,7 +170,6 @@ public class MyGroupsFragment extends Fragment {
                             }
                             else {
                                 if ("failure".equals(status) && "error_auth_user_credentials".equals(response.getString("detail"))) {
-                                    System.out.println("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOORRRR");
                                     if (getActivity() != null && isAdded()) {
                                         Toast.makeText(getActivity(), "Authentication error", Toast.LENGTH_SHORT).show();
                                         logout();
@@ -208,7 +194,7 @@ public class MyGroupsFragment extends Fragment {
             }
         });
         System.out.println(jsonRequest.getUrl());
-        queue.add(jsonRequest);
+        VolleySingleton.getInstance(getActivity()).getRequestQueue().add(jsonRequest);
     }
 
     private void logout() {

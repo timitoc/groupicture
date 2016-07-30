@@ -20,6 +20,7 @@ import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.models.RegisterFragmentModel;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
+import com.timitoc.groupic.utils.VolleySingleton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,9 +54,6 @@ public class RegisterFragment extends Fragment {
         return mainView;
     }
 
-    public void setModel(RegisterFragmentModel model) {
-        this.model = model;
-    }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -69,7 +67,6 @@ public class RegisterFragment extends Fragment {
         model.setPassword(((EditText)mainView.findViewById(R.id.password_textbox_r)).getText().toString());
         model.setNickname(((EditText)mainView.findViewById(R.id.name_textbox_r)).getText().toString());
 
-        System.out.println(model.getUsername() + " " + model.getPassword() + " " + model.getNickname());
         super.onPause();
     }
 
@@ -83,7 +80,6 @@ public class RegisterFragment extends Fragment {
         final String username = ((TextView)mainView.findViewById(R.id.username_textbox_r)).getText().toString();
         final String password = ((TextView)mainView.findViewById(R.id.password_textbox_r)).getText().toString();
         final String name = ((TextView)mainView.findViewById(R.id.name_textbox_r)).getText().toString();
-        RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         final JSONObject params = new JSONObject();
         params.put("username", username);
@@ -100,7 +96,6 @@ public class RegisterFragment extends Fragment {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             if ("success".equals(jsonResponse.getString("status"))) {
-                                System.out.println("success to register user");
                                 SharedPreferences sharedPref = Global.getSharedPreferences(getActivity());
                                 SharedPreferences.Editor editor = sharedPref.edit();
                                 editor.putString("username", username);
@@ -111,12 +106,10 @@ public class RegisterFragment extends Fragment {
                                 getActivity().finish();
                             }
                             else {
-                                System.out.println("Username is already taken");
                                 registerAttemptResponse.setText("Username is already taken");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            System.out.println("exception to register user");
                             registerAttemptResponse.setText("Network error occurred please try again latter");
                         }
                     }
@@ -142,7 +135,7 @@ public class RegisterFragment extends Fragment {
             }
         };
 
-        queue.add(strRequest);
+        VolleySingleton.getInstance(getActivity()).getRequestQueue().add(strRequest);
 
     }
 
