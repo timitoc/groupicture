@@ -6,6 +6,11 @@ import android.util.AttributeSet;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+/**
+ * from https://stackoverflow.com/questions/21270152/volleys-networkimageview-setimagebitmap-method-doesnt-work
+ * @author param
+ */
+
 public class CustomNetworkImageView extends NetworkImageView {
 
     private Bitmap mLocalBitmap;
