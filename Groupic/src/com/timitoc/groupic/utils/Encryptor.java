@@ -9,10 +9,6 @@ import java.util.logging.Logger;
 
 public class Encryptor {
 
-    private static final String ALGO = "AES";
-    private static Cipher cipher;
-
-
     public static String hash(String toHash){
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

@@ -12,7 +12,7 @@ public class SearchGroupsFragmentModel implements Serializable {
     private String query;
     private ArrayList<GroupItem> groupItems;
 
-    public SearchGroupsFragmentModel() {
+    SearchGroupsFragmentModel() {
         query = "";
         groupItems = new ArrayList<>();
     }

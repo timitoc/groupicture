@@ -16,7 +16,7 @@ public class EndlessScrollListener implements AbsListView.OnScrollListener {
     private boolean loading = true;
     private SearchGroupsFragment callback;
 
-    ///My improvised multi tone
+    ///My improvised multiton
     public static EndlessScrollListener getInstance(SearchGroupsFragment callback) {
         if (callback != null)
             instance = new EndlessScrollListener(callback);

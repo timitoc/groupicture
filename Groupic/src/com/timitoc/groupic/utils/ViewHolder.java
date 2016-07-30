@@ -7,10 +7,6 @@ public class ViewHolder {
 
     public CustomNetworkImageView image;
 
-    public ViewHolder() {
-
-
-    }
     public ViewHolder(CustomNetworkImageView image) {
         this.image = image;
     }

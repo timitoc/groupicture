@@ -19,14 +19,8 @@ public class LoginFragmentModel implements Serializable{
         checked = false;
     }
 
-    public LoginFragmentModel(String username, String password, boolean checked) {
-        this.username = username;
-        this.password = password;
-        this.checked = checked;
-    }
-
     public boolean isEmpty() {
-        return username.isEmpty() && password.isEmpty() && checked == false;
+        return username.isEmpty() && password.isEmpty() && !checked;
     }
 
     public String getUsername() {

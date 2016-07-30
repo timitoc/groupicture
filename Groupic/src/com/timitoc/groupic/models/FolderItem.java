@@ -14,10 +14,6 @@ public class FolderItem implements Serializable{
     private GroupItem parentGroup;
     private int color;
 
-    public FolderItem(){
-
-    }
-
     public FolderItem(int id, String title, GroupItem parentGroup, int color){
         this.id = id;
         this.title = title;
@@ -38,7 +34,6 @@ public class FolderItem implements Serializable{
         }
 
     }
-
 
     public String getTitle() {
         return title;

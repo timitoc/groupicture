@@ -12,10 +12,6 @@ public class GroupItem implements Serializable {
     private int id;
     private boolean hasPassword;
 
-    public GroupItem(){
-
-    }
-
     public GroupItem(int id, String title, String description){
         this.id = id;
         this.title = title;
@@ -28,10 +24,7 @@ public class GroupItem implements Serializable {
             this.title = jsonObject.getString("title");
             this.description = jsonObject.getString("description");
             this.id = jsonObject.getInt("id");
-            if (jsonObject.has("hasPassword"))
-                this.hasPassword = jsonObject.getBoolean("hasPassword");
-            else
-                this.hasPassword = false;
+            this.hasPassword = jsonObject.has("hasPassword") && jsonObject.getBoolean("hasPassword");
         } catch (JSONException e) {
             e.printStackTrace();
             this.id = 0;
@@ -41,7 +34,6 @@ public class GroupItem implements Serializable {
         }
 
     }
-
 
     public String getTitle() {
         return title;
@@ -53,10 +45,6 @@ public class GroupItem implements Serializable {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getId() {
