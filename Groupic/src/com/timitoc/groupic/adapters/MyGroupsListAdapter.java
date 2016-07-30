@@ -103,12 +103,4 @@ public class MyGroupsListAdapter extends BaseAdapter {
         });
     }
 
-    public void setAllowViewExpansion(boolean h) {
-        allowViewExpansion = h;
-    }
-
-    public boolean doesAllowViewExpansion() {
-        return allowViewExpansion;
-    }
-
 }

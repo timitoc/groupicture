@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * Created by timi on 25.04.2016.
  */
-public class FragmentRegister extends Fragment {
+public class RegisterFragment extends Fragment {
     View mainView;
     Button registerRequest;
     TextView registerAttemptResponse;

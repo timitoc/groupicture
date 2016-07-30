@@ -11,29 +11,22 @@ import com.timitoc.groupic.R;
 import com.timitoc.groupic.utils.Global;
 
 /**
- * Created by Cornel on 02.05.2016.
+ * Created by Cornel on 25.07.2016.
  */
-public class FragmentAbout extends Fragment {
+public class CreditsFragment extends Fragment{
     View mainView;
-    int displayScreen;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mainView =  inflater.inflate(R.layout.fragment_about, container, false);
+        mainView =  inflater.inflate(R.layout.fragment_credits, container, false);
+        setDisplay(0);
         Global.onRefreshMenuItemClicked = new Runnable() {
             @Override
             public void run() {
                 setDisplay(0);
             }
         };
-        if (savedInstanceState == null)
-            displayScreen = 0;
-        else {
-            displayScreen = savedInstanceState.getInt("display");
-        }
-        setDisplay(displayScreen);
-        setButtonEvent((Button) mainView.findViewById(R.id.about_us), 0);
-        setButtonEvent((Button) mainView.findViewById(R.id.about_the_app), 1);
+        setButtonEvent((Button) mainView.findViewById(R.id.credits1), 0);
         return mainView;
     }
     public void setButtonEvent(Button button, final int position) {
@@ -46,26 +39,18 @@ public class FragmentAbout extends Fragment {
     }
 
     public void setDisplay(int position) {
-        Fragment fragment = new FragmentText();
+        Fragment fragment = new TextFragment();
         Bundle args = new Bundle();
-        displayScreen = position;
         switch (position) {
             case 0:
-                args.putString("param1", getResources().getString(R.string.about_us));
-                break;
-            case 1:
-                args.putString("param1", getResources().getString(R.string.about_app));
+                args.putString("param1", getResources().getString(R.string.credits1));
+                System.out.println("0");
                 break;
             default:
                 break;
         }
         fragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.about_frame_container, fragment).commit();
-    }
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt("display", displayScreen);
-        super.onSaveInstanceState(savedInstanceState);
+        fragmentManager.beginTransaction().replace(R.id.credits_frame_container, fragment).commit();
     }
 }

@@ -40,7 +40,6 @@ public class BigImageViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.big_image_view_layout);
 
-        String requestUrl = getIntent().getStringExtra("request_url");
         if (savedInstanceState == null)
             currentIndex = getIntent().getIntExtra("index", 0);
         else
@@ -48,7 +47,6 @@ public class BigImageViewActivity extends Activity {
         requestArray = getIntent().getStringArrayExtra("request_array");
         imageItems = (ArrayList<ImageItem>) getIntent().getSerializableExtra("image_items_list");
 
-        //imageView = (ImageView) findViewById(R.id.big_image);
         imageSwitcher = (ImageSwitcher) findViewById(R.id.imageSwitcher);
         final Animation inLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
         final Animation outLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
@@ -69,26 +67,18 @@ public class BigImageViewActivity extends Activity {
         loader = VolleySingleton.getInstance(this).getImageLoader();
         loadImage(currentIndex);
 
-
-        //loader.get(requestUrl, ImageLoader.getImageListener(imageView, R.drawable.ic_launcher, R.drawable.ic_launcher));
-
         imageSwitcher.setOnTouchListener(new OnSwipeTouchListener(BigImageViewActivity.this) {
             public void onSwipeRight() {
-                //Toast.makeText(BigImageViewActivity.this, "right", Toast.LENGTH_SHORT).show();
                 imageSwitcher.setInAnimation(inRight);
                 imageSwitcher.setOutAnimation(outRight);
-                //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 currentIndex = (currentIndex + 1 + requestArray.length) % requestArray.length;
 
-                //imageSwitcher.setImageResource(R.drawable.ic_launcher);
                 loadImage(currentIndex);
             }
             public void onSwipeLeft() {
-                //Toast.makeText(BigImageViewActivity.this, "left", Toast.LENGTH_SHORT).show();
                 imageSwitcher.setInAnimation(inLeft);
                 imageSwitcher.setOutAnimation(outLeft);
                 currentIndex = (currentIndex - 1 + requestArray.length) % requestArray.length;
-                //imageSwitcher.setImageResource(R.drawable.ic_launcher);
                 loadImage(currentIndex);
             }
         });
@@ -105,21 +95,17 @@ public class BigImageViewActivity extends Activity {
         int oldWidth = 600;
         int oldHeight = 895;
         System.out.println(oldWidth + " " + oldHeight);
-        //BitmapDrawable drawable = new BitmapDrawable(Global.getScaledBitmap(oldWidth, oldHeight, SaveLocalManager.getBitmapFromLocal(imageItem)));
-        BitmapDrawable drawable = new BitmapDrawable(SaveLocalManager.getBitmapFromLocal(imageItem));
+        BitmapDrawable drawable = new BitmapDrawable(getResources(), SaveLocalManager.getBitmapFromLocal(imageItem));
         imageSwitcher.setImageDrawable(drawable);
         System.out.println("Image loaded from local");
     }
 
     private void loadImageFromServer(String requestUrl)
     {
-
         loader.get(requestUrl, new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                BitmapDrawable drawable = new BitmapDrawable(response.getBitmap());
-                //imageSwitcher.setInAnimation(BigImageViewActivity.this, android.R.anim.fade_in);
-                //imageSwitcher.setOutAnimation(BigImageViewActivity.this, android.R.anim.fade_out);
+                BitmapDrawable drawable = new BitmapDrawable(getResources(), response.getBitmap());
                 imageSwitcher.setImageDrawable(drawable);
                 System.out.println("Image loaded from server");
             }

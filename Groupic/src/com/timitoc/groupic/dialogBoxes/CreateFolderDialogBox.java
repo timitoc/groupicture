@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.utils.ConnectionStateManager;
 import com.timitoc.groupic.utils.Encryptor;
 import com.timitoc.groupic.utils.Global;
 import org.json.JSONException;
@@ -77,7 +78,9 @@ public class CreateFolderDialogBox extends DialogFragment {
     }
 
     public void giveError() {
-        System.out.println("Network error, are you connected to internet?");
+        //System.out.println("Network error, are you connected to internet?");
+        Toast.makeText(getActivity(), "Weak internet connection", Toast.LENGTH_SHORT).show();
+        ConnectionStateManager.decreaseUsingState();
     }
 
     public void createFolder(String name) throws JSONException {
@@ -97,7 +100,8 @@ public class CreateFolderDialogBox extends DialogFragment {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             if ("success".equals(jsonResponse.getString("status"))) {
-                                System.out.println("Success in creating folder");
+                                if (getActivity() != null && isAdded())
+                                    Toast.makeText(getActivity(), "Created folder successfully", Toast.LENGTH_SHORT).show();
                             }
                             else {
                                 giveError();

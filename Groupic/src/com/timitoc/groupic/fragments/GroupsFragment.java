@@ -11,14 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.timitoc.groupic.R;
 import com.timitoc.groupic.models.GroupsFragmentModel;
-import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.utils.Global;
 
-public class FragmentGroups extends Fragment {
+public class GroupsFragment extends Fragment {
     View mainView;
     GroupsFragmentModel model;
 
-    public FragmentGroups() {
+    public GroupsFragment() {
         //this.setRetainInstance(true);
     }
 
@@ -79,7 +78,7 @@ public class FragmentGroups extends Fragment {
         Bundle args;
         switch (position) {
             case 0:
-                fragment = new FragmentMyGroups();
+                fragment = new MyGroupsFragment();
                 break;
             case 1:
                 fragment = new SearchGroupsFragment();

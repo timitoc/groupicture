@@ -34,7 +34,7 @@ import org.json.JSONObject;
 /**
  * Created by timi on 25.04.2016.
  */
-public class FragmentLogin extends Fragment {
+public class LoginFragment extends Fragment {
     View mainView;
     Button loginRequest;
     TextView loginAttemptResponse;

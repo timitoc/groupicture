@@ -30,13 +30,11 @@ public class DeleteGroupDialogBox extends DialogFragment {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                System.out.println("Start to leave group");
                 callback.accept(true);
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                System.out.println("Cancel leaving group");
                 callback.accept(false);
             }
         });

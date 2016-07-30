@@ -36,13 +36,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class FragmentMyGroups extends Fragment {
+public class MyGroupsFragment extends Fragment {
 
     MyGroupsListAdapter adapter;
     ListView groupItemListView;
     View mainView;
 
-    public FragmentMyGroups() {
+    public MyGroupsFragment() {
         //this.setRetainInstance(true);
     }
 
