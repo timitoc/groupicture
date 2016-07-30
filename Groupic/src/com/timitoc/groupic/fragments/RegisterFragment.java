@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.timitoc.groupic.R;
+import com.timitoc.groupic.activities.LoginActivity;
 import com.timitoc.groupic.activities.MainActivity;
 import com.timitoc.groupic.models.RegisterFragmentModel;
 import com.timitoc.groupic.utils.Encryptor;
@@ -98,8 +100,9 @@ public class RegisterFragment extends Fragment {
                                 SharedPreferences.Editor editor = sharedPref.edit();
                                 editor.putString("username", username);
                                 editor.putString("password", password);
-                                editor.apply();
-                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                editor.commit();
+                                Toast.makeText(getActivity(), "Registration successful! You can now login", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
                                 startActivity(intent);
                                 getActivity().finish();
                             }
@@ -173,6 +176,7 @@ public class RegisterFragment extends Fragment {
     public void registerAttempt() {
         if (validCredentials()) {
             try {
+                registerAttemptResponse.setText("Creating account...");
                 saveUserInDatabase();
             } catch (JSONException e) {
                 e.printStackTrace();
