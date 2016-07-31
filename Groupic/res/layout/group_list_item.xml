@@ -9,14 +9,18 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="32sp"
-            android:gravity="fill_vertical"/>
+            android:gravity="fill_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
 
     <TextView
             android:id="@+id/group_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/group_title"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
     <RelativeLayout android:id="@+id/no_pass_layout" android:layout_height="wrap_content" android:layout_width="wrap_content"
             android:layout_below="@+id/group_description" android:visibility="gone">
             <TextView
@@ -25,12 +29,16 @@
                 android:layout_height="wrap_content"
                 android:text="This group has no password you can enter it"
                 android:textColor="@color/acad2"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
             />
             <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:id="@+id/no_pass_enter"
                     android:layout_below="@+id/info_no_pass"
                     android:text="Enter group"
                     android:focusable="false"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
             />
     </RelativeLayout>
     <RelativeLayout android:id="@+id/has_pass_layout" android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -41,6 +49,8 @@
                 android:layout_height="wrap_content"
                 android:text="This group has a password"
                 android:textColor="@color/acad2"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
         />
         <EditText
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -55,12 +65,16 @@
                 android:textCursorDrawable="@null"
                 android:maxLength="100"
                 android:singleLine="true"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
         />
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/has_pass_enter"
                 android:layout_below="@+id/has_pass_input"
                 android:text="Enter group"
                 android:focusable="false"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
         />
     </RelativeLayout>
 </RelativeLayout>
