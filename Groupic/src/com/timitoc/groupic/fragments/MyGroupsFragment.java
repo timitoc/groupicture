@@ -211,10 +211,15 @@ public class MyGroupsFragment extends Fragment {
         ConnectionStateManager.decreaseUsingState();
         Set<String> groupSet = SaveLocalManager.getGroupsSet();
         for (String groupString : groupSet) {
+            System.out.println("Group: " + groupString);
             String[] fields = groupString.split("#");
             int id = Integer.parseInt(fields[1], 16);
             String title = fields[2];
-            String description = fields[3];
+            String description;
+            if (fields.length > 3)
+                description = fields[3];
+            else
+                description = "";
             GroupItem groupItem= new GroupItem(id, title, description);
             groupItems.add(groupItem);
         }

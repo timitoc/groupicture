@@ -123,7 +123,7 @@ public class SaveLocalManager {
                 "#" + item.getParentFolder().getTitle();
     }
     private static String constructGroupPrefName(ImageItem item) {
-        return "GI#" + item.getParentFolder().getParentGroup().getId() +
+        return "GI#" + Integer.toHexString(item.getParentFolder().getParentGroup().getId()) +
                 "#" + item.getParentFolder().getParentGroup().getTitle() +
                 "#" + item.getParentFolder().getParentGroup().getDescription();
     }
@@ -160,6 +160,13 @@ public class SaveLocalManager {
             imagesSet = preferences.getStringSet(PREFERENCE_TAG_IMAGES, new HashSet<String>());
             foldersSet = preferences.getStringSet(PREFERENCE_TAG_FOLDERS, new HashSet<String>());
             groupsSet = preferences.getStringSet(PREFERENCE_TAG_GROUPS, new HashSet<String>());
+
+            //for (String s : groupsSet) {
+                    editor = preferences.edit();
+                    editor.remove(PREFERENCE_TAG_GROUPS).commit();
+                    //groupsSet.remove(s);
+                    editor.putStringSet(PREFERENCE_TAG_GROUPS, new HashSet<String>()).commit();
+            //}
             /*imagesSet = new HashSet<>();
             foldersSet = new HashSet<>();
             groupsSet = new HashSet<>(); */

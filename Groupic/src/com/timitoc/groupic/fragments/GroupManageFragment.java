@@ -202,11 +202,14 @@ public class GroupManageFragment extends Fragment {
         ConnectionStateManager.decreaseUsingState();
 
         Set<String> folderSet = SaveLocalManager.getFoldersSet();
+        System.out.println("Getting local folders from group " + groupItem.getTitle() + " " + groupItem.getId());
         for (String folderString : folderSet) {
+            System.out.println("Folder " + folderString);
             String[] fields = folderString.split("#");
             int groupId = Integer.parseInt(fields[1], 16);
             int folderId = Integer.parseInt(fields[2], 16);
             String title = fields[3];
+            //System.out.println("Found " + groupId + " " + folderId + " " + title);
             if (groupId == groupItem.getId()) {
                 FolderItem folderItem= new FolderItem(folderId, title, groupItem, getResources().getColor(R.color.transparent));
                 folderItems.add(folderItem);
