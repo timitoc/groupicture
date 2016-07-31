@@ -230,6 +230,17 @@ public class DBHandler {
             return null;
         }
     }
+    
+    public ResultSet getUser(String query, String username) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            return preparedStatement.executeQuery(); 
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
        
     public ResultSet getUser(String query, String username, String password) {
         try {
@@ -408,6 +419,17 @@ public class DBHandler {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, regex);
         preparedStatement.setString(2, regex);
+        return preparedStatement.executeQuery();
+    }
+    
+    public ResultSet searchForGroups(String keyword, int offset, int size) throws SQLException {
+        String query = "SELECT * FROM groups WHERE title LIKE ? OR description LIKE ? ORDER BY title LIMIT ?,?; ";
+        String regex = "%" + keyword + "%";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, regex);
+        preparedStatement.setString(2, regex);
+        preparedStatement.setInt(3, offset);
+        preparedStatement.setInt(4, size);
         return preparedStatement.executeQuery();
     }
     
