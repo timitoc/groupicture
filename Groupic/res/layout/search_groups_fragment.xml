@@ -16,6 +16,8 @@
             android:choiceMode="singleChoice"
             android:divider="@color/white"
             android:dividerHeight="2dp"
-            android:background="@color/acad1"/>
+            android:background="@color/acad1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
 
 </LinearLayout>
