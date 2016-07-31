@@ -41,3 +41,6 @@ captures/
 #Credentials
 Groupic/src/com/timitoc/groupic/utils/Credentials.java
 Server Java Sources/Global/Constants.java
+
+#apk
+!release/groupic.apk
