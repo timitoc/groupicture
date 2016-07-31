@@ -143,7 +143,6 @@ public class SaveLocalManager {
 
 
         private static void init() {
-            System.out.println("init called");
             if (!PreferenceImageDataManager.isPreferenceDataInitialized())
                 PreferenceImageDataManager.initializePreferenceData();
         }
