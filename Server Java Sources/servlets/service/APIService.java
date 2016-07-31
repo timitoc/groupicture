@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+import utils.Authenticator;
 import utils.DBHandler;
 import utils.Encryptor;
 import utils.Worker;
@@ -91,6 +92,8 @@ public class APIService extends HttpServlet {
     }
     
     public void targetFunction(String function, JSONObject parameters, JSONObject response) throws Exception {
+        if (!Authenticator.authentic(function, parameters, response))
+            return;
         if ("add_user".equals(function)) {
             Worker.addUser(parameters);
         }
@@ -102,7 +105,7 @@ public class APIService extends HttpServlet {
             //TODO do smt woth this result
         }
         else if ("get_groups_from_id".equals(function)) {
-            Worker.getGroupsForId(parameters, response);
+            Worker.getGroupsFromId(parameters, response);
         }
         else if ("get_folders_from_group".equals(function)) {
             Worker.getFoldersFromGroup(parameters, response);

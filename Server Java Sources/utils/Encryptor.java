@@ -64,4 +64,51 @@ public class Encryptor {
             }
             return sb.toString().substring(0, nr);
         }
+        
+        public static byte[] hashBytes(byte[] toHash) {
+            try {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA-256");
+                md.update(toHash);
+                return md.digest();
+            } catch (NoSuchAlgorithmException e) {
+                return null;
+            }
+        }
+
+        private static final int SALT_SIZE = 5;
+
+        public static String saltedHash(String toHash) {
+            return saltedHash(toHash, null);
+        }
+
+        private static String saltedHash(String toHash, byte[] saltBytes) {
+            Random r = new Random();
+            if (saltBytes == null) {
+                saltBytes = new byte[SALT_SIZE];
+                r.nextBytes(saltBytes);
+            }
+            byte[] textBytes = toHash.getBytes();
+            byte[] textWithSaltBytes = new byte[textBytes.length + saltBytes.length];
+            System.arraycopy(textBytes, 0, textWithSaltBytes, 0, textBytes.length);
+            System.arraycopy(saltBytes, 0, textWithSaltBytes, textBytes.length, saltBytes.length);
+            byte[] hashBytes = Encryptor.hashBytes(textWithSaltBytes);
+            byte[] hashWithSaltBytes = new byte[hashBytes.length + saltBytes.length];
+            System.arraycopy(hashBytes, 0, hashWithSaltBytes, 0, hashBytes.length);
+            System.arraycopy(saltBytes, 0, hashWithSaltBytes, hashBytes.length, saltBytes.length);
+            return Base64.encode(hashWithSaltBytes);
+        }
+
+        public static boolean checkSaltedHash(String text, String hash) {
+            try {
+                byte[] hashWithSaltBytes = Base64.decode(hash);
+                byte[] saltBytes = new byte[hashWithSaltBytes.length - 32];
+                System.arraycopy(hashWithSaltBytes, 32, saltBytes, 0, saltBytes.length);
+                String expectedHash = saltedHash(text, saltBytes);
+                return expectedHash.equals(hash);
+
+            } catch (Exception e) {
+                return false;
+            }
+        }
 }

@@ -40,23 +40,41 @@ public class Worker {
         initDBHandler();
         NameValuePair[] params = new NameValuePair[3];
         params[0] = new BasicNameValuePair("username", username);
-        params[1] = new BasicNameValuePair("password", password);
+        params[1] = new BasicNameValuePair("password", Encryptor.saltedHash(password));
         params[2] = new BasicNameValuePair("name", name);
         return DBHandler.getInstance().customInsert("users", params);
+    }
+    
+    public static int getUserId(JSONObject parameters) {
+        initDBHandler();
+        String query;
+        query = "SELECT * FROM users WHERE username = ?";
+         try {
+            String username = parameters.getString("username");
+            String password = parameters.getString("password");
+            ResultSet result = DBHandler.getInstance().getUser(query, username);
+            if (result != null && result.next() && Encryptor.checkSaltedHash(password, result.getString("password")))
+            {
+                return result.getInt("id");
+            }
+        } catch (Exception e) {
+             return -1;
+        }
+        return -1;
     }
     
     public static void getUser(JSONObject parameters, JSONObject response) {
         initDBHandler();
         String query;
-        query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        query = "SELECT * FROM users WHERE username = ?";
         
         try {
             String username = parameters.getString("username");
             String password = parameters.getString("password");
             response.put("username", username);
             response.put("password", password);
-            ResultSet result = DBHandler.getInstance().getUser(query, username, password);
-            if (result != null && result.next()) {
+            ResultSet result = DBHandler.getInstance().getUser(query, username);
+            if (result != null && result.next() && Encryptor.checkSaltedHash(password, result.getString("password"))) {
                 response.put("status", "success");
                 response.put("id", result.getInt("id"));
             }
@@ -83,7 +101,7 @@ public class Worker {
         DBHandler.getInstance().removeSetFromUser(param.getInt("user_id"), param.getInt("set_id"));
     }
     
-    public static void getGroupsForId(JSONObject param, JSONObject response) {
+    public static void getGroupsFromId(JSONObject param, JSONObject response) {
         initDBHandler();
         int id = param.getInt("id");
         ResultSet res = DBHandler.getInstance().getGroupsForId(id);
@@ -256,7 +274,11 @@ public class Worker {
         initDBHandler();
         String keyword = parameters.getString("query");
         try {
-            ResultSet res = DBHandler.getInstance().searchForGroups(keyword);
+            ResultSet res;
+            if (parameters.has("offset") && parameters.has("size"))
+                res = DBHandler.getInstance().searchForGroups(keyword, parameters.getInt("offset"), parameters.getInt("size"));
+            else
+                res = DBHandler.getInstance().searchForGroups(keyword);
             JSONArray array = new JSONArray();
             for (int i = 0; res.next(); i++) {
                 JSONObject obj = new JSONObject();
