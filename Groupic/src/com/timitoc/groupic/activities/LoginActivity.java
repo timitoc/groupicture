@@ -17,7 +17,6 @@ import com.timitoc.groupic.fragments.LoginFragment;
 import com.timitoc.groupic.fragments.RegisterFragment;
 import com.timitoc.groupic.models.LoginFragmentModel;
 import com.timitoc.groupic.models.RegisterFragmentModel;
-import com.timitoc.groupic.utils.EncryptorTest;
 import com.timitoc.groupic.utils.Global;
 
 /**
