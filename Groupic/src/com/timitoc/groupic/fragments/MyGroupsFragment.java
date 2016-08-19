@@ -149,8 +149,10 @@ public class MyGroupsFragment extends Fragment {
         builder.appendQueryParameter("public_key", Global.MY_PUBLIC_KEY);
         JSONObject params = new JSONObject();
         params.put("id", Global.user_id);
-        params.put("username", Global.user_username);
-        params.put("password", Encryptor.hash(Global.user_password));
+        params.put("user_id", Global.user_id);
+        params.put("user_username", Global.user_username);
+        params.put("user_password", Encryptor.hash(Global.user_password));
+        System.out.println("working pass: " + Encryptor.hash(Global.user_password));
         String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
         builder.appendQueryParameter("data", params.toString());
         builder.appendQueryParameter("hash", hash);

@@ -114,6 +114,9 @@ public class FolderContentFragment extends Fragment {
         final JSONObject params = new JSONObject();
 
         params.put("id", folderId); /// id-ul folderului curent
+        params.put("user_id", Global.user_id);
+        params.put("user_username", Global.user_username);
+        params.put("user_password", Encryptor.hash(Global.user_password));
         params.put("image", Global.getStringImage(bitmap));
         final String hash = Encryptor.hash(params.toString() + Global.MY_PRIVATE_KEY);
         builder.appendQueryParameter("data", params.toString());
@@ -125,7 +128,7 @@ public class FolderContentFragment extends Fragment {
                     @Override
                     public void onResponse(String response)
                     {
-
+                        System.out.println(response);
                     }
                 },
                 new Response.ErrorListener()

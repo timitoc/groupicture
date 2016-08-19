@@ -9,6 +9,7 @@
             <option value="file://%MODULE_SDK_HOME%/tools/proguard/proguard-android.txt" />
           </list>
         </option>
+        <option name="runProGuard" value="true" />
       </options>
     </properties>
     <root id="archive" name="Groupic.apk">

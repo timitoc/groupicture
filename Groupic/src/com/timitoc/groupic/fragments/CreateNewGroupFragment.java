@@ -119,6 +119,9 @@ public class CreateNewGroupFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
         String url = getString(R.string.api_service_url);
         final JSONObject params = new JSONObject();
+        params.put("user_id", Global.user_id);
+        params.put("user_username", Global.user_username);
+        params.put("user_password", Encryptor.hash(Global.user_password));
         params.put("name", name);
         params.put("description", description);
         params.put("password", password.isEmpty() ? "" : Encryptor.hash(password));
