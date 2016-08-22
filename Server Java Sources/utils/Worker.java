@@ -45,13 +45,13 @@ public class Worker {
         return DBHandler.getInstance().customInsert("users", params);
     }
     
-    public static int getUserId(JSONObject parameters) {
+    public static int getUserIdForAuthenticator(JSONObject parameters) {
         initDBHandler();
         String query;
         query = "SELECT * FROM users WHERE username = ?";
          try {
-            String username = parameters.getString("username");
-            String password = parameters.getString("password");
+            String username = parameters.getString("user_username");
+            String password = parameters.getString("user_password");
             ResultSet result = DBHandler.getInstance().getUser(query, username);
             if (result != null && result.next() && Encryptor.checkSaltedHash(password, result.getString("password")))
             {

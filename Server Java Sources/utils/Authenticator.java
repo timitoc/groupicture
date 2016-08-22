@@ -1,6 +1,5 @@
 package utils;
 
-import com.sun.tracing.dtrace.FunctionName;
 import org.json.JSONObject;
 
 /**
@@ -9,13 +8,14 @@ import org.json.JSONObject;
  */
 public class Authenticator {
     
-    private static String[] secureFunctions = {"get_groups_from_id"}; 
+    private static String[] secureFunctions = {"get_groups_from_id", "upload_image_in_folder", "create_new_group"}; 
     
     public static boolean authentic(String functionName, JSONObject parameters, JSONObject response) {
         if (isUserAuthenticationNeeded(functionName)) {
-            if (Worker.getUserId(parameters) != parameters.getInt("id")) {
+            if (Worker.getUserIdForAuthenticator(parameters) != parameters.getInt("user_id")) {
                 response.put("status", "failure");
                 response.put("detail", "error_auth_user_credentials");
+                response.put("bonus", "received: " + parameters.getString("user_username") + " " + parameters.getString("user_password"));
                 return false;
             }
             else
